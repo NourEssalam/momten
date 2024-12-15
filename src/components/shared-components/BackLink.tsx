@@ -1,13 +1,13 @@
-"use client";
-import { cn } from "@/lib/utils";
+'use client'
+import { cn } from '@/lib/cn'
 
-import { usePathname } from "next/navigation";
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { usePathname } from 'next/navigation'
+import Link from 'next/link'
+import { ArrowLeft } from 'lucide-react'
 
-export default function BackLink({ className = "" }: { className?: string }) {
-  const pathname = usePathname();
-  const parentPath = pathname.split("/")[1];
+export default function BackLink({ className = '' }: { className?: string }) {
+  const pathname = usePathname()
+  const parentPath = pathname.split('/')[1]
   return (
     <Link href={`/${parentPath}`} className={cn(className)}>
       {/* Back */}
@@ -18,5 +18,5 @@ export default function BackLink({ className = "" }: { className?: string }) {
         </span>
       </div>
     </Link>
-  );
+  )
 }

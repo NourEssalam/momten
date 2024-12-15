@@ -67,6 +67,7 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: string;
+  name?: string | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -193,6 +194,16 @@ export interface Post {
     };
     [k: string]: unknown;
   };
+  publishedAt: string;
+  authors: (string | User)[];
+  populatedAuthors?:
+    | {
+        id?: string | null;
+        name?: string | null;
+      }[]
+    | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -276,6 +287,7 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  name?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -387,6 +399,16 @@ export interface PostsSelect<T extends boolean = true> {
   title?: T;
   image?: T;
   content?: T;
+  publishedAt?: T;
+  authors?: T;
+  populatedAuthors?:
+    | T
+    | {
+        id?: T;
+        name?: T;
+      };
+  slug?: T;
+  slugLock?: T;
   updatedAt?: T;
   createdAt?: T;
 }
