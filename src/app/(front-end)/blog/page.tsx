@@ -1,10 +1,10 @@
 import Categories from '@/components/blog/Categories'
 import PostCard from '@/components/blog/PostCard'
 import Container from '@/components/shared-components/Container'
-// import { blogPosts } from "@/lib/data-placeholders";
 import { Metadata } from 'next'
 import { getPayload } from 'payload'
 import config from '@payload-config'
+import { cache } from 'react'
 export const dynamic = 'force-static'
 export const revalidate = 600
 
@@ -21,6 +21,11 @@ export default async function Page() {
     collection: 'posts',
     depth: 1,
     limit: 12,
+    where: {
+      categories: {
+        equals: 'Women',
+      },
+    },
     // overrideAccess: false,
     select: {
       title: true,
@@ -30,6 +35,8 @@ export default async function Page() {
       slug: true,
     },
   })
+
+  const categories = await getCategories()
 
   return (
     <>
@@ -46,7 +53,7 @@ export default async function Page() {
           </p>
         </div>
 
-        <Categories />
+        <Categories result={categories} />
       </Container>
 
       {/* Blog posts */}
@@ -63,6 +70,7 @@ export default async function Page() {
                 version: 0,
               },
             }}
+            categories={[]}
             createdAt={''}
             updatedAt={''}
             key={post.id}
@@ -73,3 +81,17 @@ export default async function Page() {
     </>
   )
 }
+
+const getCategories = cache(async () => {
+  const payload = await getPayload({ config })
+  const categories = await payload.find({
+    collection: 'categories',
+    depth: 1,
+    limit: 12,
+    // overrideAccess: false,
+    // select: {
+    //   title: true,
+    // },
+  })
+  return categories.docs || null
+})

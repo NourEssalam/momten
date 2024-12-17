@@ -202,6 +202,7 @@ export interface Post {
         name?: string | null;
       }[]
     | null;
+  categories: (string | Category)[];
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -407,6 +408,7 @@ export interface PostsSelect<T extends boolean = true> {
         id?: T;
         name?: T;
       };
+  categories?: T;
   slug?: T;
   slugLock?: T;
   updatedAt?: T;

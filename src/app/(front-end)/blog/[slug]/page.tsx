@@ -78,30 +78,29 @@ export async function generateMetadata(props: {
   }
 }
 
-// export async function generateStaticParams() {
-//   const payload = await getPayload({ config })
-//   const posts = await payload.find({
-//     collection: 'posts',
-//     limit: 1000,
-//     pagination: false,
-//     overrideAccess: false,
-//     select: {
-//       slug: true,
-//     },
-//   })
+export async function generateStaticParams() {
+  const payload = await getPayload({ config })
+  const posts = await payload.find({
+    collection: 'posts',
+    limit: 1000,
+    pagination: false,
+    // overrideAccess: false,
+    select: {
+      slug: true,
+    },
+  })
 
-//   const params = posts.docs.map(({ slug }) => {
-//     return { slug }
-//   })
+  const params = posts.docs.map(({ slug }) => {
+    return { slug }
+  })
 
-//   return params
-// }
+  return params
+}
 
 const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
   const payload = await getPayload({ config })
   const result = await payload.find({
     collection: 'posts',
-
     limit: 1,
     pagination: false,
     where: {

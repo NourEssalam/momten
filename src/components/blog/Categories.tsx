@@ -1,17 +1,18 @@
 'use client'
+import { Category } from '@/payload-types'
 import { useState } from 'react'
 
-export default function Categories() {
+export type CategoryItem = {
+  id: string
+  title: string
+  createdAt: string // ISO date string
+  updatedAt: string // ISO date string
+}
+
+export default function Categories({ result }: { result: Category[] }) {
   const [activeCategory, setActiveCategory] = useState('general') // default active category
 
-  const categories = [
-    'general',
-    'sustainability',
-    'citizenship',
-    'leadership',
-    'initiatives',
-    'stories',
-  ]
+  const categories = result.map((cat: Category) => cat.title)
 
   const handleCategoryClick = (cat: string) => {
     setActiveCategory(cat) // Set the clicked category as active
