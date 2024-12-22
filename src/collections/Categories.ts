@@ -10,6 +10,11 @@ export const Categories: CollectionConfig = {
       name: 'title',
       type: 'text',
       required: true,
+      index: true,
+      label: 'Title',
     },
   ],
+  defaultPopulate: {
+    title: true,
+  },
 }

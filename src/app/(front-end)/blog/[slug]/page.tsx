@@ -8,11 +8,13 @@ import ShareMenu from '@/components/blog/ShareMenu'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import { formatDate } from '@/lib/formatDate'
 import { cache } from 'react'
+import PostCard from '@/components/blog/PostCard'
+import { Post } from '@/payload-types'
 
 export default async function Page(props: { params: Promise<{ slug: string }> }) {
   const params = await props.params
-
   const post = await queryPostBySlug({ slug: params.slug })
+  const relatedPosts = post.relatedPosts
 
   if (!post) {
     return <p>Post not found</p>
@@ -24,7 +26,7 @@ export default async function Page(props: { params: Promise<{ slug: string }> })
 
   return (
     <section className="flex flex-col gap-2 xl:gap-10 justify-center items-center">
-      <Container className="flex flex-col gap-10 mb-0 pb-0 ">
+      <Container className="flex flex-col gap-10 mb-0 pb-0 max-w-[1150px]">
         <BackLink />
         <h1 className="text-4xl text-secondary  font-medium sm:text-5xl lg:text-7xl   ">
           {post.title}
@@ -58,11 +60,18 @@ export default async function Page(props: { params: Promise<{ slug: string }> })
         </div>
       </Container>
 
-      <Container className="mt-0 pt-0">
+      <Container className="mt-0 pt-0 max-w-[1150px]">
         <RichText
           className="text-xl md:text-2xl p-5 text-grey !leading-relaxed tracking-normal"
           data={post.content}
         />
+      </Container>
+      <Container className="mt-0 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  xl:gap-10">
+        {relatedPosts &&
+          relatedPosts.length > 0 &&
+          relatedPosts
+            .filter((post): post is Post => typeof post !== 'string') // Type guard
+            .map((post) => <PostCard key={post.id} {...post} />)}
       </Container>
     </section>
   )

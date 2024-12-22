@@ -2,10 +2,13 @@ import { EXPERIMENTAL_TableFeature, lexicalEditor } from '@payloadcms/richtext-l
 import type { CollectionConfig } from 'payload'
 import { populateAuthors } from './hooks/populatedAuthors'
 import { slugField } from '@/fields/slug'
+import type { Where } from 'payload'
 
 export const Posts: CollectionConfig<'posts'> = {
   slug: 'posts',
-
+  admin: {
+    useAsTitle: 'title',
+  },
   fields: [
     {
       name: 'title',
@@ -17,6 +20,28 @@ export const Posts: CollectionConfig<'posts'> = {
       type: 'relationship',
       relationTo: 'media',
       required: true,
+    },
+    {
+      name: 'relatedPosts',
+      type: 'relationship',
+      admin: {
+        position: 'sidebar',
+      },
+      filterOptions: ({ id, data }) => {
+        const query: Where = {
+          and: [
+            { id: { not_in: [id] } },
+            {
+              categories: { in: data.categories },
+            },
+          ],
+        }
+
+        return query
+      },
+
+      hasMany: true,
+      relationTo: 'posts',
     },
     {
       name: 'content',
@@ -100,5 +125,5 @@ export const Posts: CollectionConfig<'posts'> = {
     afterRead: [populateAuthors],
     // afterDelete: [revalidateDelete],
   },
-  disableDuplicate: false,
+  disableDuplicate: true,
 }
