@@ -26,6 +26,9 @@ importers:
       '@payloadcms/richtext-lexical':
         specifier: 3.11.0
         version: 3.11.0(5whx22vd5xh56p7ururqir6h54)
+      '@payloadcms/translations':
+        specifier: ^3.11.0
+        version: 3.11.0
       '@radix-ui/react-accordion':
         specifier: ^1.2.2
         version: 1.2.2(@types/react-dom@19.0.1)(@types/react@19.0.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)

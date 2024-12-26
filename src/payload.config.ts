@@ -11,6 +11,9 @@ import { Users } from './collections/Users'
 import { Media } from './collections/media'
 import { Posts } from './collections/posts'
 import { Categories } from './collections/Categories'
+import { fr } from '@payloadcms/translations/languages/fr'
+import { ar } from '@payloadcms/translations/languages/ar'
+import { en } from '@payloadcms/translations/languages/en'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -20,6 +23,21 @@ export default buildConfig({
     user: Users.slug,
     importMap: {
       baseDir: path.resolve(dirname),
+    },
+  },
+  i18n: {
+    supportedLanguages: { en, fr, ar },
+    translations: {
+      en: {
+        custom: {
+          // namespace can be anything you want
+          key1: 'Translation with {{variable}}', // translation
+        },
+        // override existing translation keys
+        general: {
+          dashboard: 'Home',
+        },
+      },
     },
   },
   collections: [Users, Media, Posts, Categories],
