@@ -6,6 +6,18 @@ import type { Where } from 'payload'
 
 export const Posts: CollectionConfig<'posts'> = {
   slug: 'posts',
+  labels: {
+    singular: {
+      en: 'Article',
+      ar: 'مقالة',
+      fr: 'Article',
+    },
+    plural: {
+      en: 'Articles',
+      ar: 'مقالات',
+      fr: 'Articles',
+    },
+  },
   admin: {
     useAsTitle: 'title',
   },
