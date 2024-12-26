@@ -125,5 +125,5 @@ export const Posts: CollectionConfig<'posts'> = {
     afterRead: [populateAuthors],
     // afterDelete: [revalidateDelete],
   },
-  disableDuplicate: true,
+  disableDuplicate: false,
 }

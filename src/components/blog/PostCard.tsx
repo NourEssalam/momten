@@ -5,7 +5,7 @@ import { useState } from 'react'
 import type { Post } from '@/payload-types'
 import { formatDate } from '@/lib/formatDate'
 
-export default function PostCard({ id, title, image, publishedAt, authors, slug }: Post | any) {
+export default function PostCard({ title, image, publishedAt, authors, slug }: Post) {
   const [onHover, setOnHover] = useState(false)
   type PostImage = Exclude<typeof image, string> // Removes string from the union type
 
