@@ -1,8 +1,7 @@
-"use client";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import Image from "next/image";
+'use client'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 import {
   Form,
   FormControl,
@@ -10,44 +9,41 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
+} from '@/components/ui/form'
 
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { contactSchema } from "@/lib/form-schema";
-import Container from "@/components/shared-components/Container";
-import { Textarea } from "@/components/ui/textarea";
-import { contactInfo, socials } from "@/lib/menus";
-import Link from "next/link";
-import { contactInfoType } from "@/lib/types/menu-types";
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { contactSchema } from '@/lib/form-schema'
+import Container from '@/components/shared-components/Container'
+import { Textarea } from '@/components/ui/textarea'
+import { contactInfo, socials } from '@/lib/menus'
+import Link from 'next/link'
+import { contactInfoType } from '@/lib/types/menu-types'
 
 export default function Contact() {
   const form = useForm<z.infer<typeof contactSchema>>({
     resolver: zodResolver(contactSchema),
     defaultValues: {
-      name: "",
-      email: "",
-      message: "",
+      name: '',
+      email: '',
+      message: '',
     },
-  });
+  })
 
   return (
     <Container>
       <div className="flex flex-col mb-4">
-        <h1 className="text-4xl font-medium text-shade-strong leading-6 mb-8">
-          Reach Out to Us
-        </h1>
+        <h1 className="text-4xl font-medium text-shade-strong leading-6 mb-8">Reach Out to Us</h1>
         <p className="text-base max-w-xl  font-light text-secondary">
-          Have questions or ideas? Want to get involved? Contact us using the
-          form below or connect via email and social media. We're excited to
-          hear from you!
+          Have questions or ideas? Want to get involved? Contact us using the form below or connect
+          via email and social media. We&apos;re excited to hear from you!
         </p>
       </div>
       <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-5 lg:gap-10">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit((values) => {
-              console.log(values);
+              console.log(values)
             })}
             className="grid grid-cols-1 gap-4 "
           >
@@ -58,11 +54,7 @@ export default function Contact() {
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input
-                      type="text"
-                      placeholder="Enter your name"
-                      {...field}
-                    />
+                    <Input type="text" placeholder="Enter your name" {...field} />
                   </FormControl>
 
                   <FormMessage />
@@ -76,11 +68,7 @@ export default function Contact() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input
-                      type="email"
-                      placeholder="Enter your email"
-                      {...field}
-                    />
+                    <Input type="email" placeholder="Enter your email" {...field} />
                   </FormControl>
 
                   <FormMessage />
@@ -95,11 +83,7 @@ export default function Contact() {
                 <FormItem>
                   <FormLabel>Message</FormLabel>
                   <FormControl>
-                    <Textarea
-                      className="bg-white"
-                      placeholder="Enter your message"
-                      {...field}
-                    />
+                    <Textarea className="bg-white" placeholder="Enter your message" {...field} />
                   </FormControl>
 
                   <FormMessage />
@@ -107,10 +91,7 @@ export default function Contact() {
               )}
             />
 
-            <Button
-              type="submit"
-              className="bg-[#2d234b] hover:bg-[#2d234b]/90"
-            >
+            <Button type="submit" className="bg-[#2d234b] hover:bg-[#2d234b]/90">
               Submit
             </Button>
           </form>
@@ -121,11 +102,9 @@ export default function Contact() {
             {contactInfo.map((info: contactInfoType) => (
               <Link
                 className={`${
-                  info.type === "address"
-                    ? "font-medium"
-                    : "font-normal hover:text-accent"
+                  info.type === 'address' ? 'font-medium' : 'font-normal hover:text-accent'
                 } text-lg inline-block text-grey  transition-colors duration-300`}
-                href={!info.link ? "#" : info.link}
+                href={!info.link ? '#' : info.link}
                 key={info.value}
               >
                 {info.value}
@@ -147,5 +126,5 @@ export default function Contact() {
         </div>
       </div>
     </Container>
-  );
+  )
 }

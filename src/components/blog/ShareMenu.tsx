@@ -1,27 +1,21 @@
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { CiShare1 } from "react-icons/ci";
+} from '@/components/ui/dropdown-menu'
+import { CiShare1 } from 'react-icons/ci'
 
 export default function ShareMenu() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="flex gap-2">
-        <span>
+        <span className="flex gap-2 items-center underline cursor-pointer">
           Share :
-          <CiShare1 className=" text-black font-bold stroke-1 w-7 h-7 text-xl cursor-pointer" />
+          <CiShare1 className=" text-black font-bold stroke-[0.5] w-5 text-xl cursor-pointer" />
         </span>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 ">
@@ -35,7 +29,7 @@ export default function ShareMenu() {
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
+  )
 }
 
 /* */

@@ -1,46 +1,43 @@
-"use client";
-import { useState } from "react";
-import Link from "next/link";
-import { Button } from "../ui/button";
+'use client'
+import { Category } from '@/payload-types'
+import { useCategoryStore } from '@/state-store/category-store'
+import { useEffect } from 'react'
 
-export default function Categories() {
-  const [activeCategory, setActiveCategory] = useState("general"); // default active category
+import { useRouter } from 'next/navigation'
 
-  const categories = [
-    "general",
-    "sustainability",
-    "citizenship",
-    "leadership",
-    "initiatives",
-    "stories",
-  ];
+export default function Categories({ result }: { result: Category[] }) {
+  // fetch categories
+  const categories = result.map((cat: Category) => cat.title)
+  categories.unshift('All')
+  // handle states
+  const setCategory = useCategoryStore((state) => state.setCategory)
+  const activeCategory = useCategoryStore((state) => state.category)
 
-  const handleCategoryClick = (cat: string) => {
-    setActiveCategory(cat); // Set the clicked category as active
-  };
+  const router = useRouter()
+  useEffect(() => {
+    router.push(`?title=${activeCategory}`)
+  }, [activeCategory, router])
 
   return (
     <div className="flex flex-col">
-      <h1 className="text-xl font-medium text-shade-strong leading-6 mb-8">
+      <h1 className="text-xl font-medium text-shade-strong leading-6 mb-8 capitalize">
         Categories
       </h1>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
         {categories.map((cat) => (
-          <div
+          <button
             key={cat}
-            className={`text-lg font-thin  cursor-pointer p-2 ${
+            className={`text-lg font-thin  cursor-pointer  ${
               activeCategory === cat
-                ? "text-black border-b-2 border-black font-semibold" // Active category styles
-                : "text-grey-medium hover:underline hover:text-black"
+                ? 'text-black border-b-2 border-black font-semibold' // Active category styles
+                : 'text-gray-600  hover:text-black'
             }`}
-            onClick={() => handleCategoryClick(cat)} // Update active category on click
+            onClick={() => setCategory(cat)} // Update active category on click
           >
-            {/* Link to the category */}
-            {/* <Link href={`#`}>{cat}</Link> */}
-            <button className="capitalize">{cat}</button>
-          </div>
+            {cat}
+          </button>
         ))}
       </div>
     </div>
-  );
+  )
 }
