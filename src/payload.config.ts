@@ -13,6 +13,7 @@ import { ar } from '@payloadcms/translations/languages/ar'
 import { en } from '@payloadcms/translations/languages/en'
 import { arabicTranslation } from './i18n/arabicExtend'
 import { plugins } from './plugins'
+import { Header } from './globals/Header/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -24,13 +25,34 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
+  collections: [Users, Media, Posts, Categories],
+  globals: [Header],
   i18n: {
     supportedLanguages: { en, fr, ar },
     translations: {
       ...arabicTranslation,
     },
   },
-  collections: [Users, Media, Posts, Categories],
+  localization: {
+    locales: [
+      {
+        label: 'English',
+        code: 'en',
+      },
+      {
+        label: 'Arabic',
+        code: 'ar',
+        rtl: true,
+      },
+      {
+        label: 'French',
+        code: 'fr',
+      },
+    ],
+    defaultLocale: 'en', // required
+    fallback: true, // defaults to true
+  },
+
   editor: lexicalEditor({}),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -40,61 +62,5 @@ export default buildConfig({
     url: process.env.DATABASE_URI || '',
   }),
   sharp,
-  plugins: [
-    ...plugins,
-    // searchPlugin({
-    //   collections: ['posts', 'categories'],
-    //   defaultPriorities: {
-    //     posts: 20,
-    //     categories: 10,
-    //   },
-    //   searchOverrides: {
-    //     slug: 'search-results',
-    //     labels: {
-    //       singular: {
-    //         en: 'Search Result', // Singular form for a single result
-    //         ar: 'نتيجة البحث', // "Search Result" in Arabic
-    //         fr: 'Résultat de recherche', // "Search Result" in French
-    //       },
-    //       plural: {
-    //         en: 'Search Results', // Plural form for multiple results
-    //         ar: 'نتائج البحث', // "Search Results" in Arabic (plural form)
-    //         fr: 'Résultats de recherche', // "Search Results" in French
-    //       },
-    //     },
-    //     fields: ({ defaultFields }) => [
-    //       ...defaultFields,
-    //       {
-    //         name: 'slug',
-    //         type: 'text',
-    //         index: true,
-    //         admin: {
-    //           readOnly: true,
-    //         },
-    //         label: {
-    //           en: 'Slug',
-    //           ar: 'الرابط',
-    //           fr: 'Lien',
-    //         },
-    //       },
-    //       {
-    //         name: 'image',
-    //         type: 'relationship',
-    //         relationTo: 'media',
-    //         index: true,
-    //         label: {
-    //           en: 'Image',
-    //           ar: 'صورة',
-    //           fr: 'Image',
-    //         },
-    //       },
-    //     ],
-    //   },
-    //   beforeSync: ({ originalDoc, searchDoc }) => ({
-    //     ...searchDoc,
-    //     slug: originalDoc?.slug || 'this a slug field !',
-    //     image: originalDoc?.image || 'this an image field !',
-    //   }),
-    // }),
-  ],
+  plugins: [...plugins],
 })

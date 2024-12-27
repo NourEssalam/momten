@@ -9,8 +9,7 @@ import { IoIosCloseCircleOutline } from 'react-icons/io'
 import { useEffect, useState } from 'react'
 import { mainMenuType } from '@/lib/types/menu-types'
 
-import SwitchLanguage from './SwitchLanguage'
-import SearchWrapper from '@/components/search/searchWrapper'
+import SwitchLanguage from '../shared-components/SwitchLanguage'
 import DialogSearchButton from '@/components/search/SearchDialogButton'
 
 export default function Header() {

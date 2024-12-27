@@ -1,8 +1,6 @@
-"use client";
-
-import * as React from "react";
-
-import { Button } from "@/components/ui/button";
+'use client'
+import * as React from 'react'
+import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,11 +9,26 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { FaGlobeAmericas } from "react-icons/fa";
+} from '@/components/ui/dropdown-menu'
+import { FaGlobeAmericas } from 'react-icons/fa'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 export default function SwitchLanguage() {
-  const [position, setPosition] = React.useState("top");
+  const [position, setPosition] = useState('english')
+  const router = useRouter()
+
+  const handleLanguageChange = (value: React.SetStateAction<string>) => {
+    setPosition(value)
+
+    if (value === 'arabic') {
+      router.push('?locale=ar')
+    } else if (value === 'french') {
+      router.push('?locale=fr')
+    } else {
+      router.push('?locale=en')
+    }
+  }
 
   return (
     <DropdownMenu>
@@ -25,14 +38,14 @@ export default function SwitchLanguage() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-48 mr-10">
-        <DropdownMenuLabel>Choose Your language</DropdownMenuLabel>
+        <DropdownMenuLabel>Choose Your Language</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
-          <DropdownMenuRadioItem value="top">Arabic</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="bottom">English</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="right">French</DropdownMenuRadioItem>
+        <DropdownMenuRadioGroup value={position} onValueChange={handleLanguageChange}>
+          <DropdownMenuRadioItem value="arabic">Arabic</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="english">English</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="french">French</DropdownMenuRadioItem>
         </DropdownMenuRadioGroup>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
+  )
 }

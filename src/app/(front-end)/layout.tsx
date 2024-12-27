@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Rubik } from 'next/font/google'
 import './globals.css'
-import Header from '@/components/shared-components/Header'
+import Header from '@/components/header/Header'
 import Footer from '@/components/shared-components/Footer'
 
 export const metadata: Metadata = {
@@ -18,7 +18,7 @@ const rubik = Rubik({
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="ar">
       <body
         className={`${rubik.className} antialiased inset-0 relative bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]`}
       >
