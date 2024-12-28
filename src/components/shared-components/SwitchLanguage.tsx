@@ -13,20 +13,27 @@ import {
 import { FaGlobeAmericas } from 'react-icons/fa'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { usePathname } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 export default function SwitchLanguage() {
-  const [position, setPosition] = useState('english')
+  const t = useTranslations('SwitchLanguage')
+  const pathname = usePathname()
+  const [position, setPosition] = useState(
+    `${pathname.includes('/ar/') || pathname === '/ar' ? 'arabic' : 'english'}`,
+  )
   const router = useRouter()
-
   const handleLanguageChange = (value: React.SetStateAction<string>) => {
     setPosition(value)
 
-    if (value === 'arabic') {
-      router.push('?locale=ar')
-    } else if (value === 'french') {
-      router.push('?locale=fr')
-    } else {
-      router.push('?locale=en')
+    if (value === 'arabic' && (pathname.includes('/en/') || pathname === '/en')) {
+      const segments = pathname.split('/')
+      segments[1] = 'ar'
+      router.push(segments.join('/'))
+    } else if (value === 'english' && (pathname.includes('/ar/') || pathname === '/ar')) {
+      const segments = pathname.split('/')
+      segments[1] = 'en'
+      router.push(segments.join('/'))
     }
   }
 
@@ -38,12 +45,11 @@ export default function SwitchLanguage() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-48 mr-10">
-        <DropdownMenuLabel>Choose Your Language</DropdownMenuLabel>
+        <DropdownMenuLabel>{t('choose')}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuRadioGroup value={position} onValueChange={handleLanguageChange}>
-          <DropdownMenuRadioItem value="arabic">Arabic</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="english">English</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="french">French</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="arabic">{t('arabic')}</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="english">{t('english')}</DropdownMenuRadioItem>
         </DropdownMenuRadioGroup>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -1,22 +1,23 @@
-import { contactInfo, footerMenu, socials } from "@/lib/menus";
-import { contactInfoType, footerMenuType } from "@/lib/types/menu-types";
-import Link from "next/link";
-import Image from "next/image";
-import Container from "../shared-components/Container";
-import { Separator } from "@/components/ui/separator";
-
+import { contactInfo, footerMenu, socials } from '@/lib/menus'
+import { contactInfoType, footerMenuType } from '@/lib/types/menu-types'
+import Link from 'next/link'
+import Image from 'next/image'
+import Container from '../shared-components/Container'
+import { Separator } from '@/components/ui/separator'
+import { useTranslations } from 'next-intl'
 export default function Footer() {
+  const t = useTranslations('CopyRight')
   const groupedMenu = footerMenu.reduce<Record<string, footerMenuType[]>>(
     (acc, item) => {
-      if (!acc[item.category]) acc[item.category] = [];
-      acc[item.category].push(item);
-      return acc;
+      if (!acc[item.category]) acc[item.category] = []
+      acc[item.category].push(item)
+      return acc
     },
-    {} // initial value
-  );
+    {}, // initial value
+  )
 
-  const date = new Date();
-  const year = date.getFullYear();
+  const date = new Date()
+  const year = date.getFullYear()
 
   //items must be in the center
 
@@ -59,16 +60,14 @@ export default function Footer() {
           </ul>
           {/* contact */}
           <div className="">
-            <h3 className="text-lg text-grey  font-semibold mb-4">
-              Contact Us
-            </h3>
+            <h3 className="text-lg text-grey  font-semibold mb-4">Contact Us</h3>
             <address className="contacts flex flex-col gap-1 ">
               {contactInfo.map((info: contactInfoType) => (
                 <Link
                   className={`${
-                    info.type === "address" ? "font-medium" : "font-normal"
+                    info.type === 'address' ? 'font-medium' : 'font-normal'
                   } text-sm lg:text-base inline-block text-grey hover:text-accent transition-colors duration-300`}
-                  href={!info.link ? "#" : info.link}
+                  href={!info.link ? '#' : info.link}
                   key={info.value}
                 >
                   {info.value}
@@ -97,9 +96,9 @@ export default function Footer() {
         </main>
 
         <p className="text-sm iniline-block text-grey-light lg:col-span-3 text-center">
-          Copyright &copy; {year} by Momtan, Inc. All right reserved.
+          {`${t('title')} © ${year} ${t('by Momtan')} ${t('desc')}.`}
         </p>
       </Container>
     </footer>
-  );
+  )
 }

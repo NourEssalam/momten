@@ -144,7 +144,7 @@ export interface Post {
     [k: string]: unknown;
   };
   publishedAt: string;
-  authors: (string | User)[];
+  authors?: (string | User)[] | null;
   populatedAuthors?:
     | {
         id?: string | null;

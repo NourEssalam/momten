@@ -3,6 +3,11 @@ import { Rubik } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/header/Header'
 import Footer from '@/components/shared-components/Footer'
+import { NextIntlClientProvider } from 'next-intl'
+import { getMessages } from 'next-intl/server'
+import { notFound } from 'next/navigation'
+import { routing } from '@/i18n/routing'
+import HeaderWrap from '@/components/header/headerWrap'
 
 export const metadata: Metadata = {
   title: 'Momtan Next App',
@@ -16,9 +21,25 @@ const rubik = Rubik({
   weight: ['400', '500', '600', '700'],
 })
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode
+  params: Promise<{ locale: string }>
+}) {
+  // Ensure that the incoming `locale` is valid
+  const resolvedParams = await params
+  const { locale } = resolvedParams
+
+  if (!routing.locales.includes(locale as 'en' | 'ar')) {
+    notFound()
+  }
+  // Providing all messages to the client
+  // side is the easiest way to get started
+  const messages = await getMessages()
   return (
-    <html lang="ar">
+    <html lang="ar" dir={`${locale === 'ar' ? 'rtl' : 'ltr'}`}>
       <body
         className={`${rubik.className} antialiased inset-0 relative bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]`}
       >
@@ -26,11 +47,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           className="absolute left-0 right-0 top-0 -z-10 m-auto h-full w-full 
         rounded-full bg-fuchsia-200 opacity-30 blur-[100px]"
         ></div>
-
-        <Header />
-
-        {children}
-        <Footer />
+        <NextIntlClientProvider messages={messages}>
+          <HeaderWrap locale={locale} />
+          {children}
+          <Footer />
+        </NextIntlClientProvider>
       </body>
     </html>
   )

@@ -16,8 +16,9 @@ import { getSearchResults } from '@/components/search/actions'
 import { useEffect, useState } from 'react'
 import { PaginatedDocs } from 'payload'
 import Loading from './loading'
-
+import { useTranslations } from 'next-intl'
 export default function DialogSearchButton() {
+  const t = useTranslations('Search')
   const searchParams = useSearchParams()
   const [searchResults, setSearchResults] = useState<PaginatedDocs | null>(null)
 
@@ -45,19 +46,17 @@ export default function DialogSearchButton() {
       translate-x-[0%] translate-y-[0%]"
         >
           <DialogHeader className=" text-left mb-0 gap-2 space-x-0">
-            <DialogTitle className="text-2xl">Search</DialogTitle>
+            <DialogTitle className="text-2xl">{t('title')}</DialogTitle>
             <Description></Description>
             <SearchForm />
           </DialogHeader>
 
           {/* Results */}
           {!searchResults ? (
-            <p>Start typing to search</p>
+            <p>{t('start')}</p>
           ) : (
             <div className="overflow-y-scroll md:grid grid-cols-2 gap-3 mt-4 ">
               <div className="flex flex-col gap-2 p-4">
-                <h3 className="text-lg font-bold">Posts</h3>
-
                 {searchResults?.docs.length > 0 ? (
                   <Suspense fallback={<Loading />}>
                     <div className=" grid grid-cols-2">
@@ -74,7 +73,7 @@ export default function DialogSearchButton() {
                   </Suspense>
                 ) : (
                   //
-                  <p>No results</p>
+                  <p>{t('notfound')}</p>
                 )}
               </div>
             </div>

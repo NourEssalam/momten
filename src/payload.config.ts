@@ -11,7 +11,7 @@ import { Categories } from './collections/Categories'
 import { fr } from '@payloadcms/translations/languages/fr'
 import { ar } from '@payloadcms/translations/languages/ar'
 import { en } from '@payloadcms/translations/languages/en'
-import { arabicTranslation } from './i18n/arabicExtend'
+import { arabicTranslation } from './i18n/arabicPayloadExtend'
 import { plugins } from './plugins'
 import { Header } from './globals/Header/config'
 

@@ -1,7 +1,9 @@
-import Image from "next/image";
-import { buttonVariants } from "../ui/button";
-import Link from "next/link";
+import Image from 'next/image'
+import { buttonVariants } from '../ui/button'
+import { Link } from '@/i18n/routing'
+import { useTranslations } from 'next-intl'
 export default function Hero() {
+  const t = useTranslations('Hero')
   return (
     <section className="  bg-section w-full lg:h-[40rem] ">
       {/* content */}
@@ -12,33 +14,30 @@ export default function Hero() {
                    md:px-10
                    lg:items-start lg:text-left lg:mb-28"
         >
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl leading-6 mb-8">
-            The association of citizenship and sustainable development
-          </h1>
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl leading-6 mb-8">{t('title')}</h1>
           <p
             className="text-lg text-gray-700
                       sm:text-xl
                       lg:text-base"
           >
-            A nation dedicated to the principles of the Sustainable Development
-            Goals and a better future for the next generations.
+            {t('desc')}
           </p>
           <div className="flex gap-4 lg:gap-8 mt-10">
             <Link
-              href={"#sign-up"}
+              href={'#sign-up'}
               className={`${buttonVariants({
-                variant: "default",
+                variant: 'default',
               })} md:text-xl md:h-12 md:px-6`}
             >
-              Subscribe &darr;
+              {t('subscribeButton')} &darr;
             </Link>
             <Link
-              href={"/about"}
+              href={'/about'}
               className={`${buttonVariants({
-                variant: "secondary",
+                variant: 'secondary',
               })} md:text-xl md:h-12 md:px-6`}
             >
-              Learn More &darr;
+              {t('learnMoreButton')} &darr;
             </Link>
           </div>
         </div>
@@ -54,5 +53,5 @@ export default function Hero() {
         />
       </div>
     </section>
-  );
+  )
 }

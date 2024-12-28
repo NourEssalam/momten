@@ -97,7 +97,8 @@ export const Posts: CollectionConfig<'posts'> = {
       },
       hasMany: true,
       relationTo: 'users',
-      required: true,
+      // required: true,
+      defaultValue: 'momtan',
     },
     {
       name: 'populatedAuthors',
@@ -134,7 +135,7 @@ export const Posts: CollectionConfig<'posts'> = {
   ],
   hooks: {
     // afterChange: [revalidatePost],
-    afterRead: [populateAuthors],
+    // afterRead: [populateAuthors],
     // afterDelete: [revalidateDelete],
   },
   disableDuplicate: false,

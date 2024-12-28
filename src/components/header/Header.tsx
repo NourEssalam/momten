@@ -1,5 +1,5 @@
 'use client'
-import Link from 'next/link'
+import { Link } from '@/i18n/routing'
 import Image from 'next/image'
 
 import { mainMenu } from '@/lib/menus'
@@ -11,8 +11,11 @@ import { mainMenuType } from '@/lib/types/menu-types'
 
 import SwitchLanguage from '../shared-components/SwitchLanguage'
 import DialogSearchButton from '@/components/search/SearchDialogButton'
-
-export default function Header() {
+import HeaderNav from './headerNav'
+interface HeaderProps {
+  nav: { pageName: string; url: string; id?: string | null | undefined }[]
+}
+export default function Header({ nav }: HeaderProps) {
   const [open, setOpen] = useState(false)
   const [sticky, setSticky] = useState('initial')
 
@@ -68,25 +71,7 @@ export default function Header() {
         />
       </Link>
       {/* //desktop and big screen nav */}
-      <nav className="hidden lg:flex items-center gap-6 text-xs">
-        {mainMenu.map((menu: mainMenuType) => (
-          <Link
-            key={menu.name}
-            href={menu.href}
-            className="text-grey font-base text-lg capitalize transition-colors duration-300 inline-block
-           py-[1.2rem] hover:text-accent active:text-shade"
-          >
-            {menu.name}
-          </Link>
-        ))}
-        {/* cta */}
-        {/* <Link
-          href="/donation"
-          className="bg-primary/90 hover:bg-accent text-white uppercase font-base text-lg px-5 py-px border rounded-lg "
-        >
-          Donate
-        </Link>{" "} */}
-      </nav>
+      <HeaderNav nav={nav} />
       <div className="action hidden  lg:flex justify-between lg:w-24 gap-6 items-center">
         <DialogSearchButton />
 
