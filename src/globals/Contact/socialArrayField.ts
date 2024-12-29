@@ -27,5 +27,21 @@ export const SocialArrayField: Field = {
       type: 'text',
       required: true,
     },
+    {
+      name: 'icon',
+      type: 'text',
+      admin: {
+        disabled: true,
+        readOnly: true,
+      },
+    },
+    {
+      name: 'color',
+      type: 'text',
+      admin: {
+        disabled: true,
+        readOnly: true,
+      },
+    },
   ],
 }

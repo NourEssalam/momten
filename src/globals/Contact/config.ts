@@ -1,6 +1,6 @@
 import { GlobalConfig } from 'payload'
 import { SocialArrayField } from './socialArrayField'
-
+import { iconPlusColor } from './hooks/iconPlusColor'
 export const Contact: GlobalConfig = {
   slug: 'contact',
   label: {
@@ -58,4 +58,7 @@ export const Contact: GlobalConfig = {
       ],
     },
   ],
+  hooks: {
+    afterRead: [iconPlusColor],
+  },
 }

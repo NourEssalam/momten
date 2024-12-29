@@ -1,11 +1,10 @@
 import type { Metadata } from 'next'
 import { Rubik } from 'next/font/google'
 import './globals.css'
-import Header from '@/components/header/Header'
 import Footer from '@/components/shared-components/Footer'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import { routing } from '@/i18n/routing'
 import HeaderWrap from '@/components/header/headerWrap'
 
@@ -50,7 +49,7 @@ export default async function RootLayout({
         <NextIntlClientProvider messages={messages}>
           <HeaderWrap locale={locale} />
           {children}
-          <Footer />
+          <Footer locale={locale} />
         </NextIntlClientProvider>
       </body>
     </html>

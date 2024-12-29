@@ -419,6 +419,8 @@ export interface Contact {
   social: {
     name: string;
     url: string;
+    icon?: string | null;
+    color?: string | null;
     id?: string | null;
   }[];
   phones: {
@@ -478,6 +480,8 @@ export interface ContactSelect<T extends boolean = true> {
     | {
         name?: T;
         url?: T;
+        icon?: T;
+        color?: T;
         id?: T;
       };
   phones?:

@@ -46,7 +46,9 @@ export default function DialogSearchButton() {
       translate-x-[0%] translate-y-[0%]"
         >
           <DialogHeader className=" text-left mb-0 gap-2 space-x-0">
-            <DialogTitle className="text-2xl">{t('title')}</DialogTitle>
+            <DialogTitle dir="rtl" className="text-2xl">
+              {t('title')}
+            </DialogTitle>
             <Description></Description>
             <SearchForm />
           </DialogHeader>
