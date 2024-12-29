@@ -1,8 +1,17 @@
+import createNextIntlPlugin from 'next-intl/plugin'
 import { withPayload } from '@payloadcms/next/withPayload'
+
+// Create the Next.js configuration plugins
+const withNextIntl = createNextIntlPlugin()
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Your Next.js config here
+  experimental: {
+    reactCompiler: false, // Required for Payload compatibility
+  },
+  // Any other shared Next.js configurations
 }
 
-export default withPayload(nextConfig)
+// Wrap both plugins - order is flexible
+// export default withPayload(withNextIntl(nextConfig))
+export default withNextIntl(withPayload(nextConfig))

@@ -19,8 +19,9 @@ import { Textarea } from '@/components/ui/textarea'
 import { contactInfo, socials } from '@/lib/menus'
 import Link from 'next/link'
 import { contactInfoType } from '@/lib/types/menu-types'
-
+import { useTranslations } from 'next-intl'
 export default function Contact() {
+  const t = useTranslations('ContactPage')
   const form = useForm<z.infer<typeof contactSchema>>({
     resolver: zodResolver(contactSchema),
     defaultValues: {
@@ -33,11 +34,8 @@ export default function Contact() {
   return (
     <Container>
       <div className="flex flex-col mb-4">
-        <h1 className="text-4xl font-medium text-shade-strong leading-6 mb-8">Reach Out to Us</h1>
-        <p className="text-base max-w-xl  font-light text-secondary">
-          Have questions or ideas? Want to get involved? Contact us using the form below or connect
-          via email and social media. We&apos;re excited to hear from you!
-        </p>
+        <h1 className="text-4xl font-medium text-shade-strong leading-6 mb-8">{t('title')}</h1>
+        <p className="text-base max-w-xl  font-light text-secondary">{t('subTitle')}</p>
       </div>
       <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-5 lg:gap-10">
         <Form {...form}>
@@ -52,9 +50,9 @@ export default function Contact() {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>{t('form.name')}</FormLabel>
                   <FormControl>
-                    <Input type="text" placeholder="Enter your name" {...field} />
+                    <Input type="text" placeholder={t('form.namePlaceholder')} {...field} />
                   </FormControl>
 
                   <FormMessage />
@@ -66,9 +64,9 @@ export default function Contact() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>{t('form.email')}</FormLabel>
                   <FormControl>
-                    <Input type="email" placeholder="Enter your email" {...field} />
+                    <Input type="email" placeholder={t('form.emailPlaceholder')} {...field} />
                   </FormControl>
 
                   <FormMessage />
@@ -81,9 +79,13 @@ export default function Contact() {
               name="message"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Message</FormLabel>
+                  <FormLabel>{t('form.message')}</FormLabel>
                   <FormControl>
-                    <Textarea className="bg-white" placeholder="Enter your message" {...field} />
+                    <Textarea
+                      className="bg-white"
+                      placeholder={t('form.messagePlaceholder')}
+                      {...field}
+                    />
                   </FormControl>
 
                   <FormMessage />
@@ -92,7 +94,7 @@ export default function Contact() {
             />
 
             <Button type="submit" className="bg-[#2d234b] hover:bg-[#2d234b]/90">
-              Submit
+              {t('form.submit')}
             </Button>
           </form>
         </Form>

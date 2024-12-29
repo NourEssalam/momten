@@ -1,15 +1,15 @@
-import Container from '@/components/shared-components/Container'
 import config from '@payload-config'
+import { getPayload } from 'payload'
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import BackLink from '@/components/shared-components/BackLink'
-import { getPayload } from 'payload'
 import ShareMenu from '@/components/blog/ShareMenu'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import { formatDate } from '@/lib/formatDate'
 import { cache } from 'react'
 import PostCard from '@/components/blog/PostCard'
 import { Post } from '@/payload-types'
+import Container from '@/components/shared-components/Container'
 
 export default async function Page(props: { params: Promise<{ slug: string }> }) {
   const params = await props.params
@@ -39,10 +39,13 @@ export default async function Page(props: { params: Promise<{ slug: string }> })
             </time>
             <span>
               <em className="text-secondary">Written by:&nbsp;&nbsp;</em>
-              {Array.isArray(post.authors) &&
-                post.authors
-                  .map((author) => (typeof author === 'object' && author.name ? author.name : ''))
-                  .join(' and ')}
+              {post.authors && post.authors?.length > 0
+                ? post.authors
+                    .map((author) =>
+                      typeof author === 'object' && author.name ? author.name : author,
+                    )
+                    .join(' and ')
+                : 'momtan'}
             </span>
           </div>
           <div className="flex justify-end w-1/2">

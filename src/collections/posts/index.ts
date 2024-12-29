@@ -6,6 +6,18 @@ import type { Where } from 'payload'
 
 export const Posts: CollectionConfig<'posts'> = {
   slug: 'posts',
+  labels: {
+    singular: {
+      en: 'Article',
+      ar: 'مقالة',
+      fr: 'Article',
+    },
+    plural: {
+      en: 'Articles',
+      ar: 'مقالات',
+      fr: 'Articles',
+    },
+  },
   admin: {
     useAsTitle: 'title',
   },
@@ -85,7 +97,8 @@ export const Posts: CollectionConfig<'posts'> = {
       },
       hasMany: true,
       relationTo: 'users',
-      required: true,
+      // required: true,
+      defaultValue: 'momtan',
     },
     {
       name: 'populatedAuthors',
@@ -122,7 +135,7 @@ export const Posts: CollectionConfig<'posts'> = {
   ],
   hooks: {
     // afterChange: [revalidatePost],
-    afterRead: [populateAuthors],
+    // afterRead: [populateAuthors],
     // afterDelete: [revalidateDelete],
   },
   disableDuplicate: false,

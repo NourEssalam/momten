@@ -43,10 +43,13 @@ export default function PostCard({ title, image, publishedAt, authors, slug }: P
           </time>
           <span>
             <em className="text-secondary">Written by:</em>&nbsp;
-            {Array.isArray(authors) &&
-              authors
-                .map((author) => (typeof author === 'object' && author.name ? author.name : ''))
-                .join(' and ')}
+            {authors && authors?.length > 0
+              ? authors
+                  .map((author) =>
+                    typeof author === 'object' && author.name ? author.name : author,
+                  )
+                  .join(' and ')
+              : 'momtan'}
           </span>
         </div>
       </div>

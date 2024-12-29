@@ -5,8 +5,9 @@ import { Input } from '../ui/input'
 
 import { useRouter } from 'next/navigation'
 import { useDebounce } from 'use-debounce'
-
+import { useTranslations } from 'next-intl'
 export default function SearchForm() {
+  const t = useTranslations('Search')
   const [search, setSearch] = useState('')
   const [query] = useDebounce(search, 500)
   const router = useRouter()
@@ -23,7 +24,7 @@ export default function SearchForm() {
         <Input
           type="search"
           id="search"
-          placeholder="Search for anything..."
+          placeholder={t('placeholder')}
           className="md:w-1/2"
           onChange={(e) => setSearch(e.target.value)}
         />

@@ -9,7 +9,18 @@ const dirname = path.dirname(filename)
 
 export const Media: CollectionConfig = {
   slug: 'media',
-
+  labels: {
+    singular: {
+      en: 'Media',
+      ar: 'وسائط',
+      fr: 'Média',
+    },
+    plural: {
+      en: 'Media',
+      ar: 'وسائط',
+      fr: 'Média',
+    },
+  },
   fields: [
     { name: 'alt', type: 'text', required: true },
     {
