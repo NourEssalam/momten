@@ -14,6 +14,8 @@ import { en } from '@payloadcms/translations/languages/en'
 import { arabicTranslation } from './i18n/arabicPayloadExtend'
 import { plugins } from './plugins'
 import { Header } from './globals/Header/config'
+import { Footer } from './globals/Footer/config'
+import { Contact } from './globals/Contact/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -26,7 +28,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Posts, Categories],
-  globals: [Header],
+  globals: [Header, Footer, Contact],
   i18n: {
     supportedLanguages: { en, fr, ar },
     translations: {
@@ -44,10 +46,10 @@ export default buildConfig({
         code: 'ar',
         rtl: true,
       },
-      {
-        label: 'French',
-        code: 'fr',
-      },
+      // {
+      //   label: 'French',
+      //   code: 'fr',
+      // },
     ],
     defaultLocale: 'en', // required
     fallback: true, // defaults to true

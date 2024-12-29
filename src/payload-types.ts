@@ -36,11 +36,15 @@ export interface Config {
   };
   globals: {
     header: Header;
+    footer: Footer;
+    contact: Contact;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
+    contact: ContactSelect<false> | ContactSelect<true>;
   };
-  locale: 'en' | 'ar' | 'fr';
+  locale: 'en' | 'ar';
   user: User & {
     collection: 'users';
   };
@@ -388,6 +392,46 @@ export interface Header {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: string;
+  quicklinkcolumns?:
+    | {
+        column: string;
+        links: {
+          pageName: string;
+          url: string;
+          id?: string | null;
+        }[];
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact".
+ */
+export interface Contact {
+  id: string;
+  social: {
+    name: string;
+    url: string;
+    id?: string | null;
+  }[];
+  phones: {
+    phone: number;
+    id?: string | null;
+  }[];
+  email: string;
+  address: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -398,6 +442,52 @@ export interface HeaderSelect<T extends boolean = true> {
         url?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  quicklinkcolumns?:
+    | T
+    | {
+        column?: T;
+        links?:
+          | T
+          | {
+              pageName?: T;
+              url?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact_select".
+ */
+export interface ContactSelect<T extends boolean = true> {
+  social?:
+    | T
+    | {
+        name?: T;
+        url?: T;
+        id?: T;
+      };
+  phones?:
+    | T
+    | {
+        phone?: T;
+        id?: T;
+      };
+  email?: T;
+  address?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
