@@ -47,5 +47,19 @@
     "title": "Copyright",
     "desc": "All rights reserved",
     "by Momtan": "By Momtan"
+  },
+
+  "ContactPage": {
+    "title": "Reach Out to Us",
+    "subTitle": "Have questions or ideas? Want to get involved? Contact us using the form below or connect via email and social media. We're excited to hear from you!",
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "Enter your name",
+      "email": "Email",
+      "emailPlaceholder": "Enter your email",
+      "message": "Message",
+      "messagePlaceholder": "Enter your message",
+      "submit": "Submit"
+    }
   }
 }
