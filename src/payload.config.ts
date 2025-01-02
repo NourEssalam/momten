@@ -6,8 +6,7 @@ import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 import { Users } from './collections/Users'
 import { Media } from './collections/media'
-import { Posts } from './collections/posts'
-import { Categories } from './collections/Categories'
+
 import { fr } from '@payloadcms/translations/languages/fr'
 import { ar } from '@payloadcms/translations/languages/ar'
 import { en } from '@payloadcms/translations/languages/en'
@@ -16,6 +15,12 @@ import { plugins } from './plugins'
 import { Header } from './globals/Header/config'
 import { Footer } from './globals/Footer/config'
 import { Contact } from './globals/Contact/config'
+import { AboutGlobal } from './globals/about-global/config'
+import { AboutPages } from './collections/about-pages'
+import { Team } from './collections/team'
+import { Tag } from './collections/Tags'
+import { Posts } from './collections/posts'
+import { Partner } from './globals/partners/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -27,8 +32,8 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Posts, Categories],
-  globals: [Header, Footer, Contact],
+  collections: [Users, Media, AboutPages, Team, Tag, Posts],
+  globals: [Header, Footer, Contact, AboutGlobal, Partner],
   i18n: {
     supportedLanguages: { en, fr, ar },
     translations: {
@@ -46,13 +51,9 @@ export default buildConfig({
         code: 'ar',
         rtl: true,
       },
-      // {
-      //   label: 'French',
-      //   code: 'fr',
-      // },
     ],
     defaultLocale: 'en', // required
-    fallback: true, // defaults to true
+    // fallback: true, // defaults to true
   },
 
   editor: lexicalEditor({}),

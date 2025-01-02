@@ -3,9 +3,9 @@ import { Rubik } from 'next/font/google'
 import './globals.css'
 import Footer from '@/components/shared-components/Footer'
 import { NextIntlClientProvider } from 'next-intl'
-import { getMessages } from 'next-intl/server'
-import { notFound, redirect } from 'next/navigation'
-import { routing } from '@/i18n/routing'
+import { getMessages, setRequestLocale } from 'next-intl/server'
+import { notFound } from 'next/navigation'
+import { Language, routing } from '@/i18n/routing'
 import HeaderWrap from '@/components/header/headerWrap'
 
 export const metadata: Metadata = {
@@ -25,13 +25,14 @@ export default async function RootLayout({
   params,
 }: {
   children: React.ReactNode
-  params: Promise<{ locale: string }>
+  params: Promise<{ locale: Language }>
 }) {
   // Ensure that the incoming `locale` is valid
   const resolvedParams = await params
   const { locale } = resolvedParams
+  // setRequestLocale(locale)
 
-  if (!routing.locales.includes(locale as 'en' | 'ar')) {
+  if (!routing.locales.includes(locale)) {
     notFound()
   }
   // Providing all messages to the client

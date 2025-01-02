@@ -1,20 +1,21 @@
 import Image from 'next/image'
 import { buttonVariants } from '../ui/button'
-import { Link } from '@/i18n/routing'
+import { Language, Link } from '@/i18n/routing'
 import { useTranslations } from 'next-intl'
-export default function Hero() {
+export default function Hero({ locale }: { locale: Language }) {
   const t = useTranslations('Hero')
   return (
     <section className="  bg-section w-full lg:h-[40rem] ">
       {/* content */}
       <div className="container flex flex-col  lg:flex-row  lg:gap-20  gap-10 items-center  justify-center ">
         <div
-          className="flex flex-col items-center justify-center text-center  
+          className={`flex flex-col items-center justify-center  
                    text-secondary font-medium sm:font-bold  -tracking-tight
                    md:px-10
-                   lg:items-start lg:text-left lg:mb-28"
+                   lg:items-start text-center lg:mb-28 
+                   ${locale === 'ar' ? 'lg:text-right' : 'lg:text-left'}`}
         >
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl leading-6 mb-8">{t('title')}</h1>
+          <h1 className={`text-2xl sm:text-3xl lg:text-4xl leading-6 mb-8 `}>{t('title')}</h1>
           <p
             className="text-lg text-gray-700
                       sm:text-xl

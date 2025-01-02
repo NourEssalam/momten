@@ -61,5 +61,14 @@
       "messagePlaceholder": "Enter your message",
       "submit": "Submit"
     }
+  },
+
+  "Team": {
+    "title": "Meet Our Team",
+    "desc": "Our team is made up of passionate individuals dedicated to making a positive impact in our community. With diverse skills and backgrounds, we work together to drive change and support the mission of our organization."
+  },
+
+  "BackLinks": {
+    "blog": "back to blog"
   }
 }

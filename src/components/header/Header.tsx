@@ -1,5 +1,5 @@
 'use client'
-import { Link } from '@/i18n/routing'
+import { Language, Link } from '@/i18n/routing'
 import Image from 'next/image'
 
 import { mainMenu } from '@/lib/menus'
@@ -12,10 +12,12 @@ import { mainMenuType } from '@/lib/types/menu-types'
 import SwitchLanguage from '../shared-components/SwitchLanguage'
 import DialogSearchButton from '@/components/search/SearchDialogButton'
 import HeaderNav from './headerNav'
-interface HeaderProps {
-  nav: { pageName: string; url: string; id?: string | null | undefined }[]
-}
-export default function Header({ nav }: HeaderProps) {
+// interface HeaderProps {
+//   nav: { pageName: string; url: string; id?: string | null | undefined }[]
+// }
+import type { Header } from '@/payload-types'
+
+export default function Header({ headerObj, locale }: { headerObj: Header; locale: Language }) {
   const [open, setOpen] = useState(false)
   const [sticky, setSticky] = useState('initial')
 
@@ -71,16 +73,16 @@ export default function Header({ nav }: HeaderProps) {
         />
       </Link>
       {/* //desktop and big screen nav */}
-      <HeaderNav nav={nav} />
+      <HeaderNav headerObj={headerObj} />
       <div className="action hidden  lg:flex justify-between lg:w-24 gap-6 items-center">
-        <DialogSearchButton />
+        <DialogSearchButton locale={locale} />
 
         <SwitchLanguage />
       </div>
 
       {/* nav actions */}
       <div className="action lg:hidden   flex justify-between lg:w-24 gap-6 items-center">
-        <DialogSearchButton />
+        <DialogSearchButton locale={locale} />
 
         <SwitchLanguage />
         <div className="open-close relative  flex items-center justify-center">

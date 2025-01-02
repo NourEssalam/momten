@@ -1,19 +1,18 @@
 import { EXPERIMENTAL_TableFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 import type { CollectionConfig } from 'payload'
-import { populateAuthors } from './hooks/populatedAuthors'
 import { slugField } from '@/fields/slug'
 import type { Where } from 'payload'
 
-export const Posts: CollectionConfig<'posts'> = {
+export const Posts: CollectionConfig = {
   slug: 'posts',
   labels: {
     singular: {
-      en: 'Article',
+      en: 'Post',
       ar: 'مقالة',
       fr: 'Article',
     },
     plural: {
-      en: 'Articles',
+      en: 'Posts',
       ar: 'مقالات',
       fr: 'Articles',
     },
@@ -26,6 +25,7 @@ export const Posts: CollectionConfig<'posts'> = {
       name: 'title',
       type: 'text',
       required: true,
+      localized: true,
     },
     {
       name: 'image',
@@ -44,20 +44,21 @@ export const Posts: CollectionConfig<'posts'> = {
           and: [
             { id: { not_in: [id] } },
             {
-              categories: { in: data.categories },
+              tag: { in: data.tag },
             },
           ],
         }
 
         return query
       },
-
+      localized: true,
       hasMany: true,
       relationTo: 'posts',
     },
     {
       name: 'content',
       type: 'richText',
+      localized: true,
       required: true,
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
@@ -72,21 +73,21 @@ export const Posts: CollectionConfig<'posts'> = {
       admin: {
         date: {
           pickerAppearance: 'dayOnly',
-          displayFormat: 'd MMMM y',
+          displayFormat: 'dd MMMM yyyy',
+          // minDate: new Date(),
         },
         position: 'sidebar',
       },
-      hooks: {
-        beforeChange: [
-          // ({ value }) => formatDate(value),
-          ({ siblingData, value }) => {
-            if (siblingData._status === 'published' && !value) {
-              return new Date()
-            }
-            return value
-          },
-        ],
-      },
+      // hooks: {
+      //   beforeChange: [
+      //     ({ siblingData, value }) => {
+      //       if (siblingData._status === 'published' && !value) {
+      //         return new Date()
+      //       }
+      //       return value
+      //     },
+      //   ],
+      // },
       required: true,
     },
     {
@@ -122,14 +123,15 @@ export const Posts: CollectionConfig<'posts'> = {
       ],
     },
     {
-      name: 'categories',
+      name: 'tag',
       type: 'relationship',
       admin: {
         position: 'sidebar',
       },
       hasMany: true,
-      relationTo: 'categories',
-      required: true,
+      relationTo: 'tag',
+      // required: true,
+      localized: true,
     },
     ...slugField(),
   ],

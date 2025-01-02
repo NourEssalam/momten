@@ -6,10 +6,9 @@ import { Plugin } from 'payload'
 
 export const plugins: Plugin[] = [
   searchPlugin({
-    collections: ['posts', 'categories'],
+    collections: ['posts'],
     defaultPriorities: {
       posts: 20,
-      categories: 10,
     },
     beforeSync: beforeSyncWithSearch,
     searchOverrides: {

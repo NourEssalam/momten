@@ -17,7 +17,9 @@ import { useEffect, useState } from 'react'
 import { PaginatedDocs } from 'payload'
 import Loading from './loading'
 import { useTranslations } from 'next-intl'
-export default function DialogSearchButton() {
+import { Language } from '@/i18n/routing'
+
+export default function DialogSearchButton({ locale }: { locale: Language }) {
   const t = useTranslations('Search')
   const searchParams = useSearchParams()
   const [searchResults, setSearchResults] = useState<PaginatedDocs | null>(null)
@@ -26,12 +28,12 @@ export default function DialogSearchButton() {
   useEffect(() => {
     const searchResults = async () => {
       if (!search) return setSearchResults(null)
-      const results: PaginatedDocs = await getSearchResults(search || '')
+      const results: PaginatedDocs = await getSearchResults(search || '', locale)
 
       setSearchResults(results)
     }
     searchResults()
-  }, [search])
+  }, [search, locale])
 
   return (
     <>
