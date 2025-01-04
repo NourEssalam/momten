@@ -12,7 +12,6 @@ type ContainerProps = {
 
 export default function Container({
   children,
-  id,
   variant = 'default',
   className,
   innerClassName,

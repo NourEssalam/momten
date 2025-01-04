@@ -1,4 +1,4 @@
-import Categories from '@/components/blog/Categories'
+import Category from '@/components/blog/Categories'
 import PostCard from '@/components/blog/PostCard'
 import Container from '@/components/shared-components/Container'
 import { Metadata } from 'next'
@@ -15,6 +15,7 @@ import {
   PaginationEllipsis,
   PaginationNext,
 } from '@/components/ui/pagination'
+import { Language } from '@/i18n/routing'
 
 // export const dynamic = 'force-static'
 export const revalidate = 0
@@ -26,21 +27,23 @@ export function generateMetadata(): Metadata {
 }
 
 export default async function Page({
+  params,
   searchParams,
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+  params: Promise<{ locale: Language }>
 }) {
   const searchParamsObj = await searchParams
-
+  const { locale } = await params
   const title = searchParamsObj.title
   const page = typeof searchParamsObj.page === 'string' ? Number(searchParamsObj.page) : 1
 
-  const categories = await getCategories()
-  const catObj = categories.map((cat) => ({ id: cat.id, title: cat.title }))
+  const category = await getcategory({ locale })
+  const catObj = category.map((cat) => ({ id: cat.id, title: cat.title }))
   const findIdByTitle = catObj.find((cat) => cat.title === title)
 
   const activeCategoryId = findIdByTitle ? findIdByTitle.id : 'All'
-  const posts = await getPosts(activeCategoryId, page)
+  const posts = await getPosts(activeCategoryId, page, { locale })
   const postDocs = posts.docs || []
   const totalPages = posts.totalPages
 
@@ -50,7 +53,7 @@ export default async function Page({
     <>
       <Container className="mt-0 grid grid-cols-1 xl:grid-cols-[40%_60%] gap-10">
         <div className="flex flex-col ">
-          <h1 className="text-4xl font-medium text-shade-strong leading-6 mb-8">Blog</h1>
+          {/* <h1 className="text-4xl font-medium text-shade-strong leading-6 mb-8">Blog</h1>
           <p
             className="text-lg xl:text-xl font-base text-gray-900
           sm:text-lg
@@ -58,9 +61,9 @@ export default async function Page({
           >
             Stay Informed on the Latest Initiatives, Success Stories, and Thought Leadership in
             Sustainability and Active Citizenship
-          </p>
+          </p> */}
         </div>
-        <Categories result={categories} />
+        <Category result={category} />
       </Container>
 
       {/* Blog posts */}
@@ -77,10 +80,11 @@ export default async function Page({
                 version: 0,
               },
             }}
-            categories={[]}
+            tag={[]}
             createdAt={''}
             updatedAt={''}
             key={post.id}
+            locale={locale}
             {...post}
           />
         ))}
@@ -144,7 +148,7 @@ export default async function Page({
   )
 }
 
-const getPosts = async (catId: string, page: number) => {
+const getPosts = async (catId: string, page: number, { locale }: { locale: Language }) => {
   const payload = await getPayload({ config })
   if (catId === 'All') {
     const posts = await payload.find({
@@ -158,6 +162,8 @@ const getPosts = async (catId: string, page: number) => {
         authors: true,
         slug: true,
       },
+      locale: locale,
+      fallbackLocale: false,
       page: page,
     })
     return posts
@@ -167,7 +173,7 @@ const getPosts = async (catId: string, page: number) => {
       depth: 1,
       limit: 9,
       where: {
-        categories: {
+        tag: {
           equals: catId,
         },
       },
@@ -179,18 +185,22 @@ const getPosts = async (catId: string, page: number) => {
         slug: true,
       },
       page: page,
+      locale: locale,
+      fallbackLocale: false,
     })
 
     return posts
   }
 }
 
-const getCategories = cache(async () => {
+const getcategory = cache(async ({ locale }: { locale: Language }) => {
   const payload = await getPayload({ config })
-  const categories = await payload.find({
-    collection: 'categories',
+  const tags = await payload.find({
+    collection: 'tag',
     depth: 1,
-    limit: 5,
+    pagination: false,
+    locale: locale,
+    fallbackLocale: false,
   })
-  return categories.docs || null
+  return tags.docs || null
 })

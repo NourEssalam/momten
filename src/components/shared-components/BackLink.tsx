@@ -1,20 +1,18 @@
 'use client'
 import { cn } from '@/lib/cn'
 
-import { usePathname } from 'next/navigation'
-import Link from 'next/link'
+import { Link } from '@/i18n/routing'
 import { ArrowLeft } from 'lucide-react'
-
+import { useTranslations } from 'next-intl'
 export default function BackLink({ className = '' }: { className?: string }) {
-  const pathname = usePathname()
-  const parentPath = pathname.split('/')[1]
+  const t = useTranslations('BackLinks')
   return (
-    <Link href={`/${parentPath}`} className={cn(className)}>
+    <Link href={`/blog`} className={cn(className)}>
       {/* Back */}
       <div className=" flex gap-2  ">
         <ArrowLeft />
         <span className=" translate-x-0 hover:translate-x-2 transition-all duration-700">
-          {`Back to ${parentPath}`}
+          {t('blog')}
         </span>
       </div>
     </Link>

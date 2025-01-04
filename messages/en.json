@@ -2,8 +2,8 @@
   "Hero": {
     "title": "The association of citizenship and sustainable development",
     "desc": "A nation dedicated to the principles of the Sustainable Development Goals and a better future for the next generations.",
-    "subscribeButton": "Subscribe ↓",
-    "learnMoreButton": "Learn More ↓"
+    "subscribeButton": "Subscribe",
+    "learnMoreButton": "Learn More"
   },
   "Partner": {
     "title": "Trusted by"
@@ -61,5 +61,14 @@
       "messagePlaceholder": "Enter your message",
       "submit": "Submit"
     }
+  },
+
+  "Team": {
+    "title": "Meet Our Team",
+    "desc": "Our team is made up of passionate individuals dedicated to making a positive impact in our community. With diverse skills and backgrounds, we work together to drive change and support the mission of our organization."
+  },
+
+  "BackLinks": {
+    "blog": "back to blog"
   }
 }

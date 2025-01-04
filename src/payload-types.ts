@@ -13,8 +13,10 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    'about-pages': AboutPage;
+    team: Team;
+    tag: Tag;
     posts: Post;
-    categories: Category;
     'search-results': SearchResult;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -24,8 +26,10 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    'about-pages': AboutPagesSelect<false> | AboutPagesSelect<true>;
+    team: TeamSelect<false> | TeamSelect<true>;
+    tag: TagSelect<false> | TagSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
-    categories: CategoriesSelect<false> | CategoriesSelect<true>;
     'search-results': SearchResultsSelect<false> | SearchResultsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -36,11 +40,19 @@ export interface Config {
   };
   globals: {
     header: Header;
+    footer: Footer;
+    contact: Contact;
+    'about-global': AboutGlobal;
+    partner: Partner;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
+    contact: ContactSelect<false> | ContactSelect<true>;
+    'about-global': AboutGlobalSelect<false> | AboutGlobalSelect<true>;
+    partner: PartnerSelect<false> | PartnerSelect<true>;
   };
-  locale: 'en' | 'ar' | 'fr';
+  locale: 'en' | 'ar';
   user: User & {
     collection: 'users';
   };
@@ -121,6 +133,67 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about-pages".
+ */
+export interface AboutPage {
+  id: string;
+  title: string;
+  slug: string;
+  accordions: {
+    title: string;
+    content: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    id?: string | null;
+  }[];
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "team".
+ */
+export interface Team {
+  id: string;
+  name: string;
+  position: string;
+  image: string | Media;
+  socials?:
+    | {
+        name: string;
+        url: string;
+        icon?: string | null;
+        color?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tag".
+ */
+export interface Tag {
+  id: string;
+  title: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts".
  */
 export interface Post {
@@ -151,19 +224,9 @@ export interface Post {
         name?: string | null;
       }[]
     | null;
-  categories: (string | Category)[];
+  tag?: (string | Tag)[] | null;
   slug?: string | null;
   slugLock?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "categories".
- */
-export interface Category {
-  id: string;
-  title: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -177,15 +240,10 @@ export interface SearchResult {
   id: string;
   title?: string | null;
   priority?: number | null;
-  doc:
-    | {
-        relationTo: 'posts';
-        value: string | Post;
-      }
-    | {
-        relationTo: 'categories';
-        value: string | Category;
-      };
+  doc: {
+    relationTo: 'posts';
+    value: string | Post;
+  };
   slug?: string | null;
   image?: (string | null) | Media;
   updatedAt: string;
@@ -207,12 +265,20 @@ export interface PayloadLockedDocument {
         value: string | Media;
       } | null)
     | ({
-        relationTo: 'posts';
-        value: string | Post;
+        relationTo: 'about-pages';
+        value: string | AboutPage;
       } | null)
     | ({
-        relationTo: 'categories';
-        value: string | Category;
+        relationTo: 'team';
+        value: string | Team;
+      } | null)
+    | ({
+        relationTo: 'tag';
+        value: string | Tag;
+      } | null)
+    | ({
+        relationTo: 'posts';
+        value: string | Post;
       } | null)
     | ({
         relationTo: 'search-results';
@@ -297,6 +363,52 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about-pages_select".
+ */
+export interface AboutPagesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  accordions?:
+    | T
+    | {
+        title?: T;
+        content?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "team_select".
+ */
+export interface TeamSelect<T extends boolean = true> {
+  name?: T;
+  position?: T;
+  image?: T;
+  socials?:
+    | T
+    | {
+        name?: T;
+        url?: T;
+        icon?: T;
+        color?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tag_select".
+ */
+export interface TagSelect<T extends boolean = true> {
+  title?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
@@ -312,18 +424,9 @@ export interface PostsSelect<T extends boolean = true> {
         id?: T;
         name?: T;
       };
-  categories?: T;
+  tag?: T;
   slug?: T;
   slugLock?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "categories_select".
- */
-export interface CategoriesSelect<T extends boolean = true> {
-  title?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -388,6 +491,82 @@ export interface Header {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: string;
+  quicklinkcolumns?:
+    | {
+        column: string;
+        links: {
+          pageName: string;
+          url: string;
+          id?: string | null;
+        }[];
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact".
+ */
+export interface Contact {
+  id: string;
+  social: {
+    name: string;
+    url: string;
+    icon?: string | null;
+    color?: string | null;
+    id?: string | null;
+  }[];
+  phones: {
+    phone: number;
+    id?: string | null;
+  }[];
+  email: string;
+  address: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about-global".
+ */
+export interface AboutGlobal {
+  id: string;
+  about: {
+    title: string;
+    description: string;
+    image: string | Media;
+    links: {
+      title: string;
+      link: string;
+      id?: string | null;
+    }[];
+    id?: string | null;
+  }[];
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "partner".
+ */
+export interface Partner {
+  id: string;
+  items: {
+    logo: string | Media;
+    url: string;
+    id?: string | null;
+  }[];
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -395,6 +574,94 @@ export interface HeaderSelect<T extends boolean = true> {
     | T
     | {
         pageName?: T;
+        url?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  quicklinkcolumns?:
+    | T
+    | {
+        column?: T;
+        links?:
+          | T
+          | {
+              pageName?: T;
+              url?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact_select".
+ */
+export interface ContactSelect<T extends boolean = true> {
+  social?:
+    | T
+    | {
+        name?: T;
+        url?: T;
+        icon?: T;
+        color?: T;
+        id?: T;
+      };
+  phones?:
+    | T
+    | {
+        phone?: T;
+        id?: T;
+      };
+  email?: T;
+  address?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about-global_select".
+ */
+export interface AboutGlobalSelect<T extends boolean = true> {
+  about?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        links?:
+          | T
+          | {
+              title?: T;
+              link?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "partner_select".
+ */
+export interface PartnerSelect<T extends boolean = true> {
+  items?:
+    | T
+    | {
+        logo?: T;
         url?: T;
         id?: T;
       };

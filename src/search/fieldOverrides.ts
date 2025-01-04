@@ -13,6 +13,7 @@ export const searchFields: Field[] = [
       ar: 'الرابط',
       fr: 'Lien',
     },
+    localized: true,
   },
   {
     name: 'image',

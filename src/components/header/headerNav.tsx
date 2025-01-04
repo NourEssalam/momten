@@ -1,10 +1,13 @@
 'use client'
 import { Link } from '@/i18n/routing'
 
-interface HeaderProps {
-  nav: { pageName: string; url: string; id?: string | null | undefined }[]
-}
-export default function HeaderNav({ nav }: HeaderProps) {
+// interface HeaderProps {
+//   nav: { pageName: string; url: string; id?: string | null | undefined }[]
+// }
+import { Header } from '@/payload-types'
+
+export default function HeaderNav({ headerObj }: { headerObj: Header }) {
+  const nav = headerObj.items
   return (
     <nav className="hidden lg:flex items-center gap-6 text-xs">
       {nav.map((item) => (
