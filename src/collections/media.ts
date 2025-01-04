@@ -36,7 +36,7 @@ export const Media: CollectionConfig = {
   upload: {
     staticDir: path.resolve(dirname, '../../public/media'),
     adminThumbnail: 'thumbnail',
-    mimeTypes: ['image/jpeg', 'image/png', 'image/webp', 'video/*'],
+    mimeTypes: ['image/jpeg', 'image/png', 'image/jpg', 'image/gif', 'video/*'],
     focalPoint: true,
     // imageSizes: [
     //   {

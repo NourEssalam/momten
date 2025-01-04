@@ -1,21 +1,19 @@
-import config from '@payload-config'
-import { getPayload } from 'payload'
-import type { Metadata } from 'next'
+import { Post } from '@/payload-types'
+import PostCard from '@/components/blog/PostCard'
+import Container from '@/components/shared-components/Container'
+import { Language } from '@/i18n/routing'
+import { formatDate } from '@/lib/formatDate'
 import Image from 'next/image'
 import BackLink from '@/components/shared-components/BackLink'
 import ShareMenu from '@/components/blog/ShareMenu'
 import { RichText } from '@payloadcms/richtext-lexical/react'
-
-import { cache } from 'react'
-import PostCard from '@/components/blog/PostCard'
-import { Post } from '@/payload-types'
-import Container from '@/components/shared-components/Container'
-import { Language } from '@/i18n/routing'
-import { formatDate } from '@/lib/formatDate'
+import { queryPostBySlug } from './page'
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 export default async function PostFeed({ slug, locale }: { slug: string; locale: Language }) {
-  // const { slug, locale } = await props.params
+  await delay(2500) // 2.5 seconds delay
   const post = await queryPostBySlug({ slug, locale })
+
   const relatedPosts = post?.relatedPosts || []
 
   if (!post) {
@@ -50,8 +48,22 @@ export default async function PostFeed({ slug, locale }: { slug: string; locale:
                 : 'momtan'}
             </span>
           </div>
-          <div className="flex justify-end w-1/2">
-            <ShareMenu />
+          <div className="rounded  gap-4 flex items-center justify-between">
+            {post.tag && post.tag?.length > 0
+              ? post.tag.map((tag) =>
+                  typeof tag === 'object' ? (
+                    <div
+                      key={tag.id}
+                      className="text-secondary  rounded p-1 bg-gray-200 hover:bg-gray-300"
+                    >{`#${tag.title.split(' ').join('_')}`}</div>
+                  ) : (
+                    ''
+                  ),
+                )
+              : 'No tags'}
+          </div>
+          <div className="flex justify-end ">
+            <ShareMenu excerpt={post.excerpt as string} tags={post?.tag} locale={locale} />
           </div>
         </div>
         <div className="relative w-full h-96  overflow-hidden  rounded-3xl">
@@ -81,54 +93,3 @@ export default async function PostFeed({ slug, locale }: { slug: string; locale:
     </section>
   )
 }
-
-export async function generateMetadata(props: {
-  params: Promise<{ slug: string; locale: Language }>
-}): Promise<Metadata> {
-  const { slug, locale } = await props.params
-  const post = await queryPostBySlug({ slug, locale })
-  return {
-    title: post?.title,
-  }
-}
-
-export async function generateStaticParams(props: { params: Promise<{ locale: Language }> }) {
-  const { locale } = await props.params
-  const payload = await getPayload({ config })
-  const posts = await payload.find({
-    collection: 'posts',
-    limit: 1000,
-    locale: locale,
-    pagination: false,
-    // overrideAccess: false,
-    select: {
-      slug: true,
-    },
-  })
-
-  const params = posts.docs.map(({ slug }) => {
-    return locale === 'ar' ? decodeURIComponent(slug ?? '') : { slug }
-  })
-
-  return params
-}
-
-const queryPostBySlug = cache(async ({ slug, locale }: { slug: string; locale: Language }) => {
-  const payload = await getPayload({ config })
-  // if (locale === 'ar') {
-  //   const decodedSlug = decodeURIComponent(slug)
-  // }
-  const result = await payload.find({
-    collection: 'posts',
-    limit: 1,
-    locale: locale,
-    pagination: false,
-    where: {
-      slug: {
-        equals: locale === 'ar' ? decodeURIComponent(slug) : slug,
-      },
-    },
-  })
-
-  return result.docs?.[0] || null
-})
