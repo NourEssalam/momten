@@ -1,3 +1,4 @@
+'use client'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,8 +9,31 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { CiShare1 } from 'react-icons/ci'
+import { usePathname } from 'next/navigation'
 
-export default function ShareMenu() {
+import { Tag } from '@/payload-types'
+import { Language } from '@/i18n/routing'
+
+import { EmailShareButton, FacebookShareButton } from 'react-share'
+
+export default function ShareMenu({
+  excerpt,
+  tags,
+  locale,
+}: {
+  excerpt: string
+  tags: (string | Tag)[] | undefined | null
+  locale: Language
+}) {
+  const pathname = usePathname()
+  // CHANGE THE BASE url LATER
+  const baseUrl = 'https://50ab-197-238-145-248.ngrok-free.app'
+  const postLink = `${baseUrl}${pathname}`
+  const tagsString = tags?.map((tag) => {
+    if (typeof tag === 'object') {
+      return '#' + tag.title.split(' ').join('_')
+    }
+  })
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="flex gap-2">
@@ -22,7 +46,9 @@ export default function ShareMenu() {
         <DropdownMenuLabel>Share To Social Media</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>Facebook </DropdownMenuItem>
+          <DropdownMenuItem>
+            <FacebookShareButton url={postLink}>Facebook</FacebookShareButton>
+          </DropdownMenuItem>
           <DropdownMenuItem>Twitter</DropdownMenuItem>
           <DropdownMenuItem>Instagram </DropdownMenuItem>
           <DropdownMenuItem>LinkedIn</DropdownMenuItem>

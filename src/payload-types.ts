@@ -227,6 +227,7 @@ export interface Post {
   tag?: (string | Tag)[] | null;
   slug?: string | null;
   slugLock?: boolean | null;
+  excerpt?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -427,6 +428,7 @@ export interface PostsSelect<T extends boolean = true> {
   tag?: T;
   slug?: T;
   slugLock?: T;
+  excerpt?: T;
   updatedAt?: T;
   createdAt?: T;
 }

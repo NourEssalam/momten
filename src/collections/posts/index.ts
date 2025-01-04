@@ -2,6 +2,7 @@ import { EXPERIMENTAL_TableFeature, lexicalEditor } from '@payloadcms/richtext-l
 import type { CollectionConfig } from 'payload'
 import { slugField } from '@/fields/slug'
 import type { Where } from 'payload'
+import { dynamicExcerpt } from './hooks/dynamicExcerpt'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -61,8 +62,8 @@ export const Posts: CollectionConfig = {
       localized: true,
       required: true,
       editor: lexicalEditor({
-        features: ({ rootFeatures }) => {
-          return [...rootFeatures, EXPERIMENTAL_TableFeature()]
+        features: ({ defaultFeatures }) => {
+          return [...defaultFeatures, EXPERIMENTAL_TableFeature()]
         },
       }),
     },
@@ -134,10 +135,14 @@ export const Posts: CollectionConfig = {
       localized: true,
     },
     ...slugField(),
+    {
+      name: 'excerpt',
+      type: 'textarea',
+    },
   ],
   hooks: {
     // afterChange: [revalidatePost],
-    // afterRead: [populateAuthors],
+    afterRead: [dynamicExcerpt],
     // afterDelete: [revalidateDelete],
   },
   disableDuplicate: false,
