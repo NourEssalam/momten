@@ -14,7 +14,7 @@ export default function PartnerItems({ partners }: { partners: PartenrItemsProps
   const t = useTranslations('Partner')
   return (
     <Container>
-      <h1 className="text-sm text-center font-medium uppercase tracking-widest mb-10 text-gray-500">
+      <h1 className="text-xl text-center font-medium uppercase tracking-widest mb-10 text-gray-500">
         {t('title')}
       </h1>
 
