@@ -19,11 +19,12 @@ export default function PartnerItems({ partners }: { partners: PartenrItemsProps
       </h1>
 
       <div
-        className="w-full sm:w-3/4 py-8 flex gap-4 items-center justify-start overflow-hidden relative
+        dir="ltr"
+        className="w-full sm:w-3/4 py-8 flex gap-8 items-center justify-start overflow-hidden relative
        [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-200px),transparent_100%)]"
       >
         {/* First List */}
-        <div className="flex gap-8 items-center animate-infinite-scroll ">
+        <div className="flex gap-8 items-center animate-infinite-scroll">
           {partners.map((item, index) => (
             <Link
               target="_blank"
