@@ -1,8 +1,7 @@
-import { infoIntroType } from '@/lib/types/global-types'
 import Image from 'next/image'
 import { Language, Link } from '@/i18n/routing'
 import { Button } from '../ui/button'
-import { AboutGlobal, Media } from '@/payload-types'
+import { Media } from '@/payload-types'
 
 type aboutType = {
   title: string
@@ -26,14 +25,16 @@ export default function Zpattern({
   locale: Language
 }) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-20 ">
-      <div className={`${index % 2 === 0 ? ' md:order-last' : ''} max-w-sm`}>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-20  bg-white">
+      <div
+        className={`${index % 2 === 0 ? ' md:order-last' : ''}  flex justify-center items-center `}
+      >
         <Image
           src={item.image?.url || ''}
           alt={item.image.alt}
           width={1000}
           height={1000}
-          className=" w-full h-full object-fit rounded-3xl "
+          className=" w-full h-2/3 object-fit rounded-3xl "
         />
       </div>
       <div

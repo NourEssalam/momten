@@ -1,6 +1,10 @@
 import type { CollectionAfterReadHook } from 'payload'
 
 export const dynamicExcerpt: CollectionAfterReadHook = async ({ doc }) => {
+  if (!doc?.content) {
+    return
+  }
+
   if (doc?.content) {
     const rootChildren = doc.content.root.children
 
