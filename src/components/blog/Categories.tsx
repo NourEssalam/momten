@@ -1,13 +1,13 @@
 'use client'
-import type { Category } from '@/payload-types'
+import type { Tag } from '@/payload-types'
 import { useCategoryStore } from '@/state-store/category-store'
 import { useEffect } from 'react'
 
 import { useRouter } from 'next/navigation'
 
-export default function Category({ result }: { result: Category[] }) {
+export default function Category({ result }: { result: Tag[] }) {
   // fetch category
-  const category = result.map((cat: Category) => cat.title)
+  const category = result.map((cat: Tag) => cat.title)
   category.unshift('All')
   // handle states
   const setCategory = useCategoryStore((state) => state.setCategory)
@@ -20,8 +20,8 @@ export default function Category({ result }: { result: Category[] }) {
 
   return (
     <div className="flex flex-col">
-      <h1 className="text-xl font-medium text-shade-strong leading-6 mb-8 capitalize">category</h1>
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+      {/* <h1 className="text-xl font-medium text-shade-strong leading-6 mb-8 capitalize">category</h1> */}
+      <div className="flex lg:flex-col gap-4">
         {category.map((cat) => (
           <button
             key={cat}

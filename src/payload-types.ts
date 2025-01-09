@@ -17,6 +17,7 @@ export interface Config {
     team: Team;
     tag: Tag;
     posts: Post;
+    'about-tag': AboutTag;
     'search-results': SearchResult;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -30,6 +31,7 @@ export interface Config {
     team: TeamSelect<false> | TeamSelect<true>;
     tag: TagSelect<false> | TagSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
+    'about-tag': AboutTagSelect<false> | AboutTagSelect<true>;
     'search-results': SearchResultsSelect<false> | SearchResultsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -139,6 +141,8 @@ export interface AboutPage {
   id: string;
   title: string;
   slug: string;
+  tag: (string | AboutTag)[];
+  publishedAt?: string | null;
   accordions: {
     title: string;
     content: {
@@ -158,6 +162,16 @@ export interface AboutPage {
     };
     id?: string | null;
   }[];
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about-tag".
+ */
+export interface AboutTag {
+  id: string;
+  title: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -282,6 +296,10 @@ export interface PayloadLockedDocument {
         value: string | Post;
       } | null)
     | ({
+        relationTo: 'about-tag';
+        value: string | AboutTag;
+      } | null)
+    | ({
         relationTo: 'search-results';
         value: string | SearchResult;
       } | null);
@@ -369,6 +387,8 @@ export interface MediaSelect<T extends boolean = true> {
 export interface AboutPagesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  tag?: T;
+  publishedAt?: T;
   accordions?:
     | T
     | {
@@ -429,6 +449,15 @@ export interface PostsSelect<T extends boolean = true> {
   slug?: T;
   slugLock?: T;
   excerpt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about-tag_select".
+ */
+export interface AboutTagSelect<T extends boolean = true> {
+  title?: T;
   updatedAt?: T;
   createdAt?: T;
 }

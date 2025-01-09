@@ -35,8 +35,39 @@ export const AboutPages: CollectionConfig = {
     {
       name: 'slug',
       type: 'text',
+      admin: {
+        position: 'sidebar',
+      },
       required: true,
       unique: true,
+    },
+    {
+      name: 'tag',
+      type: 'relationship',
+      admin: {
+        position: 'sidebar',
+      },
+      hasMany: true,
+      relationTo: 'about-tag',
+      required: true,
+      localized: true,
+    },
+    {
+      name: 'publishedAt',
+      type: 'date',
+      admin: {
+        position: 'sidebar',
+      },
+      hooks: {
+        beforeChange: [
+          ({ value, operation }) => {
+            if (operation === 'create' || operation === 'update') {
+              return new Date()
+            }
+            return value
+          },
+        ],
+      },
     },
 
     {
@@ -62,6 +93,7 @@ export const AboutPages: CollectionConfig = {
           required: true,
           localized: true,
         },
+
         {
           name: 'content',
           type: 'richText',

@@ -51,43 +51,33 @@ export default async function Page({
 
   return (
     <>
-      <Container className="mt-0 grid grid-cols-1 xl:grid-cols-[40%_60%] gap-10">
-        <div className="flex flex-col ">
-          {/* <h1 className="text-4xl font-medium text-shade-strong leading-6 mb-8">Blog</h1>
-          <p
-            className="text-lg xl:text-xl font-base text-gray-900
-          sm:text-lg
-          "
-          >
-            Stay Informed on the Latest Initiatives, Success Stories, and Thought Leadership in
-            Sustainability and Active Citizenship
-          </p> */}
-        </div>
-        <Category result={category} />
-      </Container>
-
       {/* Blog posts */}
-      <Container className="mt-0 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  xl:gap-10">
-        {postDocs.map((post) => (
-          <PostCard
-            content={{
-              root: {
-                type: '',
-                children: [],
-                direction: 'ltr',
-                format: '',
-                indent: 0,
-                version: 0,
-              },
-            }}
-            tag={[]}
-            createdAt={''}
-            updatedAt={''}
-            key={post.id}
-            locale={locale}
-            {...post}
-          />
-        ))}
+      <Container>
+        <div className="grid lg:grid-cols-[1fr_3fr]" dir="ltr">
+          <Category result={category} />
+          <div className="mt-0 grid grid-cols-1 sm:grid-cols-2 justify-center   xl:gap-10">
+            {postDocs.map((post) => (
+              <PostCard
+                content={{
+                  root: {
+                    type: '',
+                    children: [],
+                    direction: 'ltr',
+                    format: '',
+                    indent: 0,
+                    version: 0,
+                  },
+                }}
+                tag={[]}
+                createdAt={''}
+                updatedAt={''}
+                key={post.id}
+                locale={locale}
+                {...post}
+              />
+            ))}
+          </div>
+        </div>
       </Container>
       {totalPages > 1 && (
         <Container>

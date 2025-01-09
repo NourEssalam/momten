@@ -21,6 +21,7 @@ import { Team } from './collections/team'
 import { Tag } from './collections/Tags'
 import { Posts } from './collections/posts'
 import { Partner } from './globals/partners/config'
+import { AboutTag } from './collections/about-pages/about-tags'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -32,7 +33,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, AboutPages, Team, Tag, Posts],
+  collections: [Users, Media, AboutPages, Team, Tag, Posts, AboutTag],
   globals: [Header, Footer, Contact, AboutGlobal, Partner],
   i18n: {
     supportedLanguages: { en, fr, ar },

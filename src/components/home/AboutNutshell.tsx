@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import { Link } from '@/i18n/routing'
 import { buttonVariants } from '@/components/ui/button'
 import Container from '../shared-components/Container'
 import { useTranslations } from 'next-intl'
@@ -18,22 +18,14 @@ export default function AboutNutshell() {
       >
         {t('desc')}
       </p>
-      <div className="flex gap-4 lg:gap-8 mt-10">
+      <div className=" mt-10">
         <Link
-          href={'/about/mission'}
+          href={'/about/'}
           className={`${buttonVariants({
             variant: 'default',
           })} md:text-xl md:h-12 md:px-6`}
         >
-          {t('ourMission')}
-        </Link>
-        <Link
-          href={'/about#team'}
-          className={`${buttonVariants({
-            variant: 'secondary',
-          })} md:text-xl md:h-12 md:px-6`}
-        >
-          {t('ourteam')} &darr;
+          {t('ReadMore')}
         </Link>
       </div>
     </Container>

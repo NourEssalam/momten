@@ -87,6 +87,10 @@ const config: Config = {
         'inset-focus': ' 0 0 4px 2px rgba(255, 255, 255,1 )',
       },
       keyframes: {
+        background: {
+          '0%, 100%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+        },
         'accordion-down': {
           from: {
             height: '0',
@@ -109,6 +113,7 @@ const config: Config = {
         },
       },
       animation: {
+        border: 'background ease infinite',
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         'infinite-scroll': 'infinite-scroll 50s linear infinite',
