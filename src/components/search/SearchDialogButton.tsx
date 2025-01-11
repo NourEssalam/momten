@@ -44,7 +44,7 @@ export default function DialogSearchButton({ locale }: { locale: Language }) {
           </span>
         </DialogTrigger>
         <DialogContent
-          className=" gap-0 max-w-[640px] inset-0 p-4 mx-auto md:my-10  bg-white left-[0%] top-[0%] 
+          className=" gap-0 max-w-[640px] inset-0 p-4 z-900 mx-auto md:my-10  bg-white left-[0%] top-[0%] 
       translate-x-[0%] translate-y-[0%]"
         >
           <DialogHeader className=" text-left mb-0 gap-2 space-x-0">

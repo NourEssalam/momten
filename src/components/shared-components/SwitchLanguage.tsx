@@ -65,12 +65,20 @@ export default function SwitchLanguage() {
           />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-48 mr-10">
-        <DropdownMenuLabel>{t('choose')}</DropdownMenuLabel>
+      <DropdownMenuContent className="w-48 mr-10 z-100 lg:mx-2 justify-center items-center">
+        {/* <DropdownMenuLabel>{t('choose')}</DropdownMenuLabel> */}
         <DropdownMenuSeparator />
-        <DropdownMenuRadioGroup value={position} onValueChange={handleLanguageChange}>
-          <DropdownMenuRadioItem value="ar">{t('arabic')}</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="en">{t('english')}</DropdownMenuRadioItem>
+        <DropdownMenuRadioGroup
+          value={position}
+          onValueChange={handleLanguageChange}
+          className="items-center justify-center"
+        >
+          <DropdownMenuRadioItem className="items-center justify-center" value="ar">
+            {t('arabic')}
+          </DropdownMenuRadioItem>
+          <DropdownMenuRadioItem className="items-center justify-center" value="en">
+            {t('english')}
+          </DropdownMenuRadioItem>
         </DropdownMenuRadioGroup>
       </DropdownMenuContent>
     </DropdownMenu>

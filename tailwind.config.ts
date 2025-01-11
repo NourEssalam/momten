@@ -118,6 +118,12 @@ const config: Config = {
         'accordion-up': 'accordion-up 0.2s ease-out',
         'infinite-scroll': 'infinite-scroll 50s linear infinite',
       },
+
+      zIndex: {
+        '60': '60',
+        '100': '100',
+        '900': '900',
+      },
     },
   },
   // eslint-disable-next-line @typescript-eslint/no-require-imports

@@ -51,34 +51,33 @@ export default async function Page({
 
   return (
     <>
-      {/* Blog posts */}
-      <Container>
-        <div className="grid lg:grid-cols-[1fr_3fr]" dir="ltr">
-          <Category result={category} />
-          <div className="mt-0 grid grid-cols-1 sm:grid-cols-2 justify-center   xl:gap-10">
-            {postDocs.map((post) => (
-              <PostCard
-                content={{
-                  root: {
-                    type: '',
-                    children: [],
-                    direction: 'ltr',
-                    format: '',
-                    indent: 0,
-                    version: 0,
-                  },
-                }}
-                tag={[]}
-                createdAt={''}
-                updatedAt={''}
-                key={post.id}
-                locale={locale}
-                {...post}
-              />
-            ))}
-          </div>
-        </div>
-      </Container>
+      <section className="h-full">
+        {/* Blog posts */}
+        <Category result={category} locale={locale} />{' '}
+        {/* Don't remove this div because Container don't have dir */}
+        <Container className="mt-0 grid gap-4 grid-cols-1 sm:gap-10 sm:grid-cols-2 xl:grid-cols-3 justify-items-center  ">
+          {postDocs.map((post) => (
+            <PostCard
+              content={{
+                root: {
+                  type: '',
+                  children: [],
+                  direction: 'ltr',
+                  format: '',
+                  indent: 0,
+                  version: 0,
+                },
+              }}
+              tag={[]}
+              createdAt={''}
+              updatedAt={''}
+              key={post.id}
+              locale={locale}
+              {...post}
+            />
+          ))}
+        </Container>
+      </section>
       {totalPages > 1 && (
         <Container>
           <Pagination>
@@ -144,18 +143,20 @@ const getPosts = async (catId: string, page: number, { locale }: { locale: Langu
     const posts = await payload.find({
       collection: 'posts',
       depth: 1,
-      limit: 9,
+      limit: 10,
       select: {
         title: true,
         image: true,
         publishedAt: true,
         authors: true,
         slug: true,
+        excerpt: true,
       },
       locale: locale,
       fallbackLocale: false,
       page: page,
     })
+    // console.log('post 1 ', posts.docs[0])
     return posts
   } else {
     const posts = await payload.find({
@@ -173,6 +174,7 @@ const getPosts = async (catId: string, page: number, { locale }: { locale: Langu
         publishedAt: true,
         authors: true,
         slug: true,
+        excerpt: true,
       },
       page: page,
       locale: locale,

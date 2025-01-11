@@ -69,5 +69,13 @@
 
   "BackLinks": {
     "blog": "back to blog"
+  },
+  "PostCard": {
+    "writtenBy": "By",
+    "readMore": "Read More",
+    "and": "and"
+  },
+  "Blog": {
+    "all": "All"
   }
 }
