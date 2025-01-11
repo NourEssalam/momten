@@ -6,16 +6,9 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { cache } from 'react'
 
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationPrevious,
-  PaginationLink,
-  PaginationEllipsis,
-  PaginationNext,
-} from '@/components/ui/pagination'
 import { Language } from '@/i18n/routing'
+import BlogPagination from './blog-pagination'
+import NoResult from '@/components/shared-components/no-result'
 
 // export const dynamic = 'force-static'
 export const revalidate = 0
@@ -47,91 +40,41 @@ export default async function Page({
   const postDocs = posts.docs || []
   const totalPages = posts.totalPages
 
-  const iterableTotalPages = [page - 1, page, page + 1]
-
   return (
     <>
       <section className="h-full">
         {/* Blog posts */}
-        <Category result={category} locale={locale} />{' '}
+        <Category result={category} locale={locale} />
         {/* Don't remove this div because Container don't have dir */}
-        <Container className="mt-0 grid gap-4 grid-cols-1 sm:gap-10 sm:grid-cols-2 xl:grid-cols-3 justify-items-center  ">
-          {postDocs.map((post) => (
-            <PostCard
-              content={{
-                root: {
-                  type: '',
-                  children: [],
-                  direction: 'ltr',
-                  format: '',
-                  indent: 0,
-                  version: 0,
-                },
-              }}
-              tag={[]}
-              createdAt={''}
-              updatedAt={''}
-              key={post.id}
-              locale={locale}
-              {...post}
-            />
-          ))}
-        </Container>
+        {postDocs.length > 0 ? (
+          <Container className="mt-0 grid gap-4 grid-cols-1 sm:gap-10 sm:grid-cols-2 xl:grid-cols-3 justify-items-center  ">
+            {postDocs.map((post) => (
+              <PostCard
+                content={{
+                  root: {
+                    type: '',
+                    children: [],
+                    direction: 'ltr',
+                    format: '',
+                    indent: 0,
+                    version: 0,
+                  },
+                }}
+                tag={[]}
+                createdAt={''}
+                updatedAt={''}
+                key={post.id}
+                locale={locale}
+                {...post}
+              />
+            ))}
+          </Container>
+        ) : (
+          <NoResult backLink={true} />
+        )}
       </section>
       {totalPages > 1 && (
-        <Container>
-          <Pagination>
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious
-                  href={{
-                    pathname: '/blog',
-                    query: { ...(title ? { title } : {}), page: page > 1 ? page - 1 : 1 },
-                  }}
-                  className={`${page === 1 ? 'pointer-events-none opacity-50' : ''}`}
-                />
-              </PaginationItem>
-              {iterableTotalPages.map(
-                (item) =>
-                  item > 0 &&
-                  item <= totalPages && (
-                    <PaginationItem key={item}>
-                      <PaginationLink
-                        href={{
-                          pathname: '/blog',
-                          query: {
-                            ...(title ? { title } : {}),
-                            page: item === 1 ? page - 1 : item,
-                          },
-                        }}
-                        className={`${page === item ? 'bg-primary text-white' : ''}`}
-                      >
-                        {item}
-                      </PaginationLink>
-                    </PaginationItem>
-                  ),
-              )}
-
-              {posts.totalPages - page > 2 && (
-                <PaginationItem>
-                  <PaginationEllipsis />
-                </PaginationItem>
-              )}
-              <PaginationItem>
-                <PaginationNext
-                  href={{
-                    pathname: '/blog',
-                    query: {
-                      ...(title ? { title } : {}),
-                      page: page < totalPages ? page + 1 : page,
-                    },
-                  }}
-                  className={`${page === totalPages ? 'pointer-events-none opacity-50' : ''}`}
-                />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
-        </Container>
+        <BlogPagination title={title} page={page} totalPages={posts.totalPages} locale={locale} />
       )}
     </>
   )

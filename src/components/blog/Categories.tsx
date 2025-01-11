@@ -2,6 +2,7 @@
 import type { Tag } from '@/payload-types'
 import { useCategoryStore } from '@/state-store/category-store'
 import { useEffect, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import {
   Carousel,
   CarouselContent,
@@ -13,6 +14,7 @@ import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import Container from '../shared-components/Container'
 import { Language } from '@/i18n/routing'
+import { set } from 'lodash'
 
 export default function Category({ result, locale }: { result: Tag[]; locale: Language }) {
   const t = useTranslations('Blog')
@@ -22,8 +24,15 @@ export default function Category({ result, locale }: { result: Tag[]; locale: La
   // handle states
   const setCategory = useCategoryStore((state) => state.setCategory)
   const activeCategory = useCategoryStore((state) => state.category)
-
+  const title = useSearchParams().get('title')
   const router = useRouter()
+
+  // if (!title) setCategory('All')
+
+  useEffect(() => {
+    if (!title) setCategory('All')
+  }, [title])
+
   useEffect(() => {
     router.push(`?title=${activeCategory}`)
   }, [activeCategory, router])
@@ -57,7 +66,7 @@ export default function Category({ result, locale }: { result: Tag[]; locale: La
           isVisible ? 'translate-y-0' : '-translate-y-full'
         }`}
     >
-      <Carousel dir={locale === 'ar' ? 'rtl' : 'ltr'} className="w-full lg:w-[90%] ">
+      <Carousel dir="ltr" className="w-full lg:w-[90%] ">
         <CarouselContent className="flex -ml-1">
           {category.map((cat, index) => (
             <CarouselItem

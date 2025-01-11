@@ -7,6 +7,7 @@ import { getMessages, setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { Language, routing } from '@/i18n/routing'
 import HeaderWrap from '@/components/header/headerWrap'
+import pick from 'lodash/pick'
 
 export const metadata: Metadata = {
   title: 'Momtan Next App',
@@ -47,7 +48,7 @@ export default async function RootLayout({
           className="absolute left-0 right-0 top-0 -z-10 m-auto h-full w-full 
         rounded-full bg-fuchsia-200 opacity-30 blur-[100px]"
         ></div>
-        <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider locale={locale} messages={messages}>
           <HeaderWrap locale={locale} />
           {children}
           <Footer locale={locale} />

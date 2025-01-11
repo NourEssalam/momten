@@ -68,7 +68,8 @@
   },
 
   "BackLinks": {
-    "blog": "back to blog"
+    "blog": "back to the blog page",
+    "about": "back to the about page"
   },
   "PostCard": {
     "writtenBy": "By",
@@ -77,5 +78,15 @@
   },
   "Blog": {
     "all": "All"
+  },
+
+  "Error": {
+    "error": "Something went wrong",
+    "no-result": "No Results was found",
+    "NotFoundPage": "Page Not Found"
+  },
+  "NextPrev": {
+    "next": "Next",
+    "prev": "Previous"
   }
 }

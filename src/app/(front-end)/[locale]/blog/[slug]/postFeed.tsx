@@ -8,6 +8,7 @@ import BackLink from '@/components/shared-components/BackLink'
 import ShareMenu from '@/components/blog/ShareMenu'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import { queryPostBySlug } from './page'
+import NoResult from '@/components/shared-components/no-result'
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 export default async function PostFeed({ slug, locale }: { slug: string; locale: Language }) {
@@ -16,18 +17,14 @@ export default async function PostFeed({ slug, locale }: { slug: string; locale:
 
   const relatedPosts = post?.relatedPosts || []
 
-  if (!post) {
-    return <p>Post not found</p>
-  }
-
   type PostImage = Exclude<typeof post.image, string> // Removes string from the union type
 
   const mediaImage = post.image as PostImage // Explicitly cast
 
-  return (
+  return post ? (
     <section className="flex flex-col gap-2 xl:gap-10 justify-center items-center">
       <Container className="flex flex-col gap-10 mb-0 pb-0 max-w-[1150px]">
-        <BackLink />
+        <BackLink toPage="blog" />
         <h1 className="text-4xl text-secondary  font-medium sm:text-5xl lg:text-7xl   ">
           {post.title}
         </h1>
@@ -91,5 +88,7 @@ export default async function PostFeed({ slug, locale }: { slug: string; locale:
             .map((post) => <PostCard locale={locale} key={post.id} {...post} />)}
       </Container>
     </section>
+  ) : (
+    <NoResult backLink={true} />
   )
 }

@@ -71,7 +71,7 @@ export default function Header({ headerObj, locale }: { headerObj: Header; local
         />
       </Link>
       {/* //desktop and big screen nav */}
-      <HeaderNav headerObj={headerObj} />
+      <HeaderNav headerObj={headerObj} className="hidden lg:flex items-center gap-6  text-lg" />
       {`${sticky === 'set' ? '   ' : ''}`}
       <div className="action hidden  lg:flex justify-between lg:w-24 gap-6 items-center">
         <DialogSearchButton locale={locale} />
@@ -109,28 +109,11 @@ export default function Header({ headerObj, locale }: { headerObj: Header; local
            ${open ? 'translate-x-0' : 'translate-x-full'}
         `}
       >
-        <div className="flex flex-col items-center justify-center   w-full h-[90%] overflow-scroll">
-          {mainMenu.map((menu: mainMenuType) => (
-            <Link
-              key={menu.name}
-              href={menu.href}
-              className="text-grey font-medium text-xl capitalize transition-colors duration-300 
-           py-[1.2rem] hover:text-shade active:text-shade"
-              onClick={() => setOpen(!open)}
-            >
-              {menu.name}
-            </Link>
-          ))}
-          {/* <Button asChild>
-            <Link
-              href="/donation"
-              //     className="bg-primary/90 hover:bg-primary hover:transform hover:scale-[1.05] text-white uppercase
-              //  font-medium text-xl px-5 py-px border rounded-lg "
-            >
-              Donate
-            </Link>
-          </Button> */}
-        </div>
+        <HeaderNav
+          headerObj={headerObj}
+          setOpen={setOpen}
+          className="flex flex-col items-center gap-6  text-lg font-medium"
+        />
       </nav>
     </header>
   )
