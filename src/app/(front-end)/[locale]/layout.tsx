@@ -41,13 +41,14 @@ export default async function RootLayout({
   const messages = await getMessages()
   return (
     <html lang="ar" dir={`${locale === 'ar' ? 'rtl' : 'ltr'}`}>
-      <body
+      {/* <body
         className={`${rubik.className} antialiased inset-0 relative bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]`}
-      >
-        <div
+      > */}
+      <body className={`${rubik.className}`}>
+        {/* <div
           className="absolute left-0 right-0 top-0 -z-10 m-auto h-full w-full 
         rounded-full bg-fuchsia-200 opacity-30 blur-[100px]"
-        ></div>
+        ></div> */}
         <NextIntlClientProvider locale={locale} messages={messages}>
           <HeaderWrap locale={locale} />
           {children}

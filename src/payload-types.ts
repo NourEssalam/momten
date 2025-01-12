@@ -214,6 +214,7 @@ export interface Post {
   id: string;
   title: string;
   image: string | Media;
+  excerpt?: string | null;
   relatedPosts?: (string | Post)[] | null;
   content: {
     root: {
@@ -241,7 +242,6 @@ export interface Post {
   tag?: (string | Tag)[] | null;
   slug?: string | null;
   slugLock?: boolean | null;
-  excerpt?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -435,6 +435,7 @@ export interface TagSelect<T extends boolean = true> {
 export interface PostsSelect<T extends boolean = true> {
   title?: T;
   image?: T;
+  excerpt?: T;
   relatedPosts?: T;
   content?: T;
   publishedAt?: T;
@@ -448,7 +449,6 @@ export interface PostsSelect<T extends boolean = true> {
   tag?: T;
   slug?: T;
   slugLock?: T;
-  excerpt?: T;
   updatedAt?: T;
   createdAt?: T;
 }

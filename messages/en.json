@@ -77,7 +77,8 @@
     "and": "and"
   },
   "Blog": {
-    "all": "All"
+    "all": "All",
+    "share": "Share"
   },
 
   "Error": {

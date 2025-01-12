@@ -35,6 +35,14 @@ export const Posts: CollectionConfig = {
       required: true,
     },
     {
+      name: 'excerpt',
+      type: 'textarea',
+      localized: true,
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
       name: 'relatedPosts',
       type: 'relationship',
       admin: {
@@ -135,11 +143,6 @@ export const Posts: CollectionConfig = {
       localized: true,
     },
     ...slugField(),
-    {
-      name: 'excerpt',
-      type: 'textarea',
-      localized: true,
-    },
   ],
   hooks: {
     // afterChange: [revalidatePost],

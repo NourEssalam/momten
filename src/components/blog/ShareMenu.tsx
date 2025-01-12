@@ -15,7 +15,7 @@ import { Tag } from '@/payload-types'
 import { Language } from '@/i18n/routing'
 
 import { EmailShareButton, FacebookShareButton } from 'react-share'
-
+import { useTranslations } from 'next-intl'
 export default function ShareMenu({
   excerpt,
   tags,
@@ -25,6 +25,7 @@ export default function ShareMenu({
   tags: (string | Tag)[] | undefined | null
   locale: Language
 }) {
+  const t = useTranslations('Blog')
   const pathname = usePathname()
   // CHANGE THE BASE url LATER
   const baseUrl = 'https://50ab-197-238-145-248.ngrok-free.app'
@@ -38,7 +39,7 @@ export default function ShareMenu({
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="flex gap-2">
         <span className="flex gap-2 items-center underline cursor-pointer">
-          Share :
+          {t('share')}
           <CiShare1 className=" text-black font-bold stroke-[0.5] w-5 text-xl cursor-pointer" />
         </span>
       </DropdownMenuTrigger>
