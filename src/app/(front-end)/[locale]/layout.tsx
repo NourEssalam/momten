@@ -3,11 +3,10 @@ import { Rubik } from 'next/font/google'
 import './globals.css'
 import Footer from '@/components/shared-components/Footer'
 import { NextIntlClientProvider } from 'next-intl'
-import { getMessages, setRequestLocale } from 'next-intl/server'
+import { getMessages } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { Language, routing } from '@/i18n/routing'
 import HeaderWrap from '@/components/header/headerWrap'
-import pick from 'lodash/pick'
 
 export const metadata: Metadata = {
   title: 'Momtan Next App',
