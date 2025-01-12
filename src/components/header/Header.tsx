@@ -71,7 +71,11 @@ export default function Header({ headerObj, locale }: { headerObj: Header; local
         />
       </Link>
       {/* //desktop and big screen nav */}
-      <HeaderNav headerObj={headerObj} className="hidden lg:flex items-center gap-6  text-lg" />
+      <HeaderNav
+        headerObj={headerObj}
+        className="hidden lg:flex items-center gap-6  text-lg"
+        locale={locale}
+      />
       {`${sticky === 'set' ? '   ' : ''}`}
       <div className="action hidden  lg:flex justify-between lg:w-24 gap-6 items-center">
         <DialogSearchButton locale={locale} />
@@ -113,6 +117,7 @@ export default function Header({ headerObj, locale }: { headerObj: Header; local
           headerObj={headerObj}
           setOpen={setOpen}
           className="flex flex-col items-center gap-6  text-lg font-medium"
+          locale={locale}
         />
       </nav>
     </header>
