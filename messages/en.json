@@ -78,7 +78,8 @@
   },
   "Blog": {
     "all": "All",
-    "share": "Share"
+    "share": "Share",
+    "relatedPosts": "Related Posts"
   },
 
   "Error": {

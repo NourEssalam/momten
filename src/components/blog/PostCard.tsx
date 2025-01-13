@@ -25,7 +25,8 @@ export default function PostCard({
     title && (
       <Link
         href={`/blog/${slug}/`}
-        className="grid grid-cols-1 grid-rows-[128px_1fr] md:grid-rows-[192px_1fr]  bg-white border max-w-sm  border-gray-200 rounded-2xl overflow-hidden "
+        className="grid grid-cols-1 grid-rows-[128px_1fr] md:grid-rows-[192px_1fr]  bg-white border max-h-sm max-w-sm min-w-[300px]
+         md:min-w-[350px]  border-gray-200 rounded-2xl overflow-hidden "
         onMouseEnter={() => setOnHover(true)}
         onMouseLeave={() => setOnHover(false)}
       >
@@ -36,7 +37,9 @@ export default function PostCard({
             width={500}
             height={500}
             className={`w-full h-full object-cover absolute inset-0  ${
-              onHover ? 'scale-105 transition-all duration-300' : 'transition-all duration-300'
+              onHover
+                ? 'scale-105 transition-all duration-300'
+                : 'transition-all duration-300'
             }`}
           />
         </div>
@@ -48,15 +51,21 @@ export default function PostCard({
           >
             {title}
           </h3>
-          <p className="text-gray-600 overflow-hidden w-[95%] text-sm">{excerpt}</p>
+          <p className="text-gray-600 overflow-hidden w-[95%] text-sm">
+            {excerpt}
+          </p>
           <div className="flex flex-col items-start gap-2 text-sm justify-self-end">
-            <time dateTime={publishedAt}>{formatDate(publishedAt, locale)}</time>
+            <time dateTime={publishedAt}>
+              {formatDate(publishedAt, locale)}
+            </time>
             <span>
               <em>{t('writtenBy')} :</em>&nbsp;
               {authors && authors?.length > 0
                 ? authors
                     .map((author) =>
-                      typeof author === 'object' && author.name ? author.name : author,
+                      typeof author === 'object' && author.name
+                        ? author.name
+                        : author,
                     )
                     .join(` ${and} `)
                 : 'momtan'}

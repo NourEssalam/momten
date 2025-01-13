@@ -11,6 +11,7 @@ import { queryPostBySlug } from './page'
 import NoResult from '@/components/shared-components/no-result'
 
 import Authors from './metaInfo'
+import RelatedPosts from './relatedPosts'
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -75,7 +76,7 @@ export default async function PostFeed({
           <RichText data={post.content} />
         </article>
         <div
-          className="rounded  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-[250px] 
+          className="rounded  grid grid-cols-auto md:grid-cols-2 lg:grid-cols-3 max-w-[250px] 
           md:max-w-full gap-4  items-center justify-between"
         >
           {post.tag && post.tag?.length > 0
@@ -92,15 +93,7 @@ export default async function PostFeed({
             : 'No tags'}
         </div>
       </Container>
-      <Container className="mt-0 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 xl:gap-10">
-        {relatedPosts &&
-          relatedPosts.length > 0 &&
-          relatedPosts
-            .filter((post): post is Post => typeof post !== 'string') // Type guard
-            .map((post) => (
-              <PostCard locale={locale} key={post.id} {...post} />
-            ))}
-      </Container>
+      <RelatedPosts relatedPosts={relatedPosts} locale={locale} />
     </section>
   ) : (
     <NoResult backLink={true} />
