@@ -18,6 +18,7 @@ import { PaginatedDocs } from 'payload'
 import Loading from './loading'
 import { useTranslations } from 'next-intl'
 import { Language } from '@/i18n/routing'
+import { GiArchiveResearch } from 'react-icons/gi'
 
 export default function DialogSearchButton({ locale }: { locale: Language }) {
   const t = useTranslations('Search')
@@ -28,7 +29,10 @@ export default function DialogSearchButton({ locale }: { locale: Language }) {
   useEffect(() => {
     const searchResults = async () => {
       if (!search) return setSearchResults(null)
-      const results: PaginatedDocs = await getSearchResults(search || '', locale)
+      const results: PaginatedDocs = await getSearchResults(
+        search || '',
+        locale,
+      )
 
       setSearchResults(results)
     }
@@ -44,11 +48,11 @@ export default function DialogSearchButton({ locale }: { locale: Language }) {
           </span>
         </DialogTrigger>
         <DialogContent
-          className=" gap-0 max-w-[640px] inset-0 p-4 z-900 mx-auto md:my-10  bg-white left-[0%] top-[0%] 
+          className="  gap-0 max-w-[640px] max-h-[640px] inset-0 p-4 z-900 mx-auto md:my-10  bg-white left-[0%] top-[0%] 
       translate-x-[0%] translate-y-[0%]"
         >
-          <DialogHeader className=" text-left mb-0 gap-2 space-x-0">
-            <DialogTitle dir="rtl" className="text-2xl">
+          <DialogHeader className=" mb-0 gap-2 space-x-0">
+            <DialogTitle className="text-2xl  text-center">
               {t('title')}
             </DialogTitle>
             <Description></Description>
@@ -57,29 +61,32 @@ export default function DialogSearchButton({ locale }: { locale: Language }) {
 
           {/* Results */}
           {!searchResults ? (
-            <p>{t('start')}</p>
+            <div className="h-[400px] flex flex-col items-center justify-center gap-4  m-4">
+              <GiArchiveResearch size={100} />
+              <p className="text-2xl">{t('start')}...</p>
+            </div>
           ) : (
-            <div className="overflow-y-scroll md:grid grid-cols-2 gap-3 mt-4 ">
-              <div className="flex flex-col gap-2 p-4">
-                {searchResults?.docs.length > 0 ? (
-                  <Suspense fallback={<Loading />}>
-                    <div className=" grid grid-cols-2">
-                      {searchResults?.docs.map((item) => (
-                        <SearchResultElement
-                          key={item.id}
-                          title={item.title}
-                          image={item.image}
-                          slug={item.slug}
-                          {...item}
-                        />
-                      ))}
-                    </div>
-                  </Suspense>
-                ) : (
-                  //
-                  <p>{t('notfound')}</p>
-                )}
-              </div>
+            <div className="  mt-4 h-[90%] pb-4">
+              {searchResults?.docs.length > 0 ? (
+                <div
+                  className=" h-[400px] flex flex-col gap-1 scrollbar-thumb-rounded-full 
+                             scrollbar-track-rounded-full scrollbar scrollbar-thumb-slate-700
+                              scrollbar-track-slate-300 overflow-y-scroll"
+                >
+                  {searchResults?.docs.map((item) => (
+                    <SearchResultElement
+                      key={item.id}
+                      title={item.title}
+                      image={item.image}
+                      slug={item.slug}
+                      {...item}
+                    />
+                  ))}
+                </div>
+              ) : (
+                //
+                <p>{t('notfound')}</p>
+              )}
             </div>
           )}
         </DialogContent>
