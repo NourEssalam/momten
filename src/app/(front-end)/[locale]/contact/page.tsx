@@ -7,18 +7,24 @@ import config from '@payload-config'
 import { getPayload } from 'payload'
 import { cache } from 'react'
 
-export default async function Contact({ params }: { params: Promise<{ locale: string }> }) {
+export default async function Contact({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}) {
   const localePrams = await params
   const { locale } = localePrams
   const result = await queryContact({ locale })
 
   return (
-    <Container>
-      <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-5 lg:gap-10">
-        <ContactInfo contact={result} />
-        <ContactForm />
-      </div>
-    </Container>
+    <>
+      <Container>
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-5 lg:gap-10">
+          <ContactInfo contact={result} />
+          <ContactForm />
+        </div>
+      </Container>
+    </>
   )
 }
 

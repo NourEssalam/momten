@@ -14,8 +14,12 @@ export default function ContactInfo({ contact }: { contact: Contact }) {
   return (
     <div className="flex flex-col gap-10 justify-between md:p-5">
       <div className="flex flex-col mb-4">
-        <h1 className="text-4xl font-medium text-shade-strong leading-6 mb-8">{t('title')}</h1>
-        <p className="text-base max-w-xl  font-light text-secondary">{t('subTitle')}</p>
+        <h1 className="text-4xl font-medium text-shade-strong leading-6 mb-8">
+          {t('title')}
+        </h1>
+        <p className="text-base max-w-xl  font-light text-secondary">
+          {t('subTitle')}
+        </p>
       </div>
       <address className="contacts flex flex-col gap-4 ">
         <span className="font-normal text-lg inline-block text-grey  transition-colors duration-300">
@@ -33,7 +37,7 @@ export default function ContactInfo({ contact }: { contact: Contact }) {
               className="font-normal  text-lg inline-block text-grey hover:text-accent transition-colors duration-300"
             >
               <div className="flex items-center gap-4 ">
-                <FaPhoneVolume className="w-6 h-6 text-sky-300" />
+                <FaPhoneVolume className="w-4 h-4 text-sky-300" />
                 <span dir="ltr">{formatPhoneNumber(phone.phone)}</span>
               </div>
             </Link>
@@ -41,10 +45,10 @@ export default function ContactInfo({ contact }: { contact: Contact }) {
         </div>
         <Link
           href={`mailto:${email}`}
-          className="font-normal hover:text-accent text-lg inline-block text-grey  transition-colors duration-300"
+          className="font-normal hover:text-accent text-xs inline-block text-grey  transition-colors duration-300"
         >
-          <div className="flex items-center gap-4">
-            <IoIosMailUnread className="w-6 h-6 text-red-600" />
+          <div className="flex items-center gap-2">
+            <IoIosMailUnread className="w-5 h-5 text-red-600" />
             {email}
           </div>
         </Link>

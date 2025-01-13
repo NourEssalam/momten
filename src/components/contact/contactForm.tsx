@@ -29,13 +29,13 @@ export default function ContactForm() {
   })
 
   return (
-    <div>
+    <div className="h-full">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit((values) => {
             console.log(values)
           })}
-          className="grid grid-cols-1 gap-4 "
+          className="flex flex-col justify-stretch gap-4 h-full"
         >
           <FormField
             control={form.control}
@@ -44,7 +44,11 @@ export default function ContactForm() {
               <FormItem>
                 <FormLabel>{t('form.name')}</FormLabel>
                 <FormControl>
-                  <Input type="text" placeholder={t('form.namePlaceholder')} {...field} />
+                  <Input
+                    type="text"
+                    placeholder={t('form.namePlaceholder')}
+                    {...field}
+                  />
                 </FormControl>
 
                 <FormMessage />
@@ -58,7 +62,11 @@ export default function ContactForm() {
               <FormItem>
                 <FormLabel>{t('form.email')}</FormLabel>
                 <FormControl>
-                  <Input type="email" placeholder={t('form.emailPlaceholder')} {...field} />
+                  <Input
+                    type="email"
+                    placeholder={t('form.emailPlaceholder')}
+                    {...field}
+                  />
                 </FormControl>
 
                 <FormMessage />
