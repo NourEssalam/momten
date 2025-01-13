@@ -15,7 +15,15 @@ import HeaderNav from './headerNav'
 
 import type { Header } from '@/payload-types'
 
-export default function Header({ headerObj, locale }: { headerObj: Header; locale: Language }) {
+export default function Header({
+  englishHeader,
+  headerObj,
+  locale,
+}: {
+  englishHeader: Header
+  headerObj: Header
+  locale: Language
+}) {
   const [open, setOpen] = useState(false)
   const [sticky, setSticky] = useState('initial')
   const [lastScrollY, setLastScrollY] = useState(0)
@@ -73,8 +81,8 @@ export default function Header({ headerObj, locale }: { headerObj: Header; local
       {/* //desktop and big screen nav */}
       <HeaderNav
         headerObj={headerObj}
+        englishHeader={englishHeader}
         className="hidden lg:flex items-center gap-6  text-lg"
-        locale={locale}
       />
       {`${sticky === 'set' ? '   ' : ''}`}
       <div className="action hidden  lg:flex justify-between lg:w-24 gap-6 items-center">
@@ -117,7 +125,7 @@ export default function Header({ headerObj, locale }: { headerObj: Header; local
           headerObj={headerObj}
           setOpen={setOpen}
           className="flex flex-col items-center gap-6  text-lg font-medium"
-          locale={locale}
+          englishHeader={englishHeader}
         />
       </nav>
     </header>
