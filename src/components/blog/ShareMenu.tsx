@@ -44,7 +44,9 @@ export default function ShareMenu({
         </span>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 ">
-        <DropdownMenuLabel>Share To Social Media</DropdownMenuLabel>
+        <DropdownMenuLabel className={`${locale === 'ar' ? 'text-right' : ''}`}>
+          {t('shareToSocial')}
+        </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>

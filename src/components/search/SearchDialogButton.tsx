@@ -6,40 +6,21 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/search/SearchDialog'
-import { Suspense } from 'react'
 import { CiSearch } from 'react-icons/ci'
-import SearchResultElement from '@/components/search/SearchResultElement'
 import { Description } from '@radix-ui/react-dialog'
 import SearchForm from '@/components/search/searchForm'
 import { useSearchParams } from 'next/navigation'
-import { getSearchResults } from '@/components/search/actions'
-import { useEffect, useState } from 'react'
-import { PaginatedDocs } from 'payload'
-import Loading from '../../app/(front-end)/[locale]/loading'
+
 import { useTranslations } from 'next-intl'
 import { Language } from '@/i18n/routing'
 import { GiArchiveResearch } from 'react-icons/gi'
-import NoResult from '@/components/shared-components/no-result'
 import SearchList from './searchList'
 
 export default function DialogSearchButton({ locale }: { locale: Language }) {
   const t = useTranslations('Search')
   const searchParams = useSearchParams()
-  const [searchResults, setSearchResults] = useState<PaginatedDocs | null>(null)
 
   const search = searchParams.get('search')
-  useEffect(() => {
-    const searchResults = async () => {
-      if (!search) return setSearchResults(null)
-      const results: PaginatedDocs = await getSearchResults(
-        search || '',
-        locale,
-      )
-
-      setSearchResults(results)
-    }
-    searchResults()
-  }, [search, locale])
 
   return (
     <>
