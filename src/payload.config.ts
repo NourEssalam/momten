@@ -29,8 +29,32 @@ const dirname = path.dirname(filename)
 export default buildConfig({
   admin: {
     user: Users.slug,
-    importMap: {
-      baseDir: path.resolve(dirname),
+
+    meta: {
+      title: "Momtan's Admin Panel",
+      description: 'The best admin panel in the world',
+      defaultOGImageType: 'dynamic',
+      titleSuffix: '-momtan',
+      icons: [
+        {
+          rel: 'icon',
+          type: 'image/ico',
+          url: '/favicon.ico',
+        },
+      ],
+    },
+    components: {
+      graphics: {
+        Logo: {
+          path: '@/components/payload-root-view/graphics/logo#Logo',
+          // exportName: 'Logo',
+        },
+        Icon: {
+          path: '@/components/payload-root-view/graphics/icon#Icon',
+          // exportName: 'Logo',
+        },
+        // Icon,
+      },
     },
   },
   collections: [Users, Media, AboutPages, Team, Tag, Posts, AboutTag],
