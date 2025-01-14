@@ -15,10 +15,12 @@ import { useSearchParams } from 'next/navigation'
 import { getSearchResults } from '@/components/search/actions'
 import { useEffect, useState } from 'react'
 import { PaginatedDocs } from 'payload'
-import Loading from './loading'
+import Loading from '../../app/(front-end)/[locale]/loading'
 import { useTranslations } from 'next-intl'
 import { Language } from '@/i18n/routing'
 import { GiArchiveResearch } from 'react-icons/gi'
+import NoResult from '@/components/shared-components/no-result'
+import SearchList from './searchList'
 
 export default function DialogSearchButton({ locale }: { locale: Language }) {
   const t = useTranslations('Search')
@@ -60,34 +62,13 @@ export default function DialogSearchButton({ locale }: { locale: Language }) {
           </DialogHeader>
 
           {/* Results */}
-          {!searchResults ? (
+          {!search ? (
             <div className="h-[400px] flex flex-col items-center justify-center gap-4  m-4">
               <GiArchiveResearch size={100} />
               <p className="text-2xl">{t('start')}...</p>
             </div>
           ) : (
-            <div className="  mt-4 h-[90%] pb-4">
-              {searchResults?.docs.length > 0 ? (
-                <div
-                  className=" h-[400px] flex flex-col gap-1 scrollbar-thumb-rounded-full 
-                             scrollbar-track-rounded-full scrollbar scrollbar-thumb-slate-700
-                              scrollbar-track-slate-300 overflow-y-scroll"
-                >
-                  {searchResults?.docs.map((item) => (
-                    <SearchResultElement
-                      key={item.id}
-                      title={item.title}
-                      image={item.image}
-                      slug={item.slug}
-                      {...item}
-                    />
-                  ))}
-                </div>
-              ) : (
-                //
-                <p>{t('notfound')}</p>
-              )}
-            </div>
+            <SearchList locale={locale} />
           )}
         </DialogContent>
       </Dialog>

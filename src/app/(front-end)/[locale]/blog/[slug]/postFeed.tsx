@@ -12,8 +12,7 @@ import NoResult from '@/components/shared-components/no-result'
 
 import Authors from './metaInfo'
 import RelatedPosts from './relatedPosts'
-
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+import { delay } from '@/lib/timers'
 
 export default async function PostFeed({
   slug,
