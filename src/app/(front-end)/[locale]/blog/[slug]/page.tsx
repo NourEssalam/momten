@@ -9,7 +9,9 @@ import { Language } from '@/i18n/routing'
 import Loading from './loading'
 import PostFeed from './postFeed'
 
-export default async function Page(props: { params: Promise<{ slug: string; locale: Language }> }) {
+export default async function Page(props: {
+  params: Promise<{ slug: string; locale: Language }>
+}) {
   const { slug, locale } = await props.params
 
   return (
@@ -26,7 +28,9 @@ export async function generateMetadata(props: {
 
   const post = await queryPostBySlug({ slug, locale })
   const baseUrl = 'https://50ab-197-238-145-248.ngrok-free.app'
-  console.log(`${baseUrl}/${locale}${typeof post.image === 'object' ? post.image.url : ''}`)
+  console.log(
+    `${baseUrl}/${locale}${typeof post.image === 'object' ? post.image.url : ''}`,
+  )
   return {
     title: post?.title,
     description: post?.excerpt,
@@ -39,15 +43,17 @@ export async function generateMetadata(props: {
   }
 }
 
-export async function generateStaticParams(props: { params: Promise<{ locale: Language }> }) {
+export async function generateStaticParams(props: {
+  params: Promise<{ locale: Language }>
+}) {
   const { locale } = await props.params
   const payload = await getPayload({ config })
   const posts = await payload.find({
     collection: 'posts',
-    limit: 1000,
+    limit: 100,
     locale: locale,
     pagination: false,
-    // overrideAccess: false,
+    overrideAccess: true,
     select: {
       slug: true,
     },

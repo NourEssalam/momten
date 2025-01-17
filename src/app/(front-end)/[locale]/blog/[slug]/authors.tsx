@@ -8,13 +8,11 @@ export default function MetaInfo({ authors }: Authors) {
   return (
     <span>
       <em className="text-secondary">{t('writtenBy')}&nbsp;&nbsp;</em>
-      {authors && authors?.length > 0
-        ? authors
-            .map((author) =>
-              typeof author === 'object' && author.name ? author.name : author,
-            )
-            .join(` ${t('and')} `)
-        : 'momtan'}
+      {authors &&
+        authors?.length &&
+        authors
+          .map((author) => typeof author === 'object' && author.username)
+          .join(` ${t('and')} `)}
     </span>
   )
 }

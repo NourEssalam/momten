@@ -2,7 +2,7 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { Language } from '@/i18n/routing'
-import { permanentRedirect, redirect } from 'next/navigation'
+import { redirect } from 'next/navigation'
 
 export const getIdByCurrentSlug = async ({
   slug,

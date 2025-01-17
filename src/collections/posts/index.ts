@@ -1,8 +1,12 @@
-import { EXPERIMENTAL_TableFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
+import {
+  EXPERIMENTAL_TableFeature,
+  lexicalEditor,
+} from '@payloadcms/richtext-lexical'
 import type { CollectionConfig } from 'payload'
 import { slugField } from '@/fields/slug'
 import type { Where } from 'payload'
 import { dynamicExcerpt } from './hooks/dynamicExcerpt'
+import { User } from '@/payload-types'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -107,8 +111,36 @@ export const Posts: CollectionConfig = {
       },
       hasMany: true,
       relationTo: 'users',
-      // required: true,
-      defaultValue: 'momtan',
+      hooks: {
+        afterRead: [
+          async ({ value, req }) => {
+            if (!Array.isArray(value)) return value // Ensure value is an array
+
+            // Map the array to promises and resolve them using Promise.all
+            const filteredAuthors = await Promise.all(
+              value.map(async (authorId: string) => {
+                try {
+                  // Attempt to find the user by ID
+                  const result = await req.payload.findByID({
+                    id: authorId,
+                    collection: 'users',
+                    depth: 1,
+                  })
+                  return result // Keep the valid result
+                } catch (error) {
+                  if ((error as any).status === 404) {
+                    return null // Handle not found case by returning null
+                  }
+                  throw error // Re-throw other errors
+                }
+              }),
+            )
+
+            // Remove null values (invalid or deleted users)
+            return filteredAuthors.filter((author) => author !== null)
+          },
+        ],
+      },
     },
     {
       name: 'populatedAuthors',
@@ -146,7 +178,7 @@ export const Posts: CollectionConfig = {
   ],
   hooks: {
     // afterChange: [revalidatePost],
-    afterRead: [dynamicExcerpt],
+    afterChange: [dynamicExcerpt],
     // afterDelete: [revalidateDelete],
   },
   disableDuplicate: false,

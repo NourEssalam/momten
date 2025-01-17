@@ -1,5 +1,3 @@
-import { Post } from '@/payload-types'
-import PostCard from '@/components/blog/PostCard'
 import Container from '@/components/shared-components/Container'
 import { Language } from '@/i18n/routing'
 import { formatDate } from '@/lib/formatDate'
@@ -10,7 +8,7 @@ import { RichText } from '@payloadcms/richtext-lexical/react'
 import { queryPostBySlug } from './page'
 import NoResult from '@/components/shared-components/no-result'
 
-import Authors from './metaInfo'
+import Authors from './authors'
 import RelatedPosts from './relatedPosts'
 import { delay } from '@/lib/timers'
 
@@ -43,7 +41,9 @@ export default async function PostFeed({
             <time dateTime={post.publishedAt} className=" text-secondary">
               {formatDate(post.publishedAt, locale)}
             </time>
-            <Authors authors={post.authors} />
+            {post.authors && post.authors.length > 0 && (
+              <Authors authors={post.authors} />
+            )}
           </div>
 
           <div className="flex justify-end ">

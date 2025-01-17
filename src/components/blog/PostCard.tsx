@@ -59,16 +59,20 @@ export default function PostCard({
               {formatDate(publishedAt, locale)}
             </time>
             <span>
-              <em>{t('writtenBy')} :</em>&nbsp;
-              {authors && authors?.length > 0
-                ? authors
-                    .map((author) =>
-                      typeof author === 'object' && author.name
-                        ? author.name
-                        : author,
-                    )
-                    .join(` ${and} `)
-                : 'momtan'}
+              {authors && authors?.length > 0 && (
+                <div className="flex items-center">
+                  <em>{t('writtenBy')} :</em>&nbsp;
+                  <div>
+                    {authors
+                      .map((author) =>
+                        typeof author === 'object' && author.username
+                          ? author.username
+                          : 'momtan',
+                      )
+                      .join(` ${and} `)}
+                  </div>
+                </div>
+              )}
             </span>
           </div>
         </div>

@@ -3,6 +3,7 @@ import config from '@payload-config'
 import { getPayload } from 'payload'
 import { cache } from 'react'
 import { PartenrItemsProps } from './PartnerItems'
+
 export default async function PartnersWrapper() {
   const result = await queryPartners()
   const partners = result.items
@@ -12,6 +13,7 @@ export default async function PartnersWrapper() {
     </>
   )
 }
+
 const queryPartners = cache(async () => {
   const payload = await getPayload({ config })
   const result = await payload.findGlobal({
