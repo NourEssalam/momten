@@ -1,3 +1,4 @@
+import { superAdminField } from '@/access-control/fields/superAdminField'
 import type { Field } from 'payload'
 export const quicklinkcolumns: Field = {
   name: 'quicklinkcolumns',
@@ -39,6 +40,10 @@ export const quicklinkcolumns: Field = {
           name: 'url',
           type: 'text',
           required: true,
+          access: {
+            create: superAdminField,
+            update: superAdminField,
+          },
         },
       ],
     },

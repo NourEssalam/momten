@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { iconPlusColor } from './hooks/iconPlusColor'
+import { adminAndSuperAdmin } from '@/access-control/collections/adminAndSuperAdmin'
 
 export const Team: CollectionConfig = {
   slug: 'team',
@@ -18,6 +19,12 @@ export const Team: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'name',
+  },
+  access: {
+    create: adminAndSuperAdmin,
+    read: adminAndSuperAdmin,
+    update: adminAndSuperAdmin,
+    delete: adminAndSuperAdmin,
   },
 
   fields: [
@@ -45,8 +52,30 @@ export const Team: CollectionConfig = {
       fields: [
         {
           name: 'name',
-          type: 'text',
+          type: 'select',
           required: true,
+          options: [
+            {
+              label: 'Facebook',
+              value: 'Facebook',
+            },
+            {
+              label: 'Instagram',
+              value: 'Instagram',
+            },
+            {
+              label: 'Twitter',
+              value: 'Twitter',
+            },
+            {
+              label: 'Youtube',
+              value: 'Youtube',
+            },
+            {
+              label: 'Linkedin',
+              value: 'Linkedin',
+            },
+          ],
         },
         {
           name: 'url',

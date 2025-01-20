@@ -6,7 +6,8 @@ import type { CollectionConfig } from 'payload'
 import { slugField } from '@/fields/slug'
 import type { Where } from 'payload'
 import { dynamicExcerpt } from './hooks/dynamicExcerpt'
-import { User } from '@/payload-types'
+import { anyone } from '@/access-control/collections/anyone'
+import { adminsOrTheEditor } from '@/access-control/collections/adminsOrTheEditor'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -22,9 +23,17 @@ export const Posts: CollectionConfig = {
       fr: 'Articles',
     },
   },
+  access: {
+    create: anyone,
+    read: anyone,
+    update: adminsOrTheEditor,
+    delete: adminsOrTheEditor,
+  },
+
   admin: {
     useAsTitle: 'title',
   },
+
   fields: [
     {
       name: 'title',
@@ -87,20 +96,10 @@ export const Posts: CollectionConfig = {
         date: {
           pickerAppearance: 'dayOnly',
           displayFormat: 'dd MMMM yyyy',
-          // minDate: new Date(),
         },
         position: 'sidebar',
       },
-      // hooks: {
-      //   beforeChange: [
-      //     ({ siblingData, value }) => {
-      //       if (siblingData._status === 'published' && !value) {
-      //         return new Date()
-      //       }
-      //       return value
-      //     },
-      //   ],
-      // },
+
       required: true,
     },
     {
@@ -128,6 +127,7 @@ export const Posts: CollectionConfig = {
                   })
                   return result // Keep the valid result
                 } catch (error) {
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   if ((error as any).status === 404) {
                     return null // Handle not found case by returning null
                   }

@@ -17,7 +17,6 @@ export interface Config {
     team: Team;
     tag: Tag;
     posts: Post;
-    'about-tag': AboutTag;
     'search-results': SearchResult;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -31,7 +30,6 @@ export interface Config {
     team: TeamSelect<false> | TeamSelect<true>;
     tag: TagSelect<false> | TagSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
-    'about-tag': AboutTagSelect<false> | AboutTagSelect<true>;
     'search-results': SearchResultsSelect<false> | SearchResultsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -44,14 +42,12 @@ export interface Config {
     header: Header;
     footer: Footer;
     contact: Contact;
-    'about-global': AboutGlobal;
     partner: Partner;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     contact: ContactSelect<false> | ContactSelect<true>;
-    'about-global': AboutGlobalSelect<false> | AboutGlobalSelect<true>;
     partner: PartnerSelect<false> | PartnerSelect<true>;
   };
   locale: 'en' | 'ar';
@@ -99,7 +95,7 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: string;
-  role?: ('super-admin' | 'admin' | 'editor') | null;
+  role: 'super-admin' | 'admin' | 'editor';
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -154,7 +150,6 @@ export interface AboutPage {
   id: string;
   title: string;
   slug: string;
-  tag: (string | AboutTag)[];
   publishedAt?: string | null;
   accordions: {
     title: string;
@@ -180,16 +175,6 @@ export interface AboutPage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "about-tag".
- */
-export interface AboutTag {
-  id: string;
-  title: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "team".
  */
 export interface Team {
@@ -199,7 +184,7 @@ export interface Team {
   image: string | Media;
   socials?:
     | {
-        name: string;
+        name: 'Facebook' | 'Instagram' | 'Twitter' | 'Youtube' | 'Linkedin';
         url: string;
         icon?: string | null;
         color?: string | null;
@@ -309,10 +294,6 @@ export interface PayloadLockedDocument {
         value: string | Post;
       } | null)
     | ({
-        relationTo: 'about-tag';
-        value: string | AboutTag;
-      } | null)
-    | ({
         relationTo: 'search-results';
         value: string | SearchResult;
       } | null);
@@ -401,7 +382,6 @@ export interface MediaSelect<T extends boolean = true> {
 export interface AboutPagesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
-  tag?: T;
   publishedAt?: T;
   accordions?:
     | T
@@ -463,15 +443,6 @@ export interface PostsSelect<T extends boolean = true> {
   tag?: T;
   slug?: T;
   slugLock?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "about-tag_select".
- */
-export interface AboutTagSelect<T extends boolean = true> {
-  title?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -561,7 +532,7 @@ export interface Footer {
 export interface Contact {
   id: string;
   social: {
-    name: string;
+    name: 'Facebook' | 'Instagram' | 'Twitter' | 'Youtube';
     url: string;
     icon?: string | null;
     color?: string | null;
@@ -573,26 +544,6 @@ export interface Contact {
   }[];
   email: string;
   address: string;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "about-global".
- */
-export interface AboutGlobal {
-  id: string;
-  about: {
-    title: string;
-    description: string;
-    image: string | Media;
-    links: {
-      title: string;
-      link: string;
-      id?: string | null;
-    }[];
-    id?: string | null;
-  }[];
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -670,30 +621,6 @@ export interface ContactSelect<T extends boolean = true> {
       };
   email?: T;
   address?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "about-global_select".
- */
-export interface AboutGlobalSelect<T extends boolean = true> {
-  about?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-        image?: T;
-        links?:
-          | T
-          | {
-              title?: T;
-              link?: T;
-              id?: T;
-            };
-        id?: T;
-      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

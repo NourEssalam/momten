@@ -1,6 +1,5 @@
 import type { CollectionAfterReadHook } from 'payload'
 import type { Social } from '@/lib/types/contact'
-import { FaLinkedin } from 'react-icons/fa'
 
 const socialMediaColors: { [key: string]: string } = {
   FaFacebook: '#1877F2', // Facebook Blue
@@ -10,7 +9,7 @@ const socialMediaColors: { [key: string]: string } = {
   FaLinkedin: '#0077B5', // LinkedIn Blue
 }
 
-export const iconPlusColor: CollectionAfterReadHook = async ({ doc, req, req: { payload } }) => {
+export const iconPlusColor: CollectionAfterReadHook = async ({ doc }) => {
   // Read the socials array  and in each item find the iconPlusColor
 
   doc?.socials.map((item: Social) => {
