@@ -1,19 +1,31 @@
-import type { CollectionAfterReadHook } from 'payload'
+import type { CollectionAfterChangeHook } from 'payload'
 
-export const dynamicExcerpt: CollectionAfterReadHook = async ({ doc }) => {
-  if (doc?.content) {
+export const dynamicExcerpt: CollectionAfterChangeHook = async ({
+  doc,
+  operation,
+}) => {
+  if (operation === 'create' || operation === 'update') {
+    if (!doc?.content?.root?.children) {
+      return
+    }
+
     const rootChildren = doc.content.root.children
 
     if (rootChildren) {
       // Find the first paragraph in rootChildren
       const Perfectchild = rootChildren.find(
-        (child: any) => child?.type === 'paragraph' && child?.children[0].text?.length > 150,
+        (child: any) =>
+          child?.type === 'paragraph' && child?.children[0].text?.length > 150,
       )
 
       if (Perfectchild) {
-        doc.excerpt = Perfectchild.children[0].text.slice(0, 150) + '...'
+        doc.excerpt = Perfectchild.children[0].text.slice(0, 120) + '...'
       } else {
-        doc.excerpt = rootChildren[0].children[0].text
+        const text = rootChildren.find(
+          (child: any) => child?.type === 'paragraph',
+        )
+
+        doc.excerpt = text.children[0].text + '...'
       }
     }
   }

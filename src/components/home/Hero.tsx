@@ -10,19 +10,28 @@ export default function Hero({ locale }: { locale: Language }) {
       <div className="container flex flex-col  lg:flex-row  lg:gap-20  gap-10 items-center  justify-center ">
         <div
           className={`flex flex-col items-center justify-center  
-                   text-secondary font-medium sm:font-bold  -tracking-tight
+                   text-secondary   -tracking-tight
                    md:px-10
                    lg:items-start text-center lg:mb-28 
                    ${locale === 'ar' ? 'lg:text-right' : 'lg:text-left'}`}
         >
-          <h1 className={`text-2xl sm:text-3xl lg:text-4xl leading-6 mb-8 `}>{t('title')}</h1>
+          <h1
+            className={`${
+              locale === 'ar'
+                ? 'text-3xl  2xs:text-4xl sm:text-5xl md:text-6xl  leading-normal '
+                : 'text-2xl md:text-3xl sm:text-3xl lg:text-4xl leading-7  '
+            } mb-8 font-bold `}
+          >
+            {t('title')}
+          </h1>
           <p
-            className="text-lg text-gray-700
+            className="text-lg text-gray-700 font-semibold 
                       sm:text-xl
                       lg:text-base"
           >
             {t('desc')}
           </p>
+
           <div className="flex gap-4 lg:gap-8 mt-10">
             <Link
               href={'#sign-up'}

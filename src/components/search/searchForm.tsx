@@ -25,7 +25,7 @@ export default function SearchForm() {
           type="search"
           id="search"
           placeholder={t('placeholder')}
-          className="md:w-1/2"
+          className="md:w-full"
           onChange={(e) => setSearch(e.target.value)}
         />
       </div>

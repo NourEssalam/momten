@@ -3,27 +3,19 @@ import { getPayload } from 'payload'
 import Header from './Header'
 import { cache } from 'react'
 import { Language } from '@/i18n/routing'
+import { queryHeaderNav } from './action'
 
 export default async function HeaderWrap({ locale }: { locale: Language }) {
   const headerObj = await queryHeaderNav({ locale })
+  const englishHeader = await queryHeaderNav({ locale: 'en' })
 
   return (
     <>
-      <Header headerObj={headerObj} locale={locale} />
+      <Header
+        englishHeader={englishHeader}
+        headerObj={headerObj}
+        locale={locale}
+      />
     </>
   )
 }
-
-const queryHeaderNav = cache(async ({ locale }: { locale: Language }) => {
-  const payload = await getPayload({ config })
-  const result = await payload.findGlobal({
-    slug: 'header', // required
-    depth: 2,
-    locale: locale,
-    // fallbackLocale: false,
-    overrideAccess: true,
-    showHiddenFields: true,
-  })
-
-  return result
-})

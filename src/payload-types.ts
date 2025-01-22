@@ -42,14 +42,12 @@ export interface Config {
     header: Header;
     footer: Footer;
     contact: Contact;
-    'about-global': AboutGlobal;
     partner: Partner;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     contact: ContactSelect<false> | ContactSelect<true>;
-    'about-global': AboutGlobalSelect<false> | AboutGlobalSelect<true>;
     partner: PartnerSelect<false> | PartnerSelect<true>;
   };
   locale: 'en' | 'ar';
@@ -62,22 +60,34 @@ export interface Config {
   };
 }
 export interface UserAuthOperations {
-  forgotPassword: {
-    email: string;
-    password: string;
-  };
-  login: {
-    email: string;
-    password: string;
-  };
+  forgotPassword:
+    | {
+        email: string;
+      }
+    | {
+        username: string;
+      };
+  login:
+    | {
+        email: string;
+        password: string;
+      }
+    | {
+        password: string;
+        username: string;
+      };
   registerFirstUser: {
-    email: string;
     password: string;
-  };
-  unlock: {
+    username: string;
     email: string;
-    password: string;
   };
+  unlock:
+    | {
+        email: string;
+      }
+    | {
+        username: string;
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -85,10 +95,11 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: string;
-  name?: string | null;
+  role: 'super-admin' | 'admin' | 'editor';
   updatedAt: string;
   createdAt: string;
   email: string;
+  username: string;
   resetPasswordToken?: string | null;
   resetPasswordExpiration?: string | null;
   salt?: string | null;
@@ -139,6 +150,7 @@ export interface AboutPage {
   id: string;
   title: string;
   slug: string;
+  publishedAt?: string | null;
   accordions: {
     title: string;
     content: {
@@ -172,7 +184,7 @@ export interface Team {
   image: string | Media;
   socials?:
     | {
-        name: string;
+        name: 'Facebook' | 'Instagram' | 'Twitter' | 'Youtube' | 'Linkedin';
         url: string;
         icon?: string | null;
         color?: string | null;
@@ -200,6 +212,7 @@ export interface Post {
   id: string;
   title: string;
   image: string | Media;
+  excerpt?: string | null;
   relatedPosts?: (string | Post)[] | null;
   content: {
     root: {
@@ -227,7 +240,6 @@ export interface Post {
   tag?: (string | Tag)[] | null;
   slug?: string | null;
   slugLock?: boolean | null;
-  excerpt?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -332,10 +344,11 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
-  name?: T;
+  role?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
+  username?: T;
   resetPasswordToken?: T;
   resetPasswordExpiration?: T;
   salt?: T;
@@ -369,6 +382,7 @@ export interface MediaSelect<T extends boolean = true> {
 export interface AboutPagesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  publishedAt?: T;
   accordions?:
     | T
     | {
@@ -415,6 +429,7 @@ export interface TagSelect<T extends boolean = true> {
 export interface PostsSelect<T extends boolean = true> {
   title?: T;
   image?: T;
+  excerpt?: T;
   relatedPosts?: T;
   content?: T;
   publishedAt?: T;
@@ -428,7 +443,6 @@ export interface PostsSelect<T extends boolean = true> {
   tag?: T;
   slug?: T;
   slugLock?: T;
-  excerpt?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -518,7 +532,7 @@ export interface Footer {
 export interface Contact {
   id: string;
   social: {
-    name: string;
+    name: 'Facebook' | 'Instagram' | 'Twitter' | 'Youtube';
     url: string;
     icon?: string | null;
     color?: string | null;
@@ -530,26 +544,6 @@ export interface Contact {
   }[];
   email: string;
   address: string;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "about-global".
- */
-export interface AboutGlobal {
-  id: string;
-  about: {
-    title: string;
-    description: string;
-    image: string | Media;
-    links: {
-      title: string;
-      link: string;
-      id?: string | null;
-    }[];
-    id?: string | null;
-  }[];
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -627,30 +621,6 @@ export interface ContactSelect<T extends boolean = true> {
       };
   email?: T;
   address?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "about-global_select".
- */
-export interface AboutGlobalSelect<T extends boolean = true> {
-  about?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-        image?: T;
-        links?:
-          | T
-          | {
-              title?: T;
-              link?: T;
-              id?: T;
-            };
-        id?: T;
-      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

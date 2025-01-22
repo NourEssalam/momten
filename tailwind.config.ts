@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 import type { Config } from 'tailwindcss'
 
 const config: Config = {
-  darkMode: ['class'],
+  // darkMode: ['class'],
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -9,6 +10,15 @@ const config: Config = {
     './src/**/*.{ts,tsx}',
   ],
   theme: {
+    screens: {
+      xs: '375px',
+      '2xs': '400px',
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
+      '2xl': '1536px',
+    },
     extend: {
       colors: {
         background: 'hsl(var(--background))',
@@ -78,6 +88,10 @@ const config: Config = {
         'inset-focus': ' 0 0 4px 2px rgba(255, 255, 255,1 )',
       },
       keyframes: {
+        background: {
+          '0%, 100%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+        },
         'accordion-down': {
           from: {
             height: '0',
@@ -94,14 +108,30 @@ const config: Config = {
             height: '0',
           },
         },
+        'infinite-scroll': {
+          from: { transform: 'translateX(0)' },
+          to: { transform: 'translateX(-100%)' },
+        },
       },
       animation: {
+        border: 'background ease infinite',
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        'infinite-scroll': 'infinite-scroll 50s linear infinite',
+      },
+
+      zIndex: {
+        '60': '60',
+        '100': '100',
+        '900': '900',
       },
     },
   },
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  plugins: [require('tailwindcss-animate')],
+
+  plugins: [
+    require('tailwindcss-animate'),
+    require('@tailwindcss/typography'),
+    require('tailwind-scrollbar')({ nocompatible: true }),
+  ],
 }
 export default config

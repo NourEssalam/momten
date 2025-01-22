@@ -1,3 +1,4 @@
+import { adminsAndSuperAdmins } from '@/access-control/globals/adminsAndSuperAdmins'
 import { GlobalConfig } from 'payload'
 
 export const Partner: GlobalConfig = {
@@ -6,6 +7,10 @@ export const Partner: GlobalConfig = {
     en: 'Partner',
     ar: 'موثوق من قبل',
     fr: 'Partenaire',
+  },
+  access: {
+    read: adminsAndSuperAdmins,
+    update: adminsAndSuperAdmins,
   },
   fields: [
     {

@@ -2,7 +2,14 @@
 import React, { useCallback, useEffect } from 'react'
 import { TextFieldClientProps } from 'payload'
 
-import { useField, Button, TextInput, FieldLabel, useFormFields, useForm } from '@payloadcms/ui'
+import {
+  useField,
+  Button,
+  TextInput,
+  FieldLabel,
+  useFormFields,
+  useForm,
+} from '@payloadcms/ui'
 
 import { formatSlug } from './formatSlug'
 import './index.scss'
@@ -53,7 +60,7 @@ export const SlugComponent: React.FC<SlugComponentProps> = ({
   }, [targetFieldValue, checkboxValue, setValue, value])
 
   const handleLock = useCallback(
-    (e) => {
+    (e: { preventDefault: () => void }) => {
       e.preventDefault()
 
       dispatchFields({

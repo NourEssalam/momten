@@ -44,7 +44,7 @@ export default async function Page(props: { params: Promise<{ locale: Language; 
   const { accordions } = result
   return (
     <Container className="flex flex-col gap-10 ">
-      <BackLink />
+      <BackLink toPage="about" />
       <h1 className="text-2xl text-shade-strong font-medium sm:text-3xl lg:text-4xl">
         {result.title}
       </h1>

@@ -12,27 +12,33 @@ import { mainMenuType } from '@/lib/types/menu-types'
 import SwitchLanguage from '../shared-components/SwitchLanguage'
 import DialogSearchButton from '@/components/search/SearchDialogButton'
 import HeaderNav from './headerNav'
-// interface HeaderProps {
-//   nav: { pageName: string; url: string; id?: string | null | undefined }[]
-// }
+
 import type { Header } from '@/payload-types'
 
-export default function Header({ headerObj, locale }: { headerObj: Header; locale: Language }) {
+export default function Header({
+  englishHeader,
+  headerObj,
+  locale,
+}: {
+  englishHeader: Header
+  headerObj: Header
+  locale: Language
+}) {
   const [open, setOpen] = useState(false)
   const [sticky, setSticky] = useState('initial')
+  const [lastScrollY, setLastScrollY] = useState(0)
 
   useEffect(() => {
-    let lastScroll = 0
     const handleScroll = () => {
       if (window.scrollY === 0) {
         setSticky('initial')
-      } else if (window.scrollY > lastScroll) {
+      } else if (window.scrollY > lastScrollY) {
         setSticky('unset')
-      } else if (window.scrollY < lastScroll) {
+      } else if (window.scrollY < lastScrollY) {
         setSticky('set')
       }
 
-      lastScroll = window.scrollY - 1
+      setLastScrollY(window.scrollY)
     }
     window.addEventListener('scroll', handleScroll)
 
@@ -49,16 +55,16 @@ export default function Header({ headerObj, locale }: { headerObj: Header; local
       document.body.classList.remove('overflow-hidden')
       window.removeEventListener('scroll', handleScroll)
     }
-  }, [open])
+  }, [open, lastScrollY])
 
   return (
     <header
-      className={`bg-white flex items-center py-5 px-5 md:px-10  border-b-4 border-b-primary
+      className={`bg-white flex items-center  py-5 px-5 z-60 md:px-10  border-b-4 border-b-primary
      lg:px-20 h-16   w-full justify-between  transition-all duration-700
-     ${sticky === 'initial' ? 'sticky top-0 opacity-100' : ''}
+     ${sticky === 'initial' ? 'sticky top-0  opacity-100' : ''}
 
-     ${sticky === 'set' ? 'sticky top-0 z-20 ' : ''}
-     ${sticky === 'unset' ? 'sticky top-0 opacity-0' : ''}`}
+     ${sticky === 'set' ? 'sticky top-0  ' : ''}
+     ${sticky === 'unset' ? 'sticky top-0 opacity-0 invisible' : ''}`}
     >
       <Link href="/" className=" w-16 h-16 lg:w-16 lg:h-16 ">
         <Image
@@ -73,7 +79,12 @@ export default function Header({ headerObj, locale }: { headerObj: Header; local
         />
       </Link>
       {/* //desktop and big screen nav */}
-      <HeaderNav headerObj={headerObj} />
+      <HeaderNav
+        headerObj={headerObj}
+        englishHeader={englishHeader}
+        className="hidden lg:flex items-center gap-6  text-lg"
+      />
+      {`${sticky === 'set' ? '   ' : ''}`}
       <div className="action hidden  lg:flex justify-between lg:w-24 gap-6 items-center">
         <DialogSearchButton locale={locale} />
 
@@ -95,7 +106,7 @@ export default function Header({ headerObj, locale }: { headerObj: Header; local
           <IoIosCloseCircleOutline
             className={`absolute transition-opacity duration-300 ${
               open ? 'opacity-100' : 'opacity-0'
-            } cursor-pointer text-grey h-8 w-8 z-20`}
+            } cursor-pointer text-grey h-8 w-8 z-900`}
             onClick={() => setOpen(!open)}
           />
         </div>
@@ -106,32 +117,16 @@ export default function Header({ headerObj, locale }: { headerObj: Header; local
       <nav
         className={`w-full h-full  fixed top-0 right-0 flex flex-col
            justify-center items-center gap-0
-         bg-white text-tint z-5 transition-all duration-300 transform opacity-90 
+         bg-white text-tint z-100 transition-all duration-300 transform opacity-90 
            ${open ? 'translate-x-0' : 'translate-x-full'}
         `}
       >
-        <div className="flex flex-col items-center justify-center   w-full h-[90%] overflow-scroll">
-          {mainMenu.map((menu: mainMenuType) => (
-            <Link
-              key={menu.name}
-              href={menu.href}
-              className="text-grey font-medium text-xl capitalize transition-colors duration-300 
-           py-[1.2rem] hover:text-shade active:text-shade"
-              onClick={() => setOpen(!open)}
-            >
-              {menu.name}
-            </Link>
-          ))}
-          {/* <Button asChild>
-            <Link
-              href="/donation"
-              //     className="bg-primary/90 hover:bg-primary hover:transform hover:scale-[1.05] text-white uppercase
-              //  font-medium text-xl px-5 py-px border rounded-lg "
-            >
-              Donate
-            </Link>
-          </Button> */}
-        </div>
+        <HeaderNav
+          headerObj={headerObj}
+          setOpen={setOpen}
+          className="flex flex-col items-center gap-6  text-lg font-medium"
+          englishHeader={englishHeader}
+        />
       </nav>
     </header>
   )

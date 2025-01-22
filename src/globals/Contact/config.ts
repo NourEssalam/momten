@@ -1,12 +1,17 @@
 import { GlobalConfig } from 'payload'
 import { SocialArrayField } from './socialArrayField'
 import { iconPlusColor } from './hooks/iconPlusColor'
+import { adminsAndSuperAdmins } from '@/access-control/globals/adminsAndSuperAdmins'
 export const Contact: GlobalConfig = {
   slug: 'contact',
   label: {
     en: 'Contact',
     ar: 'اتصل بنا',
     fr: 'Contact',
+  },
+  access: {
+    read: adminsAndSuperAdmins,
+    update: adminsAndSuperAdmins,
   },
   fields: [
     {

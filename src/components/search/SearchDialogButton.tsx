@@ -6,34 +6,21 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/search/SearchDialog'
-import { Suspense } from 'react'
 import { CiSearch } from 'react-icons/ci'
-import SearchResultElement from '@/components/search/SearchResultElement'
 import { Description } from '@radix-ui/react-dialog'
 import SearchForm from '@/components/search/searchForm'
 import { useSearchParams } from 'next/navigation'
-import { getSearchResults } from '@/components/search/actions'
-import { useEffect, useState } from 'react'
-import { PaginatedDocs } from 'payload'
-import Loading from './loading'
+
 import { useTranslations } from 'next-intl'
 import { Language } from '@/i18n/routing'
+import { GiArchiveResearch } from 'react-icons/gi'
+import SearchList from './searchList'
 
 export default function DialogSearchButton({ locale }: { locale: Language }) {
   const t = useTranslations('Search')
   const searchParams = useSearchParams()
-  const [searchResults, setSearchResults] = useState<PaginatedDocs | null>(null)
 
   const search = searchParams.get('search')
-  useEffect(() => {
-    const searchResults = async () => {
-      if (!search) return setSearchResults(null)
-      const results: PaginatedDocs = await getSearchResults(search || '', locale)
-
-      setSearchResults(results)
-    }
-    searchResults()
-  }, [search, locale])
 
   return (
     <>
@@ -44,11 +31,11 @@ export default function DialogSearchButton({ locale }: { locale: Language }) {
           </span>
         </DialogTrigger>
         <DialogContent
-          className=" gap-0 max-w-[640px] inset-0 p-4 mx-auto md:my-10  bg-white left-[0%] top-[0%] 
+          className="  gap-0 max-w-[640px] max-h-[640px] inset-0 p-4 z-900 mx-auto md:my-10  bg-white left-[0%] top-[0%] 
       translate-x-[0%] translate-y-[0%]"
         >
-          <DialogHeader className=" text-left mb-0 gap-2 space-x-0">
-            <DialogTitle dir="rtl" className="text-2xl">
+          <DialogHeader className=" mb-0 gap-2 space-x-0">
+            <DialogTitle className="text-2xl  text-center">
               {t('title')}
             </DialogTitle>
             <Description></Description>
@@ -56,31 +43,13 @@ export default function DialogSearchButton({ locale }: { locale: Language }) {
           </DialogHeader>
 
           {/* Results */}
-          {!searchResults ? (
-            <p>{t('start')}</p>
-          ) : (
-            <div className="overflow-y-scroll md:grid grid-cols-2 gap-3 mt-4 ">
-              <div className="flex flex-col gap-2 p-4">
-                {searchResults?.docs.length > 0 ? (
-                  <Suspense fallback={<Loading />}>
-                    <div className=" grid grid-cols-2">
-                      {searchResults?.docs.map((item) => (
-                        <SearchResultElement
-                          key={item.id}
-                          title={item.title}
-                          image={item.image}
-                          slug={item.slug}
-                          {...item}
-                        />
-                      ))}
-                    </div>
-                  </Suspense>
-                ) : (
-                  //
-                  <p>{t('notfound')}</p>
-                )}
-              </div>
+          {!search ? (
+            <div className="h-[400px] flex flex-col items-center justify-center gap-4  m-4">
+              <GiArchiveResearch size={100} />
+              <p className="text-2xl">{t('start')}...</p>
             </div>
+          ) : (
+            <SearchList locale={locale} />
           )}
         </DialogContent>
       </Dialog>

@@ -1,3 +1,5 @@
+import { superAdminField } from '@/access-control/fields/superAdminField'
+import { adminsAndSuperAdmins } from '@/access-control/globals/adminsAndSuperAdmins'
 import { GlobalConfig } from 'payload'
 
 export const Header: GlobalConfig = {
@@ -7,12 +9,17 @@ export const Header: GlobalConfig = {
     ar: 'رأس الصفحة',
     fr: 'en-tête',
   },
+  access: {
+    read: adminsAndSuperAdmins,
+    update: adminsAndSuperAdmins,
+  },
   fields: [
     {
       name: 'items',
       type: 'array',
       required: true,
-      maxRows: 8,
+      maxRows: 6,
+
       labels: {
         singular: {
           en: 'Item',
@@ -36,6 +43,10 @@ export const Header: GlobalConfig = {
           name: 'url',
           type: 'text',
           required: true,
+          access: {
+            create: superAdminField,
+            update: superAdminField,
+          },
         },
       ],
     },

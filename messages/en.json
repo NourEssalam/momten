@@ -11,8 +11,7 @@
   "AboutNutshell": {
     "title": "ABOUT US",
     "desc": "Momtan organization has developed a strategic and forward-looking plan, to simulate the sustainable development goals of economic, social and environmental dimensions. It extends from 2021 to 2030.",
-    "ourteam": "Our Team",
-    "ourMission": "Our Mission"
+    "ReadMore": "Read More"
   },
   "Newsletter": {
     "title": "Sign-Up For Updates",
@@ -69,6 +68,28 @@
   },
 
   "BackLinks": {
-    "blog": "back to blog"
+    "blog": "back to the blog page",
+    "about": "back to the about page"
+  },
+  "PostCard": {
+    "writtenBy": "By",
+    "readMore": "Read More",
+    "and": "and"
+  },
+  "Blog": {
+    "all": "All",
+    "share": "Share",
+    "shareToSocial": "Share To Social Media",
+    "relatedPosts": "Related Posts"
+  },
+
+  "Error": {
+    "error": "Something went wrong",
+    "no-result": "No Results was found",
+    "NotFoundPage": "Page Not Found"
+  },
+  "NextPrev": {
+    "next": "Next",
+    "prev": "Previous"
   }
 }

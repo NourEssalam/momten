@@ -1,13 +1,13 @@
 import { Language } from '@/i18n/routing'
 import { format } from 'date-fns'
-import { ar } from 'date-fns/locale'
+import { arTN } from 'date-fns/locale'
 
 export const formatDate = (isoDate: string, locale: Language): string => {
   try {
     const date = new Date(isoDate)
 
     // Validate locale
-    const selectedLocale = locale === 'ar' ? ar : undefined
+    const selectedLocale = locale === 'ar' ? arTN : undefined
 
     // Use date-fns formatting
     return format(date, 'dd MMMM yyyy', { locale: selectedLocale })

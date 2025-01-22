@@ -10,7 +10,7 @@ export const getSearchResults = async (query: string, locale: Language) => {
     collection: 'search-results',
     locale: locale,
     depth: 1,
-    limit: 12,
+    limit: 24,
     select: {
       title: true,
       slug: true,

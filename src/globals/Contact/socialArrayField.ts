@@ -3,7 +3,7 @@ export const SocialArrayField: Field = {
   name: 'social',
   type: 'array',
   required: true,
-
+  maxRows: 4,
   labels: {
     singular: {
       en: 'Social Link',
@@ -19,8 +19,27 @@ export const SocialArrayField: Field = {
   fields: [
     {
       name: 'name',
-      type: 'text',
+      type: 'select',
       required: true,
+      unique: true,
+      options: [
+        {
+          label: 'Facebook',
+          value: 'Facebook',
+        },
+        {
+          label: 'Instagram',
+          value: 'Instagram',
+        },
+        {
+          label: 'Twitter',
+          value: 'Twitter',
+        },
+        {
+          label: 'Youtube',
+          value: 'Youtube',
+        },
+      ],
     },
     {
       name: 'url',

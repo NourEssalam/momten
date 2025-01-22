@@ -1,4 +1,10 @@
-import { EXPERIMENTAL_TableFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
+import { adminAndSuperAdmin } from '@/access-control/collections/adminAndSuperAdmin'
+import { anyone } from '@/access-control/collections/anyone'
+import { superAdminField } from '@/access-control/fields/superAdminField'
+import {
+  EXPERIMENTAL_TableFeature,
+  lexicalEditor,
+} from '@payloadcms/richtext-lexical'
 import type { CollectionConfig } from 'payload'
 
 export const AboutPages: CollectionConfig = {
@@ -15,7 +21,12 @@ export const AboutPages: CollectionConfig = {
       fr: 'Pages à propos',
     },
   },
-
+  access: {
+    create: adminAndSuperAdmin,
+    read: adminAndSuperAdmin,
+    update: adminAndSuperAdmin,
+    delete: adminAndSuperAdmin,
+  },
   admin: {
     useAsTitle: 'title',
   },
@@ -35,8 +46,33 @@ export const AboutPages: CollectionConfig = {
     {
       name: 'slug',
       type: 'text',
+      access: {
+        create: superAdminField,
+        update: superAdminField,
+      },
+      admin: {
+        position: 'sidebar',
+      },
       required: true,
       unique: true,
+    },
+
+    {
+      name: 'publishedAt',
+      type: 'date',
+      admin: {
+        position: 'sidebar',
+      },
+      hooks: {
+        beforeChange: [
+          ({ value, operation }) => {
+            if (operation === 'create' || operation === 'update') {
+              return new Date()
+            }
+            return value
+          },
+        ],
+      },
     },
 
     {
@@ -62,6 +98,7 @@ export const AboutPages: CollectionConfig = {
           required: true,
           localized: true,
         },
+
         {
           name: 'content',
           type: 'richText',
