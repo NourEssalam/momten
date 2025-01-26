@@ -1,0 +1,95 @@
+{
+  "Hero": {
+    "title": "The Association of Citizenship, Human and Sustainable Development",
+    "desc": "A nation dedicated to the principles of the Sustainable Development Goals and a better future for the next generations.",
+    "subscribeButton": "Subscribe",
+    "learnMoreButton": "Learn More"
+  },
+  "Partner": {
+    "title": "Trusted by"
+  },
+  "AboutNutshell": {
+    "title": "ABOUT US",
+    "desc": "Momtan organization has developed a strategic and forward-looking plan, to simulate the sustainable development goals of economic, social and environmental dimensions. It extends from 2021 to 2030.",
+    "ReadMore": "Read More"
+  },
+  "Newsletter": {
+    "title": "Sign-Up For Updates",
+    "subTitle": "To receive updates about our latest programs, reports, campaigns and webinars,etc.",
+    "email": "Email",
+    "emailPlaceholder": "Enter your email address",
+    "name": "Name",
+    "namePlaceholder": "Enter your name",
+    "option": "How did you hear about us?",
+    "submit": "Subscribe",
+    "optionPlaceholder": "Select an option",
+    "options": {
+      "Friends and family": "Friends and family",
+      "Social media": "Social media",
+      "Youtube": "Youtube",
+      "One of our programs or events": "One of our programs or events",
+      "Other": "Other"
+    }
+  },
+  "Search": {
+    "title": "Search",
+    "placeholder": "Search...",
+    "start": "Start typing to search",
+    "notfound": "No results found"
+  },
+  "SwitchLanguage": {
+    "choose": "Choose Your Language",
+    "arabic": "Arabic",
+    "english": "English"
+  },
+  "CopyRight": {
+    "title": "Copyright",
+    "desc": "All rights reserved",
+    "by Momtan": "By Momten"
+  },
+
+  "ContactPage": {
+    "title": "Reach Out to Us",
+    "subTitle": "Have questions or ideas? Want to get involved? Contact us using the form below or connect via email and social media. We're excited to hear from you!",
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "Enter your name",
+      "email": "Email",
+      "emailPlaceholder": "Enter your email",
+      "message": "Message",
+      "messagePlaceholder": "Enter your message",
+      "submit": "Submit"
+    }
+  },
+
+  "Team": {
+    "title": "Meet Our Team",
+    "desc": "Our team is made up of passionate individuals dedicated to making a positive impact in our community. With diverse skills and backgrounds, we work together to drive change and support the mission of our organization."
+  },
+
+  "BackLinks": {
+    "blog": "back to the blog page",
+    "about": "back to the about page"
+  },
+  "PostCard": {
+    "writtenBy": "By",
+    "readMore": "Read More",
+    "and": "and"
+  },
+  "Blog": {
+    "all": "All",
+    "share": "Share",
+    "shareToSocial": "Share To Social Media",
+    "relatedPosts": "Related Posts"
+  },
+
+  "Error": {
+    "error": "Something went wrong",
+    "no-result": "No Results was found",
+    "NotFoundPage": "Page Not Found"
+  },
+  "NextPrev": {
+    "next": "Next",
+    "prev": "Previous"
+  }
+}

@@ -1,9 +1,9 @@
-"use client";
-import Container from "../shared-components/Container";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import Image from "next/image";
+'use client'
+import Container from '../shared-components/Container'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import Image from 'next/image'
 import {
   Form,
   FormControl,
@@ -11,7 +11,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
+} from '@/components/ui/form'
 
 import {
   Select,
@@ -19,21 +19,22 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select'
 
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { newsLetterSchema } from "@/lib/form-schema";
-
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { newsLetterSchema } from '@/lib/form-schema'
+import { useTranslations } from 'next-intl'
 export default function SignUp() {
+  const t = useTranslations('Newsletter')
   const form = useForm<z.infer<typeof newsLetterSchema>>({
     resolver: zodResolver(newsLetterSchema),
     defaultValues: {
-      name: "",
-      email: "",
-      option: "",
+      name: '',
+      email: '',
+      option: '',
     },
-  });
+  })
 
   return (
     <Container
@@ -43,17 +44,14 @@ export default function SignUp() {
     >
       <div className="flex flex-col  justify-center gap-2 py-10 px-10 text-[#2d234b]">
         <h1 className="font-medium capitalize text-2xl sm:text-3xl lg:text-4xl leading-6 mb-4">
-          Sign-up for updates
+          {t('title')}
         </h1>
-        <p>
-          To receive updates about our latest programs, reports, campaigns and
-          webinars,etc.
-        </p>
+        <p>{t('subTitle')}</p>
 
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit((values) => {
-              console.log(values);
+              console.log(values)
             })}
             className="grid grid-cols-1 gap-4 items-end sm:grid-cols-2"
           >
@@ -62,13 +60,9 @@ export default function SignUp() {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>{t('name')}</FormLabel>
                   <FormControl>
-                    <Input
-                      type="text"
-                      placeholder="Enter your name"
-                      {...field}
-                    />
+                    <Input type="text" placeholder={t('namePlaceholder')} {...field} />
                   </FormControl>
 
                   <FormMessage />
@@ -80,13 +74,9 @@ export default function SignUp() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>{t('email')}</FormLabel>
                   <FormControl>
-                    <Input
-                      type="email"
-                      placeholder="Enter your email"
-                      {...field}
-                    />
+                    <Input type="email" placeholder={t('emailPlaceholder')} {...field} />
                   </FormControl>
 
                   <FormMessage />
@@ -99,27 +89,23 @@ export default function SignUp() {
               name="option"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>How did you hear about us?</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
+                  <FormLabel>{t('option')}</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl className="text-secondary font-medium">
                       <SelectTrigger className="">
-                        <SelectValue placeholder="Please choose one option" />
+                        <SelectValue placeholder={t('optionPlaceholder')} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value={"Friends and family"}>
-                        Friends and family
+                      <SelectItem value={'Friends and family'}>
+                        {t('options.Friends and family')}
                       </SelectItem>
-                      <SelectItem value={"Youtube"}>Youtube</SelectItem>
-                      <SelectItem value={"Social media"}>
-                        Social media
+                      <SelectItem value={'Youtube'}>{t('options.Youtube')}</SelectItem>
+                      <SelectItem value={'Social media'}>{t('options.Social media')}</SelectItem>
+                      <SelectItem value={'One of our programs or events'}>
+                        {t('options.One of our programs or events')}
                       </SelectItem>
-                      <SelectItem value={"One of our programs or events"}>
-                        One of our programs or events
-                      </SelectItem>
+                      <SelectItem value={'Other'}>{t('options.Other')}</SelectItem>
                     </SelectContent>
                   </Select>
 
@@ -127,11 +113,8 @@ export default function SignUp() {
                 </FormItem>
               )}
             />
-            <Button
-              type="submit"
-              className="bg-[#2d234b] hover:bg-[#2d234b]/90"
-            >
-              Submit
+            <Button type="submit" className="bg-[#2d234b] hover:bg-[#2d234b]/90">
+              {t('submit')}
             </Button>
           </form>
         </Form>
@@ -148,5 +131,5 @@ export default function SignUp() {
         />
       </div>
     </Container>
-  );
+  )
 }

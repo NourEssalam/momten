@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 0 0% 0%; /* No need to change, white background */
+  --foreground: 210, 10%, 23%;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: hsl(var(--foreground));
+  background: hsl(var(--background));
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer base {
+  :root {
+    /* Background and Foreground */
+    --background: 0 0% 0%; /* No need to change, white background */
+    --foreground: 210, 10%, 23%; /* No need to change, near-black foreground */
+    --section-background: 256, 93%, 94%;
+
+    /* Card and Popover */
+    --card: 0 0% 100%; /* Keeping as white */
+    --card-foreground: 0 0% 3.9%; /* Keeping as near-black */
+    --popover: 0 0% 100%; /* White for popovers */
+    --popover-foreground: 0 0% 3.9%; /* Near-black for popover text */
+    --border: 216 34% 17%;
+    --input: 216 34% 17%;
+    /* Primary Color */
+    --primary: 258 93% 72%; /* Adjusted to match #9675FA (Primary) in HSL */
+    --primary-foreground: 0 0% 98%; /* Keeping as near-white for contrast */
+
+    /* Secondary colors */
+    /* Shades */
+    --stronger-shade: 255, 36%, 22%; /* 	#2e244c */
+    --lighter-shade: 255, 36%, 43%; /* #5a4695 */
+    /* Tints */
+    --stronger-tint: 255, 94%, 80%; /* #b49cfc */
+    --medium-tint: 256, 93%, 94%; /* 	#e9e1fe*/
+    --lighter-tint: 257, 100%, 97%; /* #f4f0ff */
+
+    /* greys */
+    --grey: 210, 10%, 23%;
+
+    /* From shadcn Secondary Color */
+    --secondary: 210, 10%, 23%; /* 	#353b41  this light grey */
+    --secondary-foreground: 0 0% 100%; /* Keeping this near-black for contrast */
+
+    /* Muted Color */
+    --muted: 0 0% 96.1%; /* Keeping light grey muted */
+    --muted-foreground: 0 0% 45.1%; /* Keeping as medium grey for muted text */
+
+    /* Accent Color */
+    --accent: 18 100% 53%; /* Adjusted to #FF5815 (Accent) */
+    --accent-foreground: 0 0% 9%; /* Near-black for contrast against accent */
+
+    /* Destructive Color */
+    --destructive: 0 84.2% 60.2%; /* Keeping as red */
+    --destructive-foreground: 0 0% 98%; /* Keeping as near-white for contrast */
+
+    /* Border and Input */
+    --border: 0 0% 89.8%; /* #000 Keeping as light grey */
+    --input: 0 0% 89.8%; /* #000 Same as border */
+
+    /* Ring */
+    --ring: 0 0% 3.9%; /* Near-black for focus rings or borders */
+
+    /* Radius */
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply text-foreground;
+  }
+}
+
+@layer components {
+  .container {
+    @apply max-w-[1440px] mx-auto my-0 py-12 px-6  md:py-12  lg:px-24;
+  }
+}
+
+@layer utilities {
+}
