@@ -33,7 +33,6 @@ export const getIdByCurrentSlug = async ({
   if (!id) {
     console.error('No post found with the given slug')
     redirect(`/${position}/blog`)
-    return
   }
 
   const result = await payload.findByID({

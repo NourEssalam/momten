@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { CollectionAfterChangeHook } from 'payload'
 
 export const dynamicExcerpt: CollectionAfterChangeHook = async ({

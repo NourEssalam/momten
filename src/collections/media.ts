@@ -3,6 +3,7 @@ import type { CollectionConfig } from 'payload'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import { anyone } from '@/access-control/collections/anyone'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -20,6 +21,12 @@ export const Media: CollectionConfig = {
       ar: 'وسائط',
       fr: 'Média',
     },
+  },
+  access: {
+    create: anyone,
+    update: anyone,
+    delete: anyone,
+    read: () => true,
   },
   fields: [
     { name: 'alt', type: 'text', required: true },

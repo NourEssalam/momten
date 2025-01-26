@@ -27,11 +27,12 @@ export default async function RootLayout({
   children: React.ReactNode
   params: Promise<{ locale: Language }>
 }) {
+  console.log('process.env.NODE_ENV', process.env.NODE_ENV)
+
   // Ensure that the incoming `locale` is valid
   const resolvedParams = await params
   const { locale } = resolvedParams
   // setRequestLocale(locale)
-
   if (!routing.locales.includes(locale)) {
     notFound()
   }

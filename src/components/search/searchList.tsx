@@ -7,7 +7,7 @@ import { PaginatedDocs } from 'payload'
 import SearchResultElement from './SearchResultElement'
 import NoResult from '../shared-components/no-result'
 import { delay } from '@/lib/timers'
-import Loading from '../../app/(front-end)/[locale]/loading'
+import SearchLoading from './seearchLoading'
 
 export default function SearchList({ locale }: { locale: Language }) {
   const searchParams = useSearchParams()
@@ -32,14 +32,14 @@ export default function SearchList({ locale }: { locale: Language }) {
   }, [search])
 
   if (isLoading) {
-    return <Loading />
+    return <SearchLoading />
   }
 
   return (
     <div className="  mt-4 h-[90%] pb-4">
       {searchResults?.docs && searchResults?.docs.length > 0 ? (
         <div
-          className=" h-[400px] flex flex-col gap-1 scrollbar-thumb-rounded-full 
+          className=" h-[400px] flex flex-col gap-1 scrollbar-thumb-rounded-full
                                  scrollbar-track-rounded-full scrollbar scrollbar-thumb-slate-700
                                   scrollbar-track-slate-300 overflow-y-scroll"
         >

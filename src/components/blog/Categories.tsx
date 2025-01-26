@@ -14,9 +14,14 @@ import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import Container from '../shared-components/Container'
 import { Language } from '@/i18n/routing'
-import { set } from 'lodash'
 
-export default function Category({ result, locale }: { result: Tag[]; locale: Language }) {
+export default function Category({
+  result,
+  locale,
+}: {
+  result: Tag[]
+  locale: Language
+}) {
   const t = useTranslations('Blog')
   // fetch category
   const category = result.map((cat: Tag) => cat.title)
@@ -31,6 +36,7 @@ export default function Category({ result, locale }: { result: Tag[]; locale: La
 
   useEffect(() => {
     if (!title) setCategory('All')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [title])
 
   useEffect(() => {
@@ -86,8 +92,14 @@ export default function Category({ result, locale }: { result: Tag[]; locale: La
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="  bg-primary" dir={locale === 'ar' ? 'rtl' : 'ltr'} />
-        <CarouselNext className="  bg-primary" dir={locale === 'ar' ? 'rtl' : 'ltr'} />
+        <CarouselPrevious
+          className="  bg-primary"
+          dir={locale === 'ar' ? 'rtl' : 'ltr'}
+        />
+        <CarouselNext
+          className="  bg-primary"
+          dir={locale === 'ar' ? 'rtl' : 'ltr'}
+        />
       </Carousel>
     </Container>
   )

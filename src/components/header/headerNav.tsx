@@ -1,5 +1,5 @@
 'use client'
-import { Language, Link } from '@/i18n/routing'
+import { Link } from '@/i18n/routing'
 import { usePathname } from 'next/navigation'
 import { Header } from '@/payload-types'
 import { useEffect, useState } from 'react'

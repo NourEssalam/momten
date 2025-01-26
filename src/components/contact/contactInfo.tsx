@@ -45,7 +45,7 @@ export default function ContactInfo({ contact }: { contact: Contact }) {
         </div>
         <Link
           href={`mailto:${email}`}
-          className="font-normal hover:text-accent text-xs inline-block text-grey  transition-colors duration-300"
+          className="font-normal hover:text-accent text-lg inline-block text-grey  transition-colors duration-300"
         >
           <div className="flex items-center gap-2">
             <IoIosMailUnread className="w-5 h-5 text-red-600" />

@@ -7,7 +7,10 @@ type Overrides = {
   checkboxOverrides?: Partial<CheckboxField>
 }
 
-type Slug = (fieldToUse?: string, overrides?: Overrides) => [TextField, CheckboxField]
+type Slug = (
+  fieldToUse?: string,
+  overrides?: Overrides,
+) => [TextField, CheckboxField]
 
 export const slugField: Slug = (fieldToUse = 'title', overrides = {}) => {
   const { slugOverrides, checkboxOverrides } = overrides
@@ -23,8 +26,9 @@ export const slugField: Slug = (fieldToUse = 'title', overrides = {}) => {
     ...checkboxOverrides,
   }
 
-  // Expect ts error here because of typescript mismatching Partial<TextField> with TextField
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error
+  // Expect ts error here because of typescript mismatching Partial<TextField> with TextField
   const slugField: TextField = {
     name: 'slug',
     type: 'text',

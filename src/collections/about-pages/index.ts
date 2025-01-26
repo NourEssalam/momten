@@ -1,5 +1,4 @@
 import { adminAndSuperAdmin } from '@/access-control/collections/adminAndSuperAdmin'
-import { anyone } from '@/access-control/collections/anyone'
 import { superAdminField } from '@/access-control/fields/superAdminField'
 import {
   EXPERIMENTAL_TableFeature,
@@ -23,7 +22,7 @@ export const AboutPages: CollectionConfig = {
   },
   access: {
     create: adminAndSuperAdmin,
-    read: adminAndSuperAdmin,
+    read: () => true,
     update: adminAndSuperAdmin,
     delete: adminAndSuperAdmin,
   },

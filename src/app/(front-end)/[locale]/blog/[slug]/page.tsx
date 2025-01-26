@@ -1,13 +1,9 @@
-import config from '@payload-config'
-import { getPayload } from 'payload'
-import type { Metadata } from 'next'
-
-import { cache, Suspense } from 'react'
-
+import { Suspense } from 'react'
 import { Language } from '@/i18n/routing'
-
 import Loading from './loading'
 import PostFeed from './postFeed'
+import { queryPostBySlug } from './query'
+import { Metadata } from 'next'
 
 export default async function Page(props: {
   params: Promise<{ slug: string; locale: Language }>
@@ -27,10 +23,11 @@ export async function generateMetadata(props: {
   const { slug, locale } = await props.params
 
   const post = await queryPostBySlug({ slug, locale })
-  const baseUrl = 'https://50ab-197-238-145-248.ngrok-free.app'
+  const baseUrl = 'https://9e28-197-244-54-172.ngrok-free.app'
   console.log(
-    `${baseUrl}/${locale}${typeof post.image === 'object' ? post.image.url : ''}`,
+    `${baseUrl}${typeof post.image === 'object' ? post.image.url : ''}`,
   )
+
   return {
     title: post?.title,
     description: post?.excerpt,
@@ -43,45 +40,20 @@ export async function generateMetadata(props: {
   }
 }
 
-export async function generateStaticParams(props: {
-  params: Promise<{ locale: Language }>
-}) {
-  const { locale } = await props.params
-  const payload = await getPayload({ config })
-  const posts = await payload.find({
-    collection: 'posts',
-    limit: 100,
-    locale: locale,
-    pagination: false,
-    overrideAccess: true,
-    select: {
-      slug: true,
-    },
-  })
+// export async function generateStaticParams() {
+//   const result = await queryPostsSlugs()
 
-  const params = posts.docs.map(({ slug }) => {
-    return locale === 'ar' ? decodeURIComponent(slug ?? '') : { slug }
-  })
+//   const params = result.flatMap((item) =>
+//     item.slug
+//       ? Object.values(item.slug).map((orgSlug) => {
+//           const slug = decodeURIComponent(orgSlug)
+//           return { slug }
+//         })
+//       : [],
+//   )
 
-  return params
-}
+//   // console.log('params', params)
+//   // console.log('params length', params.length)
 
-export const queryPostBySlug = cache(
-  async ({ slug, locale }: { slug: string; locale: Language }) => {
-    const payload = await getPayload({ config })
-
-    const result = await payload.find({
-      collection: 'posts',
-      limit: 1,
-      locale: locale,
-      pagination: false,
-      where: {
-        slug: {
-          equals: locale === 'ar' ? decodeURIComponent(slug) : slug,
-        },
-      },
-    })
-
-    return result.docs?.[0] || null
-  },
-)
+//   return params
+// }

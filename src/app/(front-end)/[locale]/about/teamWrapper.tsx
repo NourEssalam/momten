@@ -10,7 +10,9 @@ export default function TeamWrapper({ locale }: { locale: Language }) {
         <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-shade-strong">
           {t('title')}
         </h1>
-        <p className="lg:w-2/3 mx-auto leading-relaxed text-base text-secondary">{t('desc')}</p>
+        <p className="lg:w-2/3 mx-auto leading-relaxed text-base text-secondary">
+          {t('desc')}
+        </p>
       </div>
       <Team locale={locale} />
     </Container>

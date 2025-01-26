@@ -1,4 +1,3 @@
-import Container from '../shared-components/Container'
 import {
   Carousel,
   CarouselContent,
@@ -32,7 +31,7 @@ export default async function Team({ locale }: { locale: Language }) {
   )
 }
 
-export const queryTeam = cache(async ({ locale }: { locale: Language }) => {
+const queryTeam = cache(async ({ locale }: { locale: Language }) => {
   const payload = await getPayload({ config })
   const result = await payload.find({
     collection: 'team',

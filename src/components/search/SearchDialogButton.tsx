@@ -15,19 +15,24 @@ import { useTranslations } from 'next-intl'
 import { Language } from '@/i18n/routing'
 import { GiArchiveResearch } from 'react-icons/gi'
 import SearchList from './searchList'
+import { useClickedSearchElement } from '@/state-store/search'
 
 export default function DialogSearchButton({ locale }: { locale: Language }) {
   const t = useTranslations('Search')
   const searchParams = useSearchParams()
-
+  const open = useClickedSearchElement((state) => state.open)
+  const setOpen = useClickedSearchElement((state) => state.setOpen)
   const search = searchParams.get('search')
 
   return (
     <>
-      <Dialog>
+      <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <span className="cursor-pointer">
-            <CiSearch className="text-grey stroke-1 w-7 h-7 hover:text-accent" />
+            <CiSearch
+              className="text-grey stroke-1 w-7 h-7 hover:text-accent"
+              onClick={() => setOpen(true)}
+            />
           </span>
         </DialogTrigger>
         <DialogContent

@@ -1,7 +1,4 @@
-import config from '@payload-config'
-import { getPayload } from 'payload'
 import Header from './Header'
-import { cache } from 'react'
 import { Language } from '@/i18n/routing'
 import { queryHeaderNav } from './action'
 

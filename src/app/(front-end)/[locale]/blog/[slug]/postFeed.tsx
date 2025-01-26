@@ -5,12 +5,12 @@ import Image from 'next/image'
 import BackLink from '@/components/shared-components/BackLink'
 import ShareMenu from '@/components/blog/ShareMenu'
 import { RichText } from '@payloadcms/richtext-lexical/react'
-import { queryPostBySlug } from './page'
+import { queryPostBySlug } from './query'
 import NoResult from '@/components/shared-components/no-result'
 
 import Authors from './authors'
 import RelatedPosts from './relatedPosts'
-import { delay } from '@/lib/timers'
+// import { delay } from '@/lib/timers'
 
 export default async function PostFeed({
   slug,
@@ -19,7 +19,7 @@ export default async function PostFeed({
   slug: string
   locale: Language
 }) {
-  await delay(2500) // 2.5 seconds delay
+  // await delay(2500) // 2.5 seconds delay
   const post = await queryPostBySlug({ slug, locale })
 
   const relatedPosts = post?.relatedPosts || []
@@ -32,7 +32,7 @@ export default async function PostFeed({
     <section className="flex flex-col gap-2 xl:gap-10 justify-center items-center">
       <Container className="flex flex-col gap-10 mb-0 pb-0 max-w-[1150px]">
         <BackLink toPage="blog" />
-        <h1 className="text-3xl text-secondary  font-medium sm:text-4xl lg:text-6xl leading-relaxed lg:leading-normal  ">
+        <h1 className="text-3xl text-secondary  font-medium sm:text-4xl lg:text-6xl lg:leading-tight  ">
           {post.title}
         </h1>
         {/* meta data */}
@@ -48,6 +48,7 @@ export default async function PostFeed({
 
           <div className="flex justify-end ">
             <ShareMenu
+              title={post.title}
               excerpt={post.excerpt as string}
               tags={post?.tag}
               locale={locale}
@@ -66,12 +67,7 @@ export default async function PostFeed({
       </Container>
       {/* Content */}
       <Container className="mt-0 pt-0 max-w-[1150px]">
-        {/* <RichText
-          className="text-lg md:text-xl p-5 text-black !leading-relaxed tracking-normal"
-          data={post.content}
-        /> */}
         <article className="prose prose-stone md:prose-lg lg:prose-xl prose-p:text-black">
-          {/* <PayloadLexicalReact content={post.content} />  Using zapa  */}
           <RichText data={post.content} />
         </article>
         <div

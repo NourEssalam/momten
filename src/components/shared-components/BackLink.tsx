@@ -13,7 +13,7 @@ export default function BackLink({
 }) {
   const t = useTranslations('BackLinks')
   return (
-    <Link href={`/blog`} className={cn(className)}>
+    <Link href={`/${toPage}`} className={cn(className)}>
       {/* Back */}
       <div className=" flex gap-2  ">
         <ArrowLeft />

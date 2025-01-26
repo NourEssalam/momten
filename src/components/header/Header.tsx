@@ -2,12 +2,10 @@
 import { Language, Link } from '@/i18n/routing'
 import Image from 'next/image'
 
-import { mainMenu } from '@/lib/menus'
 import { CiMenuFries } from 'react-icons/ci'
 import { IoIosCloseCircleOutline } from 'react-icons/io'
 
 import { useEffect, useState } from 'react'
-import { mainMenuType } from '@/lib/types/menu-types'
 
 import SwitchLanguage from '../shared-components/SwitchLanguage'
 import DialogSearchButton from '@/components/search/SearchDialogButton'

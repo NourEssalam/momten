@@ -1,12 +1,17 @@
 import type { Language } from '@/i18n/routing'
 
 import TeamWrapper from './teamWrapper'
-import { queryAboutMetaData } from './localeApi'
+import { queryAbout } from './query'
 import AboutCards from '@/components/about/about-cards'
-export default async function About({ params }: { params: Promise<{ locale: Language }> }) {
+
+export default async function About({
+  params,
+}: {
+  params: Promise<{ locale: Language }>
+}) {
   const localePrams = await params
   const { locale } = localePrams
-  const result = await queryAboutMetaData({ locale })
+  const result = await queryAbout({ locale })
 
   return (
     <section>

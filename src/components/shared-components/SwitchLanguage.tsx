@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuLabel,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
@@ -34,7 +33,10 @@ export default function SwitchLanguage() {
     if (value === 'ar' && (pathname.includes('/en/') || pathname === '/en')) {
       segments[1] = 'ar'
       router.push(segments.join('/'))
-    } else if (value === 'en' && (pathname.includes('/ar/') || pathname === '/ar')) {
+    } else if (
+      value === 'en' &&
+      (pathname.includes('/ar/') || pathname === '/ar')
+    ) {
       segments[1] = 'en'
       router.push(segments.join('/'))
     }
@@ -53,6 +55,7 @@ export default function SwitchLanguage() {
     if (segments.length > 3 && segments[2].includes('blog')) {
       getId()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [position])
 
   return (
@@ -73,10 +76,16 @@ export default function SwitchLanguage() {
           onValueChange={handleLanguageChange}
           className="items-center justify-center"
         >
-          <DropdownMenuRadioItem className="items-center justify-center" value="ar">
+          <DropdownMenuRadioItem
+            className="items-center justify-center"
+            value="ar"
+          >
             {t('arabic')}
           </DropdownMenuRadioItem>
-          <DropdownMenuRadioItem className="items-center justify-center" value="en">
+          <DropdownMenuRadioItem
+            className="items-center justify-center"
+            value="en"
+          >
             {t('english')}
           </DropdownMenuRadioItem>
         </DropdownMenuRadioGroup>
