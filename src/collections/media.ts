@@ -23,9 +23,9 @@ export const Media: CollectionConfig = {
     },
   },
   access: {
-    create: anyone,
-    update: anyone,
-    delete: anyone,
+    create: () => true,
+    update: () => true,
+    delete: () => true,
     read: () => true,
   },
   fields: [
@@ -41,7 +41,8 @@ export const Media: CollectionConfig = {
     },
   ],
   upload: {
-    staticDir: path.resolve(dirname, '../../public/media'),
+    // staticDir: path.resolve(dirname, '../../public/media'),
+
     adminThumbnail: 'thumbnail',
     mimeTypes: ['image/jpeg', 'image/png', 'image/jpg', 'image/gif', 'video/*'],
     focalPoint: true,
