@@ -37,6 +37,10 @@
       "source.fixAll.eslint": "explicit"
     }
   },
+  "[dotenv]": {
+    "editor.defaultFormatter": null,
+    "editor.formatOnSave": false
+  },
   "i18n-ally.localesPaths": ["./path/to/your/messages"], // E.g. "./messages"
   "i18n-ally.keystyle": "nested"
 }

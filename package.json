@@ -23,6 +23,7 @@
     "@payloadcms/payload-cloud": "3.16.0",
     "@payloadcms/plugin-search": "^3.16.0",
     "@payloadcms/richtext-lexical": "3.16.0",
+    "@payloadcms/storage-vercel-blob": "^3.19.0",
     "@payloadcms/translations": "^3.16.0",
     "@payloadcms/ui": "^3.16.0",
     "@radix-ui/react-accordion": "^1.2.2",
