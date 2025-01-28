@@ -35,7 +35,7 @@ export const plugins: Plugin[] = [
   // payloadCloudPlugin(),
 
   vercelBlobStorage({
-    enabled: process.env.NODE_ENV === 'production' ? true : false,
+    // enabled: process.env.NODE_ENV === 'production' ? true : false,
     collections: {
       media: true,
     },
