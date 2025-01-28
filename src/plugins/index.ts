@@ -1,8 +1,9 @@
 import { beforeSyncWithSearch } from '@/search/beforeSync'
 import { searchFields } from '@/search/fieldOverrides'
-import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
+// import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
 import { searchPlugin } from '@payloadcms/plugin-search'
 import { Plugin } from 'payload'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 
 export const plugins: Plugin[] = [
   searchPlugin({
@@ -31,5 +32,14 @@ export const plugins: Plugin[] = [
       },
     },
   }),
-  payloadCloudPlugin(),
+  // payloadCloudPlugin(),
+
+  vercelBlobStorage({
+    enabled: process.env.NODE_ENV === 'production' ? true : false,
+    collections: {
+      media: true,
+    },
+    // Token provided by Vercel once Blob storage is added to your Vercel project
+    token: process.env.BLOB_READ_WRITE_TOKEN,
+  }),
 ]
