@@ -19,6 +19,8 @@ export const adminAndSuperAdminField: FieldAccess = ({
     return false
   }
 
+  if (user?.role === 'admin' && user?.id === id) return false
+
   // ensure that
   return user?.role === 'super-admin' || user?.role === 'admin'
 }
