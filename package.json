@@ -36,6 +36,7 @@
     "@radix-ui/react-slot": "^1.1.1",
     "@vercel/speed-insights": "^1.1.0",
     "@zapal/payload-lexical-react": "^1.7.0",
+    "axios": "^1.7.9",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cross-env": "^7.0.3",
