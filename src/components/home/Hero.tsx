@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl'
 export default function Hero({ locale }: { locale: Language }) {
   const t = useTranslations('Hero')
   return (
-    <section className="  bg-section w-full lg:h-[40rem] ">
+    <section className="  bg-white w-full lg:h-[40rem] ">
       {/* content */}
       <div className="container flex flex-col  lg:flex-row  lg:gap-20  gap-10 items-center  justify-center ">
         <div
@@ -25,7 +25,7 @@ export default function Hero({ locale }: { locale: Language }) {
             {t('title')}
           </h1>
           <p
-            className="text-lg text-gray-700 font-semibold 
+            className="text-lg text-gray-900 
                       sm:text-xl
                       lg:text-base"
           >
@@ -37,7 +37,7 @@ export default function Hero({ locale }: { locale: Language }) {
               href={'#sign-up'}
               className={`${buttonVariants({
                 variant: 'default',
-              })} md:text-xl md:h-12 md:px-6`}
+              })} md:text-xl md:h-12 md:px-4`}
             >
               {t('subscribeButton')} &darr;
             </Link>
@@ -45,7 +45,7 @@ export default function Hero({ locale }: { locale: Language }) {
               href={'/about'}
               className={`${buttonVariants({
                 variant: 'secondary',
-              })} md:text-xl md:h-12 md:px-6`}
+              })} md:text-xl md:h-12 md:px-4`}
             >
               {t('learnMoreButton')} &darr;
             </Link>
