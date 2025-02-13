@@ -20,6 +20,7 @@ import { Team } from './collections/team'
 import { Tag } from './collections/Tags'
 import { Posts } from './collections/posts'
 import { Partner } from './globals/partners/config'
+import brevoAdapter from './lib/brevo-adapter'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -78,7 +79,7 @@ export default buildConfig({
     defaultLocale: 'en', // required
     // fallback: true, // defaults to true
   },
-
+  email: brevoAdapter(),
   editor: lexicalEditor({}),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

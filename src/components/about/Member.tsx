@@ -16,7 +16,13 @@ type Team = {
       }[]
     | null
 }
-import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter, FaYoutube } from 'react-icons/fa'
+import {
+  FaFacebook,
+  FaInstagram,
+  FaLinkedin,
+  FaTwitter,
+  FaYoutube,
+} from 'react-icons/fa'
 import { IconType } from 'react-icons'
 const iconMapping: Record<string, IconType> = {
   FaFacebook,
@@ -34,14 +40,16 @@ export default function Member({ team }: { team: Team }) {
     <div className="flex flex-col items-center justify-center text-center gap-1">
       <div className="w-28 h-28 rounded-full overflow-hidden">
         <Image
-          src={image?.url || ''}
-          alt={image?.alt || ''}
+          src={image?.url || '/logo.png'}
+          alt={image?.alt || 'member image'}
           width={500}
           height={500}
           className="object-cover w-full h-full"
         />
       </div>
-      <h3 className="mb-1 text-2xl font-semi-bold tracking-tight text-shade-strong">{name}</h3>
+      <h3 className="mb-1 text-2xl font-semi-bold tracking-tight text-shade-strong">
+        {name}
+      </h3>
       <p className="text-secondary">{position}</p>
       <ul className="flex justify-center gap-4 mt-4">
         {socials?.map((social) => {

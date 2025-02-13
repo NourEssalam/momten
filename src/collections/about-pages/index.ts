@@ -4,6 +4,7 @@ import {
   EXPERIMENTAL_TableFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
+
 import type { CollectionConfig } from 'payload'
 
 export const AboutPages: CollectionConfig = {

@@ -79,12 +79,13 @@ export const Users: CollectionConfig = {
 
       hooks: {
         // only super user can set the super admin-role
-        beforeValidate: [
-          ({ value, req }) => {
+        afterChange: [
+          ({ value, req, previousValue }) => {
             // Check if the user is not a super-admin
             if (
               req.user?.role !== 'super-admin' &&
-              (value === 'super-admin' || value === 'admin')
+              (value === 'super-admin' ||
+                (value === 'admin' && value !== previousValue))
             ) {
               throw new APIError(
                 "Only super-admins can assign 'admin' or 'super-admin' roles.",

@@ -5,6 +5,7 @@ export const arabicTranslation = {
       username: 'الاسم',
       email: 'البريد الالكتروني',
       users: 'المستخدمين',
+      editAll: 'تعديل الكل',
     },
   },
 }

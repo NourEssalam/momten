@@ -32,8 +32,8 @@ export default function PostCard({
       >
         <div className=" w-full h-32 md:h-48  relative inset-0 rounded-t-2xl overflow-hidden">
           <Image
-            src={mediaImage.url ?? ''}
-            alt={mediaImage.alt}
+            src={mediaImage.url ?? '/logo.png'}
+            alt={mediaImage.alt ?? 'post image'}
             width={500}
             height={500}
             className={`w-full h-full object-cover absolute inset-0  ${

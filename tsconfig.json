@@ -20,7 +20,8 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
-      "@payload-config": ["./src/payload.config.ts"]
+      "@payload-config": ["./src/payload.config.ts"],
+      "react": ["./node_modules/@types/react"]
     },
     "target": "ES2022"
   },
@@ -30,7 +31,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "postcss.config.mjs",
-    "tailwind.config.ts"
+    "tailwind.config.ts",
+    "next-sitemap.config.cjs"
   ],
   "exclude": ["node_modules"]
 }

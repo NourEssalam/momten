@@ -57,8 +57,8 @@ export default async function PostFeed({
         </div>
         <div className="relative w-full h-96  overflow-hidden  rounded-3xl">
           <Image
-            src={mediaImage.url || ''}
-            alt={mediaImage.alt}
+            src={mediaImage.url || '/logo.png'}
+            alt={mediaImage.alt || 'post image'}
             fill
             sizes="100vw"
             className="w-full h-full object-fill absolute inset-0 -z-10"
