@@ -8,7 +8,7 @@ const brevoAdapter = (): EmailAdapter => {
     defaultFromAddress: process.env.BREVO_SENDER_EMAIL as string,
     sendEmail: async (message: SendEmailOptions) => {
       if (!process.env.BREVO_EMAILS_ACTIVE) {
-        console.log('Emails are disabled')
+        console.log('Emails are fucked up')
         console.log(message)
         return
       }
