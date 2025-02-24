@@ -59,7 +59,7 @@ export default function Hero({ locale }: { locale: Language }) {
           height="250"
           // fill={true}
           sizes="(max-width : 768px) 50vw, 50vw"
-          className="w-full h-auto md:w-[50%] md:h-[50%]  lg:w-full  xl:w-[50%] object-cover"
+          className="w-full h-auto md:w-[50%] md:h-[50%]  lg:w-full  xl:w-[50%]  object-cover "
         />
       </div>
     </section>
