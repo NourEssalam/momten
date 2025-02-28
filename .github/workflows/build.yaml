@@ -1,4 +1,4 @@
-name: Build and Deploy with Nixpacks
+name: Build and Deploy to Coolify
 on:
   push:
     branches: ['main']
@@ -12,19 +12,25 @@ jobs:
       contents: read
       packages: write
     steps:
-      - uses: actions/checkout@v3
- 
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v2
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build with Nixpacks and push to registry
-        run: |
-          nixpacks build . --name ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
 
       - name: Deploy to Coolify
         run: |
