@@ -4,7 +4,7 @@ on:
     branches: ['main']
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: 'NourEssalam/momten'
+  IMAGE_NAME: ${{ format('{0}/{1}', github.repository_owner, github.event.repository.name) | lower }}
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
