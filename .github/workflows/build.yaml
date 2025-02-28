@@ -4,6 +4,7 @@ on:
     branches: ['main']
 env:
   REGISTRY: ghcr.io
+  IMAGE_NAME: 'nouressalam/momten'
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -13,12 +14,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
-      - name: Set lowercase repository name
-        run: |
-          echo "OWNER_LC=${GITHUB_REPOSITORY_OWNER,,}" >>${GITHUB_ENV}
-          echo "REPO_LC=${GITHUB_REPOSITORY#*/}" >>${GITHUB_ENV}
-          echo "REPO_NAME_LC=${REPO_LC,,}" >>${GITHUB_ENV}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -35,7 +30,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.OWNER_LC }}/${{ env.REPO_NAME_LC }}:latest
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
 
       - name: Deploy to Coolify
         run: |
