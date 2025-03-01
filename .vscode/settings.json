@@ -42,5 +42,8 @@
     "editor.formatOnSave": false
   },
   "i18n-ally.localesPaths": ["./path/to/your/messages"], // E.g. "./messages"
-  "i18n-ally.keystyle": "nested"
+  "i18n-ally.keystyle": "nested",
+  "[dockerfile]": {
+    "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+  }
 }
