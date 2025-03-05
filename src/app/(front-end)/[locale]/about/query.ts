@@ -17,6 +17,7 @@ export const queryAboutBySlug = cache(
             equals: slug,
           },
         },
+        fallbackLocale: false,
       })
 
       return result.docs?.[0] || null
@@ -50,6 +51,7 @@ export const queryAbout = cache(async ({ locale }: { locale?: Language }) => {
     limit: 1000,
     locale: locale,
     pagination: false,
+    fallbackLocale: false,
   })
 
   return result.docs || null

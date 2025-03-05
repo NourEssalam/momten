@@ -75,6 +75,10 @@ export default buildConfig({
         code: 'ar',
         rtl: true,
       },
+      {
+        label: 'French',
+        code: 'fr',
+      },
     ],
     defaultLocale: 'en', // required
     // fallback: true, // defaults to true

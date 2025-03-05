@@ -64,6 +64,7 @@ export interface Config {
   auth: {
     users: UserAuthOperations;
   };
+  blocks: {};
   collections: {
     users: User;
     media: Media;
@@ -104,7 +105,7 @@ export interface Config {
     contact: ContactSelect<false> | ContactSelect<true>;
     partner: PartnerSelect<false> | PartnerSelect<true>;
   };
-  locale: 'en' | 'ar';
+  locale: 'en' | 'ar' | 'fr';
   user: User & {
     collection: 'users';
   };

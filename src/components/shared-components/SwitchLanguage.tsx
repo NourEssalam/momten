@@ -13,33 +13,20 @@ import { FaGlobeAmericas } from 'react-icons/fa'
 import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
-import { useTranslations } from 'next-intl'
 import { getIdByCurrentSlug } from './switchSlugAction'
 import { Language } from '@/i18n/routing'
 
 export default function SwitchLanguage() {
-  const t = useTranslations('SwitchLanguage')
   const pathname = usePathname()
-  const [position, setPosition] = useState(
-    `${pathname.includes('/ar/') || pathname === '/ar' ? 'ar' : 'en'}`,
-  )
-  const router = useRouter()
-
   const segments = pathname.split('/')
+  const [position, setPosition] = useState(`${segments[1]}`)
+  const router = useRouter()
 
   const handleLanguageChange = (value: React.SetStateAction<string>) => {
     setPosition(value)
-
-    if (value === 'ar' && (pathname.includes('/en/') || pathname === '/en')) {
-      segments[1] = 'ar'
-      router.push(segments.join('/'))
-    } else if (
-      value === 'en' &&
-      (pathname.includes('/ar/') || pathname === '/ar')
-    ) {
-      segments[1] = 'en'
-      router.push(segments.join('/'))
-    }
+    console.log('value', value)
+    segments[1] = value as Language
+    router.push(segments.join('/'))
   }
 
   useEffect(() => {
@@ -80,13 +67,19 @@ export default function SwitchLanguage() {
             className="items-center justify-center"
             value="ar"
           >
-            {t('arabic')}
+            العربية
           </DropdownMenuRadioItem>
           <DropdownMenuRadioItem
             className="items-center justify-center"
             value="en"
           >
-            {t('english')}
+            English
+          </DropdownMenuRadioItem>
+          <DropdownMenuRadioItem
+            className="items-center justify-center"
+            value="fr"
+          >
+            Français
           </DropdownMenuRadioItem>
         </DropdownMenuRadioGroup>
       </DropdownMenuContent>

@@ -40,7 +40,8 @@
   "SwitchLanguage": {
     "choose": "Choose Your Language",
     "arabic": "Arabic",
-    "english": "English"
+    "english": "English",
+    "french": "French"
   },
   "CopyRight": {
     "title": "Copyright",

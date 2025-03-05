@@ -48,11 +48,13 @@ export default async function Page({ params }: Args) {
   const segments = await params
   const { locale, slug = '' } = segments
   const result = await queryAboutBySlug({ slug, locale })
-  if (process.env.NODE_ENV === 'production' && !result) {
-    console.log('process.env.NODE_ENV', process.env.NODE_ENV)
+
+  if (!result || !result?.accordions || !result?.title) {
     return <NotFoundPage />
   }
+
   const accordions = result?.accordions
+
   return (
     <Container className="flex flex-col gap-10 ">
       <BackLink toPage="about" />

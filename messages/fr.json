@@ -1,0 +1,92 @@
+{
+  "Hero": {
+    "title": "L'Association de la Citoyenneté, des Droits de l'Homme et du Développement Durable",
+    "desc": "Une nation dédiée aux principes des Objectifs de Développement Durable et à un avenir meilleur pour les générations futures.",
+    "subscribeButton": "S'abonner",
+    "learnMoreButton": "En savoir plus"
+  },
+  "Partner": {
+    "title": "De confiance par"
+  },
+  "AboutNutshell": {
+    "title": "À PROPOS DE NOUS",
+    "desc": "L'organisation Momtan a développé un plan stratégique et prospectif pour simuler les objectifs de développement durable dans les dimensions économiques, sociales et environnementales. Il s'étend de 2021 à 2030.",
+    "ReadMore": "Lire la suite"
+  },
+  "Newsletter": {
+    "title": "Inscrivez-vous pour les mises à jour",
+    "subTitle": "Recevez des mises à jour sur nos derniers programmes, rapports, campagnes et webinaires, etc.",
+    "email": "Email",
+    "emailPlaceholder": "Entrez votre adresse email",
+    "name": "Nom",
+    "namePlaceholder": "Entrez votre nom",
+    "option": "Comment avez-vous entendu parler de nous ?",
+    "submit": "S'abonner",
+    "optionPlaceholder": "Sélectionnez une option",
+    "options": {
+      "Friends and family": "Amis et famille",
+      "Social media": "Réseaux sociaux",
+      "Youtube": "YouTube",
+      "One of our programs or events": "L'un de nos programmes ou événements",
+      "Other": "Autre"
+    }
+  },
+  "Search": {
+    "title": "Recherche",
+    "placeholder": "Rechercher...",
+    "start": "Commencez à taper pour rechercher",
+    "notfound": "Aucun résultat trouvé"
+  },
+  "SwitchLanguage": {
+    "choose": "Choisissez votre langue",
+    "arabic": "Arabe",
+    "english": "Anglais",
+    "french": "Français"
+  },
+  "CopyRight": {
+    "title": "Droits d'auteur",
+    "desc": "Tous droits réservés",
+    "by Momtan": "Par Momtan"
+  },
+  "ContactPage": {
+    "title": "Contactez-nous",
+    "subTitle": "Vous avez des questions ou des idées ? Vous voulez vous impliquer ? Contactez-nous via le formulaire ci-dessous ou connectez-vous par email et sur les réseaux sociaux. Nous sommes ravis de vous entendre !",
+    "form": {
+      "name": "Nom",
+      "namePlaceholder": "Entrez votre nom",
+      "email": "Email",
+      "emailPlaceholder": "Entrez votre email",
+      "message": "Message",
+      "messagePlaceholder": "Entrez votre message",
+      "submit": "Envoyer"
+    }
+  },
+  "Team": {
+    "title": "Rencontrez notre équipe",
+    "desc": "Notre équipe est composée de personnes passionnées, dédiées à avoir un impact positif sur notre communauté. Avec des compétences et des parcours divers, nous travaillons ensemble pour apporter des changements et soutenir la mission de notre organisation."
+  },
+  "BackLinks": {
+    "blog": "retour à la page du blog",
+    "about": "retour à la page à propos"
+  },
+  "PostCard": {
+    "writtenBy": "Par",
+    "readMore": "Lire la suite",
+    "and": "et"
+  },
+  "Blog": {
+    "all": "Tous",
+    "share": "Partager",
+    "shareToSocial": "Partager sur les réseaux sociaux",
+    "relatedPosts": "Articles connexes"
+  },
+  "Error": {
+    "error": "Quelque chose s'est mal passé",
+    "no-result": "Aucun résultat trouvé",
+    "NotFoundPage": "Page non trouvée"
+  },
+  "NextPrev": {
+    "next": "Suivant",
+    "prev": "Précédent"
+  }
+}

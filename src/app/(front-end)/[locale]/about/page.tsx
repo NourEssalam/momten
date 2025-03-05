@@ -15,7 +15,7 @@ export default async function About({
 
   return (
     <section>
-      <AboutCards props={result} locale={locale} />
+      {result && <AboutCards props={result} locale={locale} />}
       <TeamWrapper locale={locale} />
     </section>
   )
