@@ -80,13 +80,14 @@ export const Users: CollectionConfig = {
       hooks: {
         // only super user can set the super admin-role
         afterChange: [
-          ({ value, req, previousValue }) => {
+          ({ value, req }) => {
             // Check if the user is not a super-admin
             if (
               req.user?.role !== 'super-admin' &&
-              (value === 'super-admin' ||
-                (value === 'admin' && value !== previousValue))
+              !req.url?.includes('forgot-password') &&
+              (value === 'super-admin' || value === 'admin')
             ) {
+              console.log('req.url :', req.url)
               throw new APIError(
                 "Only super-admins can assign 'admin' or 'super-admin' roles.",
                 400,
