@@ -72,6 +72,7 @@ export interface Config {
     team: Team;
     tag: Tag;
     posts: Post;
+    'newsletter-subscribers': NewsletterSubscriber;
     'search-results': SearchResult;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -85,6 +86,7 @@ export interface Config {
     team: TeamSelect<false> | TeamSelect<true>;
     tag: TagSelect<false> | TagSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
+    'newsletter-subscribers': NewsletterSubscribersSelect<false> | NewsletterSubscribersSelect<true>;
     'search-results': SearchResultsSelect<false> | SearchResultsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -299,6 +301,18 @@ export interface Post {
   createdAt: string;
 }
 /**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "newsletter-subscribers".
+ */
+export interface NewsletterSubscriber {
+  id: string;
+  name: string;
+  email: string;
+  option: 'Friends and family' | 'Youtube' | 'Social media' | 'One of our programs or events' | 'Other';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This is a collection of automatically created search results. These results are used by the global site search and will be updated automatically as documents in the CMS are created or updated.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -347,6 +361,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'posts';
         value: string | Post;
+      } | null)
+    | ({
+        relationTo: 'newsletter-subscribers';
+        value: string | NewsletterSubscriber;
       } | null)
     | ({
         relationTo: 'search-results';
@@ -498,6 +516,17 @@ export interface PostsSelect<T extends boolean = true> {
   tag?: T;
   slug?: T;
   slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "newsletter-subscribers_select".
+ */
+export interface NewsletterSubscribersSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  option?: T;
   updatedAt?: T;
   createdAt?: T;
 }

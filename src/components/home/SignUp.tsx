@@ -2,6 +2,7 @@
 import Container from '../shared-components/Container'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { useActionState, useTransition } from 'react'
 import { z } from 'zod'
 import Image from 'next/image'
 import {
@@ -12,7 +13,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-
+import { useRef } from 'react'
 import {
   Select,
   SelectContent,
@@ -24,17 +25,27 @@ import {
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { newsLetterSchema } from '@/lib/form-schema'
+import { onSubmitAction } from '@/actions/newsLetter'
+
 import { useTranslations } from 'next-intl'
+import { X } from 'lucide-react'
 export default function SignUp() {
   const t = useTranslations('Newsletter')
+
+  const [state, formAction] = useActionState(onSubmitAction, {
+    message: '',
+  })
+  const [isPending, startTransition] = useTransition()
   const form = useForm<z.infer<typeof newsLetterSchema>>({
     resolver: zodResolver(newsLetterSchema),
     defaultValues: {
       name: '',
       email: '',
-      option: '',
+      // option: '',
     },
   })
+
+  const formRef = useRef<HTMLFormElement>(null)
 
   return (
     <Container
@@ -47,13 +58,39 @@ export default function SignUp() {
           {t('title')}
         </h1>
         <p>{t('subTitle')}</p>
+        {isPending && <p>{t('isPending')}</p>}
+        {state?.message !== '' && !state.issues && (
+          <div
+            className={`${state.message.includes('success') ? 'text-green-500' : 'text-red-500'} font-semibold`}
+          >
+            {state.message}
+          </div>
+        )}
+        {state?.issues && (
+          <div className="text-red-500">
+            <ul>
+              {state.issues.map((issue) => (
+                <li key={issue} className="flex gap-1">
+                  <X fill="red" />
+                  {issue}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
         <Form {...form}>
           <form
+            ref={formRef}
+            action={formAction}
+            className="grid grid-cols-1 gap-4 items-end sm:grid-cols-2"
             onSubmit={form.handleSubmit((values) => {
               console.log(values)
+              // Use startTransition when manually dispatching the action
+              startTransition(() => {
+                formAction(new FormData(formRef.current!))
+              })
             })}
-            className="grid grid-cols-1 gap-4 items-end sm:grid-cols-2"
           >
             <FormField
               control={form.control}
@@ -62,7 +99,11 @@ export default function SignUp() {
                 <FormItem>
                   <FormLabel>{t('name')}</FormLabel>
                   <FormControl>
-                    <Input type="text" placeholder={t('namePlaceholder')} {...field} />
+                    <Input
+                      type="text"
+                      placeholder={t('namePlaceholder')}
+                      {...field}
+                    />
                   </FormControl>
 
                   <FormMessage />
@@ -76,23 +117,32 @@ export default function SignUp() {
                 <FormItem>
                   <FormLabel>{t('email')}</FormLabel>
                   <FormControl>
-                    <Input type="email" placeholder={t('emailPlaceholder')} {...field} />
+                    <Input
+                      type="email"
+                      placeholder={t('emailPlaceholder')}
+                      {...field}
+                    />
                   </FormControl>
 
                   <FormMessage />
                 </FormItem>
               )}
             />
-
             <FormField
               control={form.control}
               name="option"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('option')}</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  {/* <FormLabel>{t('option')}</FormLabel> */}
+                  <Select
+                    onValueChange={field.onChange}
+                    // value={field.value} // Use value instead of defaultValue
+                    defaultValue={field.value}
+                    // name={field.name}
+                    {...field}
+                  >
                     <FormControl className="text-secondary font-medium">
-                      <SelectTrigger className="">
+                      <SelectTrigger>
                         <SelectValue placeholder={t('optionPlaceholder')} />
                       </SelectTrigger>
                     </FormControl>
@@ -100,12 +150,18 @@ export default function SignUp() {
                       <SelectItem value={'Friends and family'}>
                         {t('options.Friends and family')}
                       </SelectItem>
-                      <SelectItem value={'Youtube'}>{t('options.Youtube')}</SelectItem>
-                      <SelectItem value={'Social media'}>{t('options.Social media')}</SelectItem>
+                      <SelectItem value={'Youtube'}>
+                        {t('options.Youtube')}
+                      </SelectItem>
+                      <SelectItem value={'Social media'}>
+                        {t('options.Social media')}
+                      </SelectItem>
                       <SelectItem value={'One of our programs or events'}>
                         {t('options.One of our programs or events')}
                       </SelectItem>
-                      <SelectItem value={'Other'}>{t('options.Other')}</SelectItem>
+                      <SelectItem value={'Other'}>
+                        {t('options.Other')}
+                      </SelectItem>
                     </SelectContent>
                   </Select>
 
@@ -113,7 +169,10 @@ export default function SignUp() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="bg-[#2d234b] hover:bg-[#2d234b]/90">
+            <Button
+              type="submit"
+              className="bg-[#2d234b] hover:bg-[#2d234b]/90"
+            >
               {t('submit')}
             </Button>
           </form>

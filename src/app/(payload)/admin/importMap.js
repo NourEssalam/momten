@@ -26,7 +26,6 @@ import { LinkToDoc as LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloa
 import { ReindexButton as ReindexButton_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
 import { Icon as Icon_4b86ff4a54a30f0379afb1d0841c261b } from '@/components/payload-root-view/graphics/icon'
 import { Logo as Logo_896f17ebe10d78af15d15b71a4c08022 } from '@/components/payload-root-view/graphics/logo'
-import { VercelBlobClientUploadHandler as VercelBlobClientUploadHandler_16c82c5e25f430251a3e3ba57219ff4e } from '@payloadcms/storage-vercel-blob/client'
 
 export const importMap = {
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
@@ -56,6 +55,5 @@ export const importMap = {
   "@payloadcms/plugin-search/client#LinkToDoc": LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634,
   "@payloadcms/plugin-search/client#ReindexButton": ReindexButton_aead06e4cbf6b2620c5c51c9ab283634,
   "@/components/payload-root-view/graphics/icon#Icon": Icon_4b86ff4a54a30f0379afb1d0841c261b,
-  "@/components/payload-root-view/graphics/logo#Logo": Logo_896f17ebe10d78af15d15b71a4c08022,
-  "@payloadcms/storage-vercel-blob/client#VercelBlobClientUploadHandler": VercelBlobClientUploadHandler_16c82c5e25f430251a3e3ba57219ff4e
+  "@/components/payload-root-view/graphics/logo#Logo": Logo_896f17ebe10d78af15d15b71a4c08022
 }

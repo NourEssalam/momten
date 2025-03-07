@@ -16,6 +16,7 @@
   "Newsletter": {
     "title": "Sign-Up For Updates",
     "subTitle": "To receive updates about our latest programs, reports, campaigns and webinars,etc.",
+    "isPending": "Submitting...",
     "email": "Email",
     "emailPlaceholder": "Enter your email address",
     "name": "Name",
@@ -23,6 +24,7 @@
     "option": "How did you hear about us?",
     "submit": "Subscribe",
     "optionPlaceholder": "Select an option",
+
     "options": {
       "Friends and family": "Friends and family",
       "Social media": "Social media",

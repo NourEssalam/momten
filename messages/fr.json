@@ -16,6 +16,7 @@
   "Newsletter": {
     "title": "Inscrivez-vous pour les mises à jour",
     "subTitle": "Recevez des mises à jour sur nos derniers programmes, rapports, campagnes et webinaires, etc.",
+    "isPending": "En cours de traitement...",
     "email": "Email",
     "emailPlaceholder": "Entrez votre adresse email",
     "name": "Nom",

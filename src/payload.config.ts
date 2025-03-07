@@ -21,6 +21,7 @@ import { Tag } from './collections/Tags'
 import { Posts } from './collections/posts'
 import { Partner } from './globals/partners/config'
 import brevoAdapter from './lib/brevo-adapter'
+import { NewsletterSubscribers } from './collections/newsletter-subscribers'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -56,7 +57,15 @@ export default buildConfig({
       },
     },
   },
-  collections: [Users, Media, AboutPages, Team, Tag, Posts],
+  collections: [
+    Users,
+    Media,
+    AboutPages,
+    Team,
+    Tag,
+    Posts,
+    NewsletterSubscribers,
+  ],
   globals: [Header, Footer, Contact, Partner],
   i18n: {
     supportedLanguages: { en, fr, ar },
