@@ -32,7 +32,7 @@ export const contactSchema = z.object({
     .string()
     .email({ message: 'Please enter a valid email address.' })
     .min(1, { message: 'Please enter your email address.' }),
-  message: z.string().min(10, {
-    message: 'Please enter a message with at least 10 characters.',
+  message: z.string().min(50, {
+    message: 'Please enter a message with at least 50 characters.',
   }),
 })

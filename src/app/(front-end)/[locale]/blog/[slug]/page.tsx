@@ -23,10 +23,7 @@ export async function generateMetadata(props: {
   const { slug, locale } = await props.params
 
   const post = await queryPostBySlug({ slug, locale })
-  const baseUrl = 'https://9e28-197-244-54-172.ngrok-free.app'
-  console.log(
-    `${baseUrl}${typeof post.image === 'object' ? post.image.url : ''}`,
-  )
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
   return {
     title: post?.title,

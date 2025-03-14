@@ -5,7 +5,6 @@ import {
 import type { CollectionConfig } from 'payload'
 import { slugField } from '@/fields/slug'
 import type { Where } from 'payload'
-import { dynamicExcerpt } from './hooks/dynamicExcerpt'
 import { anyone } from '@/access-control/collections/anyone'
 import { adminsOrTheEditor } from '@/access-control/collections/adminsOrTheEditor'
 
@@ -37,12 +36,22 @@ export const Posts: CollectionConfig = {
   fields: [
     {
       name: 'title',
+      label: {
+        en: 'Title',
+        ar: 'عنوان',
+        fr: 'Titre',
+      },
       type: 'text',
       required: true,
       localized: true,
     },
     {
       name: 'image',
+      label: {
+        en: 'Image',
+        ar: 'صورة',
+        fr: 'Image',
+      },
       type: 'relationship',
       relationTo: 'media',
       required: true,
@@ -51,20 +60,46 @@ export const Posts: CollectionConfig = {
       name: 'excerpt',
       type: 'textarea',
       localized: true,
+      required: true,
       admin: {
         position: 'sidebar',
+      },
+      validate: (value) =>
+        Boolean(value && value.length > 100 && value.length < 300) ||
+        'This field must be at least 150 characters long.',
+    },
+    {
+      name: 'tag',
+      type: 'relationship',
+      admin: {
+        position: 'sidebar',
+      },
+      hasMany: true,
+      relationTo: 'tag',
+      required: true,
+      localized: true,
+      filterOptions: () => {
+        return {
+          title: {
+            exists: true,
+          },
+        }
       },
     },
     {
       name: 'relatedPosts',
       type: 'relationship',
+      relationTo: 'posts',
       admin: {
         position: 'sidebar',
+        condition: (siblingData) => {
+          return Boolean(siblingData.tag.length > 0)
+        },
       },
       filterOptions: ({ id, data }) => {
         const query: Where = {
           and: [
-            { id: { not_in: [id] } },
+            { id: { not_equals: id } },
             {
               tag: { in: data.tag },
             },
@@ -75,7 +110,6 @@ export const Posts: CollectionConfig = {
       },
       localized: true,
       hasMany: true,
-      relationTo: 'posts',
     },
     {
       name: 'content',
@@ -105,6 +139,7 @@ export const Posts: CollectionConfig = {
     {
       name: 'authors',
       type: 'relationship',
+      required: true,
       admin: {
         position: 'sidebar',
       },
@@ -164,22 +199,52 @@ export const Posts: CollectionConfig = {
       ],
     },
     {
-      name: 'tag',
-      type: 'relationship',
+      name: 'newsletter',
+      type: 'ui',
+
+      label: {
+        en: 'Send as Newsletter',
+        ar: 'إرسال كنشرة بريدية',
+        fr: 'Envoyer comme newsletter',
+      },
       admin: {
         position: 'sidebar',
+        components: {
+          Field: {
+            path: '@/components/payload-fileds-view/newsletterButton',
+            exportName: 'NewsletterButton',
+          },
+        },
+        condition: (data, siblingData) => {
+          // Required fields - all of these must be present
+          const requiredFields = [
+            'title',
+            'excerpt',
+            'publishedAt',
+            'tag',
+            'image',
+            'authors',
+            'slug',
+            'content',
+          ]
+          // Check required fields
+          const hasRequiredFields = requiredFields.every(
+            (field) =>
+              siblingData[field] &&
+              (typeof siblingData[field] === 'object'
+                ? Object.keys(siblingData[field]).length > 0
+                : true),
+          )
+
+          return hasRequiredFields
+        },
       },
-      hasMany: true,
-      relationTo: 'tag',
-      // required: true,
-      localized: true,
     },
+
     ...slugField(),
   ],
   hooks: {
-    // afterChange: [revalidatePost],
-    afterChange: [dynamicExcerpt],
-    // afterDelete: [revalidateDelete],
+    // afterChange: [dynamicExcerpt],
   },
   disableDuplicate: false,
 }

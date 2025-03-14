@@ -30,6 +30,12 @@
       "Youtube": "YouTube",
       "One of our programs or events": "L'un de nos programmes ou événements",
       "Other": "Autre"
+    },
+
+    "congratsMessage": "Félicitations ! Vous êtes abonné avec succès à notre newsletter.",
+    "congratsSubText": "Vous recevrez les mises à jour de notre blog dans votre boîte de réception.",
+    "error": {
+      "alreadySubscribed": "Vous êtes déjà abonné à notre newsletter."
     }
   },
   "Search": {
@@ -59,7 +65,9 @@
       "emailPlaceholder": "Entrez votre email",
       "message": "Message",
       "messagePlaceholder": "Entrez votre message",
-      "submit": "Envoyer"
+      "submit": "Envoyer",
+      "success": "Votre message a été envoyé avec succès !",
+      "error": "Quelque chose s'est mal passé, veuillez essayer de nouveau."
     }
   },
   "Team": {

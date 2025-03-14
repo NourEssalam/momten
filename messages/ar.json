@@ -30,6 +30,11 @@
       "Youtube": "يوتيوب",
       "One of our programs or events": "أحد برامجنا أو فعالياتنا",
       "Other": "أخرى"
+    },
+    "congratsMessage": "تهانينا! لقد تم اشتراكك بنجاح في نشرتنا الإخبارية.",
+    "congratsSubText": "ستتلقى تحديثات مدونتنا في بريدك الوارد.",
+    "error": {
+      "alreadySubscribed": "أنت مشترك بالفعل في نشرتنا الإخبارية."
     }
   },
   "Search": {
@@ -59,7 +64,9 @@
       "emailPlaceholder": "أدخل بريدك الإلكتروني",
       "message": "الرسالة",
       "messagePlaceholder": "أدخل رسالتك",
-      "submit": "إرسال"
+      "submit": "إرسال",
+      "success": "تم إرسال رسالتك بنجاح!",
+      "error": "حدث خطأ. يرجى المحاولة مرة اخرى."
     }
   },
   "Team": {

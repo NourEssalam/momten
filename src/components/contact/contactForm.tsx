@@ -1,6 +1,8 @@
 'use client'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { useActionState, useTransition } from 'react'
+import { useRef } from 'react'
 import { z } from 'zod'
 import {
   Form,
@@ -16,8 +18,17 @@ import { Textarea } from '@/components/ui/textarea'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { useTranslations } from 'next-intl'
+import { onSubmitAction } from '@/actions/contactAction'
+import { X } from 'lucide-react'
 
 export default function ContactForm() {
+  const [state, formAction] = useActionState(onSubmitAction, {
+    message: '',
+  })
+
+  const [isPending, startTransition] = useTransition()
+  const formRef = useRef<HTMLFormElement>(null)
+  const tp = useTranslations('Newsletter')
   const t = useTranslations('ContactPage')
   const form = useForm<z.infer<typeof contactSchema>>({
     resolver: zodResolver(contactSchema),
@@ -30,10 +41,38 @@ export default function ContactForm() {
 
   return (
     <div className="h-full">
+      {isPending && <p>{tp('isPending')}</p>}
+      {state?.message !== '' &&
+        !state.issues &&
+        (state.message.includes('success') ? (
+          <p className="text-green-500 text-xl">{t('form.success')}</p>
+        ) : (
+          <p className="text-red-500">{t('form.error')}</p>
+        ))}
+      {state?.issues && (
+        <div className="text-red-500">
+          <ul>
+            {state.issues.map((issue) => (
+              <li key={issue} className="flex gap-1">
+                <X fill="red" />
+                {issue}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit((values) => {
-            console.log(values)
+          ref={formRef}
+          action={formAction}
+          onSubmit={form.handleSubmit(() => {
+            // Use startTransition when manually dispatching the action
+            startTransition(() => {
+              formAction(new FormData(formRef.current!))
+            })
+            if (state.message.includes('success')) {
+              form.reset()
+            }
           })}
           className="flex flex-col justify-stretch gap-4 h-full"
         >

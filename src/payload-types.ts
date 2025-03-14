@@ -269,7 +269,8 @@ export interface Post {
   id: string;
   title: string;
   image: string | Media;
-  excerpt?: string | null;
+  excerpt: string;
+  tag: (string | Tag)[];
   relatedPosts?: (string | Post)[] | null;
   content: {
     root: {
@@ -287,14 +288,13 @@ export interface Post {
     [k: string]: unknown;
   };
   publishedAt: string;
-  authors?: (string | User)[] | null;
+  authors: (string | User)[];
   populatedAuthors?:
     | {
         id?: string | null;
         name?: string | null;
       }[]
     | null;
-  tag?: (string | Tag)[] | null;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -503,6 +503,7 @@ export interface PostsSelect<T extends boolean = true> {
   title?: T;
   image?: T;
   excerpt?: T;
+  tag?: T;
   relatedPosts?: T;
   content?: T;
   publishedAt?: T;
@@ -513,7 +514,6 @@ export interface PostsSelect<T extends boolean = true> {
         id?: T;
         name?: T;
       };
-  tag?: T;
   slug?: T;
   slugLock?: T;
   updatedAt?: T;

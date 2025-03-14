@@ -24,13 +24,18 @@
     "option": "How did you hear about us?",
     "submit": "Subscribe",
     "optionPlaceholder": "Select an option",
-
     "options": {
       "Friends and family": "Friends and family",
       "Social media": "Social media",
       "Youtube": "Youtube",
       "One of our programs or events": "One of our programs or events",
       "Other": "Other"
+    },
+    "congratsMessage": "congratulations! You have been successfully subscribed to our newsletter.",
+    "congratsSubText": "You will receive our blog updates in your inbox.",
+
+    "error": {
+      "alreadySubscribed": "You have already subscribed to our newsletter."
     }
   },
   "Search": {
@@ -61,7 +66,9 @@
       "emailPlaceholder": "Enter your email",
       "message": "Message",
       "messagePlaceholder": "Enter your message",
-      "submit": "Submit"
+      "submit": "Submit",
+      "success": "Your message has been sent successfully!",
+      "error": "Something went wrong, please try again."
     }
   },
 

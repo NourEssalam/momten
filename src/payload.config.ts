@@ -89,7 +89,7 @@ export default buildConfig({
         code: 'fr',
       },
     ],
-    defaultLocale: 'en', // required
+    defaultLocale: 'fr', // required
     // fallback: true, // defaults to true
   },
   email: brevoAdapter(),
