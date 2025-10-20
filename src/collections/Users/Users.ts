@@ -1,4 +1,5 @@
-import { APIError, type CollectionConfig } from 'payload'
+import { type CollectionConfig } from 'payload'
+// import { APIError } from 'payload'
 import { setFirstUserAsSuperAdmin } from './hooks/setFirstUserAsSuperAdmin'
 import { anyone } from '@/access-control/collections/anyone'
 import { adminAndSuperAdmin } from '@/access-control/collections/adminAndSuperAdmin'
