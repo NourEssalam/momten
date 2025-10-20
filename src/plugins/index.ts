@@ -39,7 +39,8 @@ export const plugins: Plugin[] = [
       media: true,
     },
     // Token provided by Vercel once Blob storage is added to your Vercel project
-    token: process.env.BLOB_READ_WRITE_TOKEN,
-    addRandomSuffix: true,
+    token: process.env.MOMTEN_READ_WRITE_TOKEN,
+    // addRandomSuffix: true,
+    clientUploads: true,
   }),
 ]
