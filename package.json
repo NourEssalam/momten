@@ -12,7 +12,7 @@
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
     "lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
-    "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
+    "start": "cross-env NODE_OPTIONS=--no-deprecation node .next/standalone/server.js",
     "postcss:build": "postcss .next/static/css/app/**/*.css --dir .next/static/css/app/ && pnpm run calculate-css-size",
     "calculate-css-size": "node scripts/calculate-css-size.js"
   },
