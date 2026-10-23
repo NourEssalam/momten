@@ -7,9 +7,6 @@ const withNextIntl = createNextIntlPlugin()
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
-  experimental: {
-    reactCompiler: false, // Required for Payload compatibility
-  },
 }
 
 // Wrap both plugins - order is flexible

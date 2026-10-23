@@ -41,3 +41,6 @@ next-env.d.ts
 .env
 
 /public/media
+
+# mongodb backup
+backup-before-upgrade

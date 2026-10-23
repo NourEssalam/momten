@@ -9,7 +9,7 @@ export default function BackLink({
   toPage,
 }: {
   className?: string
-  toPage?: string
+  toPage: string
 }) {
   const t = useTranslations('BackLinks')
   return (
