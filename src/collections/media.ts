@@ -45,6 +45,7 @@ export const Media: CollectionConfig = {
     adminThumbnail: 'thumbnail',
     mimeTypes: ['image/jpeg', 'image/png', 'image/jpg', 'image/gif', 'video/*'],
     focalPoint: true,
+    imageSizes: [{ name: 'thumbnail', width: 300 }],
     // imageSizes: [
     //   {
     //     name: "thumbnail",

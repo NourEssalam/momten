@@ -29,7 +29,8 @@ export default async function Page({
   const searchParamsObj = await searchParams
   const { locale } = await params
   const title = searchParamsObj.title
-  const page = typeof searchParamsObj.page === 'string' ? Number(searchParamsObj.page) : 1
+  const page =
+    typeof searchParamsObj.page === 'string' ? Number(searchParamsObj.page) : 1
 
   const category = await getcategory({ locale })
   const catObj = category.map((cat) => ({ id: cat.id, title: cat.title }))
@@ -74,19 +75,28 @@ export default async function Page({
         )}
       </section>
       {totalPages > 1 && (
-        <BlogPagination title={title} page={page} totalPages={posts.totalPages} locale={locale} />
+        <BlogPagination
+          title={title}
+          page={page}
+          totalPages={posts.totalPages}
+          locale={locale}
+        />
       )}
     </>
   )
 }
 
-const getPosts = async (catId: string, page: number, { locale }: { locale: Language }) => {
+const getPosts = async (
+  catId: string,
+  page: number,
+  { locale }: { locale: Language },
+) => {
   const payload = await getPayload({ config })
   if (catId === 'All') {
     const posts = await payload.find({
       collection: 'posts',
       depth: 1,
-      limit: 10,
+      limit: 6,
       select: {
         title: true,
         image: true,
@@ -105,7 +115,7 @@ const getPosts = async (catId: string, page: number, { locale }: { locale: Langu
     const posts = await payload.find({
       collection: 'posts',
       depth: 1,
-      limit: 9,
+      limit: 6,
       where: {
         tag: {
           equals: catId,
