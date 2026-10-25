@@ -104,12 +104,14 @@ export interface Config {
     footer: Footer;
     contact: Contact;
     partner: Partner;
+    'home-hero': HomeHero;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     contact: ContactSelect<false> | ContactSelect<true>;
     partner: PartnerSelect<false> | PartnerSelect<true>;
+    'home-hero': HomeHeroSelect<false> | HomeHeroSelect<true>;
   };
   locale: 'en' | 'ar' | 'fr';
   widgets: {
@@ -720,6 +722,27 @@ export interface Partner {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home-hero".
+ */
+export interface HomeHero {
+  id: string;
+  /**
+   * Landscape photo (4:3 works best), at least 1200px wide.
+   */
+  photo1: string | Media;
+  /**
+   * Landscape photo (4:3 works best), at least 1200px wide.
+   */
+  photo2: string | Media;
+  /**
+   * Landscape photo (4:3 works best), at least 1200px wide.
+   */
+  photo3: string | Media;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -794,6 +817,18 @@ export interface PartnerSelect<T extends boolean = true> {
         url?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home-hero_select".
+ */
+export interface HomeHeroSelect<T extends boolean = true> {
+  photo1?: T;
+  photo2?: T;
+  photo3?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
