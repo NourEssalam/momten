@@ -1,6 +1,5 @@
 import Image from 'next/image'
-import Container from '../shared-components/Container'
-import { Separator } from '@/components/ui/separator'
+import { Mail, MapPin, Phone } from 'lucide-react'
 import formatPhoneNumber from '@/globals/Contact/formatPhone'
 import config from '@payload-config'
 import { getPayload } from 'payload'
@@ -8,105 +7,106 @@ import { cache } from 'react'
 import CopyRight from './copyRight'
 import { queryContact } from '@/app/(front-end)/[locale]/contact/page'
 import Social from '../contact/social'
-import { FaPhoneVolume } from 'react-icons/fa6'
-import { IoIosMailUnread } from 'react-icons/io'
-import { FaMapLocationDot } from 'react-icons/fa6'
 import { Link } from '@/i18n/routing'
+
+const iconBox =
+  'flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-section text-shade'
 
 export default async function Footer({ locale }: { locale: string }) {
   const footer = await queryQuickLinks({ locale })
   const footerMenu = footer.quicklinkcolumns
   const contact = await queryContact({ locale })
   const { social, email, phones, address } = contact
-  const date = new Date()
-  const year = date.getFullYear()
-
-  //items must be in the center
+  const year = new Date().getFullYear()
 
   return (
-    <footer className="my-24">
-      {/* main section */}
-
-      <Separator className="max-w-[1200px] mx-auto  px-6    lg:px-24" />
-      <Container variant="default">
-        <main
-          className=" grid grid-cols-1 gap-x-6 gap-y-12 
-      sm:gap-x-12 sm:grid-cols-2 lg:grid-cols-3 mb-24"
-        >
-          {/* logo and social */}
-          <Link href="/" className=" w-20 mb-4 md:w-28 ">
+    <footer className="mt-24 border-t border-tint bg-tint-tint-lighter">
+      <div className="container">
+        <div className="grid gap-10 lg:grid-cols-[7rem_1fr_minmax(0,22rem)] lg:gap-12">
+          {/* logo */}
+          <Link href="/" className="block w-24 lg:w-28">
             <Image
               src="/img/logos/momtan-logo-footer.png"
-              alt="logo of the header"
+              alt="logo of the footer"
               width="150"
               height="150"
-              // fill={true}
-              sizes="(max-width: 1200px) 50vw, 33vw"
-              className=" object-contain"
-              priority={true}
+              sizes="112px"
+              className="object-contain"
             />
           </Link>
-          {/* socials */}
 
-          <Social social={social} className="grid grid-cols-2 gap-4" />
-          {/* contact */}
-          <div className="">
-            {/* <h3 className="text-lg text-grey  font-semibold mb-4">Contact Us</h3> */}
-            <address className="contacts flex flex-col gap-4 ">
-              <span className="font-normal text-lg inline-block text-grey  transition-colors duration-300">
-                <div className="flex items-center gap-4">
-                  <FaMapLocationDot className="w-6 h-6 text-green-500" />
-                  {address}
+          {/* quick links */}
+          {footerMenu && (
+            <nav className="grid grid-cols-2 gap-8 sm:grid-cols-[repeat(auto-fit,minmax(9rem,1fr))]">
+              {footerMenu.map((col) => (
+                <div key={col.id}>
+                  <h3 className="mb-4 text-sm font-semibold text-shade-strong">
+                    {col.column}
+                  </h3>
+                  <ul className="space-y-2">
+                    {col.links.map((item) => (
+                      <li key={item.id}>
+                        <Link
+                          href={item.url}
+                          className="text-sm text-grey-medium transition-colors duration-300 hover:text-primary"
+                        >
+                          {item.pageName}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              </span>
+              ))}
+            </nav>
+          )}
 
-              <div className="flex flex-col gap-4">
-                {phones.map((phone) => (
-                  <Link
-                    key={phone.id}
-                    href={`tel: +216 ${phone.phone}`}
-                    className="font-normal  text-lg inline-block text-grey hover:text-accent transition-colors duration-300"
-                  >
-                    <div className="flex items-center gap-4 ">
-                      <FaPhoneVolume className="w-6 h-6 text-sky-300" />
-                      <span dir="ltr">{formatPhoneNumber(phone.phone)}</span>
-                    </div>
-                  </Link>
-                ))}
+          {/* socials + contact */}
+          <div className="flex flex-col gap-6 lg:border-s lg:border-tint lg:ps-10">
+            <Social
+              social={social}
+              className="flex flex-wrap gap-3"
+              linkClassName="flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-sm transition-transform duration-300 hover:-translate-y-0.5"
+              iconClassName="h-5 w-5"
+            />
+
+            <address className="flex flex-col gap-4 not-italic">
+              <div className="flex items-start gap-3 text-sm text-grey-medium">
+                <span className={iconBox}>
+                  <MapPin className="h-4 w-4" aria-hidden />
+                </span>
+                <span className="pt-2">{address}</span>
               </div>
-              <Link
+
+              {phones.map((phone) => (
+                <a
+                  key={phone.id}
+                  href={`tel:+216${phone.phone}`}
+                  className="flex items-center gap-3 text-sm text-grey-medium transition-colors duration-300 hover:text-primary"
+                >
+                  <span className={iconBox}>
+                    <Phone className="h-4 w-4" aria-hidden />
+                  </span>
+                  <span dir="ltr">{formatPhoneNumber(phone.phone)}</span>
+                </a>
+              ))}
+
+              <a
                 href={`mailto:${email}`}
-                className="font-normal hover:text-accent text-sm md:text-base inline-block text-grey  transition-colors duration-300"
+                className="flex items-center gap-3 text-sm text-grey-medium transition-colors duration-300 hover:text-primary"
               >
-                <div className="flex items-center gap-4">
-                  <IoIosMailUnread className="w-6 h-6 text-red-600" />
-                  {email}
-                </div>
-              </Link>
+                <span className={iconBox}>
+                  <Mail className="h-4 w-4" aria-hidden />
+                </span>
+                {email}
+              </a>
             </address>
           </div>
-          {/* quick links */}
-          {footerMenu &&
-            footerMenu.map((col) => (
-              <div key={col.id} className=" ">
-                <h3 className="text-lg text-grey font-semibold mb-4">{col.column}</h3>
-                <ul>
-                  {col.links.map((item) => (
-                    <li key={item.id}>
-                      <Link
-                        href={item.url}
-                        className="text-sm lg:text-base text-grey hover:text-accent transition-colors duration-300"
-                      >
-                        {item.pageName}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-        </main>
-        <CopyRight year={year} />
-      </Container>
+        </div>
+
+        <div className="mt-10 border-t border-tint pt-6">
+          <CopyRight year={year} />
+        </div>
+      </div>
     </footer>
   )
 }

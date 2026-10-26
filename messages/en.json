@@ -1,4 +1,8 @@
 {
+  "Header": {
+    "menu": "Menu",
+    "close": "Close"
+  },
   "Hero": {
     "title": "The Association of Citizenship, Human and Sustainable Development",
     "desc": "A nation dedicated to the principles of the Sustainable Development Goals and a better future for the next generations.",
@@ -15,7 +19,11 @@
   "AboutNutshell": {
     "title": "ABOUT US",
     "desc": "Momtan organization has developed a strategic and forward-looking plan, to simulate the sustainable development goals of economic, social and environmental dimensions. It extends from 2021 to 2030.",
-    "ReadMore": "Read More"
+    "ReadMore": "Read More",
+    "heading": "From 2021 to 2030: A Strategic Plan for a Sustainable Tomorrow",
+    "years": "Years of Experience",
+    "projects": "Community Projects",
+    "beneficiaries": "Beneficiaries"
   },
   "Newsletter": {
     "title": "Sign-Up For Updates",
@@ -25,6 +33,9 @@
     "emailPlaceholder": "Enter your email address",
     "name": "Name",
     "namePlaceholder": "Enter your name",
+    "eyebrow": "Latest Updates",
+    "heading": "Stay Connected",
+    "lead": "Get the latest news, reports and events from our programs and activities directly in your inbox.",
     "option": "How did you hear about us?",
     "submit": "Subscribe",
     "optionPlaceholder": "Select an option",

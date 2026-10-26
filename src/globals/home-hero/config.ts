@@ -24,7 +24,11 @@ export const HomeHero: GlobalConfig = {
       type: 'upload',
       relationTo: 'media',
       required: true,
-      label: { en: 'Photo 1 (top)', ar: 'الصورة 1 (أعلى)', fr: 'Photo 1 (haut)' },
+      label: {
+        en: 'Photo 1 (top)',
+        ar: 'الصورة 1 (أعلى)',
+        fr: 'Photo 1 (haut)',
+      },
       admin: { description: hint },
     },
     {
@@ -32,7 +36,11 @@ export const HomeHero: GlobalConfig = {
       type: 'upload',
       relationTo: 'media',
       required: true,
-      label: { en: 'Photo 2 (right)', ar: 'الصورة 2 (جانب)', fr: 'Photo 2 (droite)' },
+      label: {
+        en: 'Photo 2 (right)',
+        ar: 'الصورة 2 (جانب)',
+        fr: 'Photo 2 (droite)',
+      },
       admin: { description: hint },
     },
     {
@@ -40,8 +48,29 @@ export const HomeHero: GlobalConfig = {
       type: 'upload',
       relationTo: 'media',
       required: true,
-      label: { en: 'Photo 3 (bottom)', ar: 'الصورة 3 (أسفل)', fr: 'Photo 3 (bas)' },
+      label: {
+        en: 'Photo 3 (bottom)',
+        ar: 'الصورة 3 (أسفل)',
+        fr: 'Photo 3 (bas)',
+      },
       admin: { description: hint },
+    },
+    {
+      name: 'aboutImage',
+      type: 'upload',
+      relationTo: 'media',
+      label: {
+        en: 'About section photo',
+        ar: 'صورة قسم من نحن',
+        fr: 'Photo de la section À propos',
+      },
+      admin: {
+        description: {
+          en: 'Portrait or square photo works best.',
+          ar: 'الصورة العمودية أو المربعة هي الأفضل.',
+          fr: 'Une photo portrait ou carrée convient le mieux.',
+        },
+      },
     },
   ],
 }

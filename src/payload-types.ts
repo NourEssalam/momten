@@ -738,6 +738,10 @@ export interface HomeHero {
    * Landscape photo (4:3 works best), at least 1200px wide.
    */
   photo3: string | Media;
+  /**
+   * Portrait or square photo works best.
+   */
+  aboutImage?: (string | null) | Media;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -829,6 +833,7 @@ export interface HomeHeroSelect<T extends boolean = true> {
   photo1?: T;
   photo2?: T;
   photo3?: T;
+  aboutImage?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

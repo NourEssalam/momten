@@ -14,7 +14,7 @@ import { plugins } from './plugins'
 import { Header } from './globals/Header/config'
 import { Footer } from './globals/Footer/config'
 import { Contact } from './globals/Contact/config'
-import { HomeHero } from './globals/home-hero/home-hero-config'
+import { HomeHero } from './globals/home-hero/config'
 
 import { AboutPages } from './collections/about-pages'
 import { Team } from './collections/team'

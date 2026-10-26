@@ -3,6 +3,7 @@ import { Link } from '@/i18n/routing'
 import { usePathname } from 'next/navigation'
 import { Header } from '@/payload-types'
 import { useEffect, useState } from 'react'
+import { cn } from '@/lib/cn'
 
 type SetOpenType = React.Dispatch<React.SetStateAction<boolean>>
 
@@ -48,8 +49,14 @@ export default function HeaderNav({
         <Link
           key={item.id}
           href={item.url}
-          className={`font-base capitalize transition-colors duration-300 inline-block active:text-red-500
-           py-[1.2rem] hover:text-primary ${active === item.id ? 'text-accent' : 'text-grey'}`}
+          className={cn(
+            'relative inline-block py-2 font-medium capitalize transition-colors duration-300 hover:text-primary',
+            // small dot under the active link on desktop
+            'lg:after:absolute lg:after:-bottom-1 lg:after:left-1/2 lg:after:h-1 lg:after:w-1 lg:after:-translate-x-1/2 lg:after:rounded-full lg:after:bg-accent lg:after:transition-opacity',
+            active === item.id
+              ? 'text-accent lg:after:opacity-100'
+              : 'text-grey lg:after:opacity-0',
+          )}
           onClick={() => handleClick(item.id as string)}
           replace={true}
         >

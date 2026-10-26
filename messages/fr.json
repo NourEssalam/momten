@@ -1,4 +1,8 @@
 {
+  "Header": {
+    "menu": "Menu",
+    "close": "Fermer"
+  },
   "Hero": {
     "title": "L'Association de la Citoyenneté, des Droits de l'Homme et du Développement Durable",
     "desc": "Une nation dédiée aux principes des Objectifs de Développement Durable et à un avenir meilleur pour les générations futures.",
@@ -15,7 +19,11 @@
   "AboutNutshell": {
     "title": "À PROPOS DE NOUS",
     "desc": "L'organisation Momtan a développé un plan stratégique et prospectif pour simuler les objectifs de développement durable dans les dimensions économiques, sociales et environnementales. Il s'étend de 2021 à 2030.",
-    "ReadMore": "Lire la suite"
+    "ReadMore": "Lire la suite",
+    "heading": "De 2021 à 2030 : un plan stratégique pour un avenir durable",
+    "years": "Années d'expérience",
+    "projects": "Projets communautaires",
+    "beneficiaries": "Bénéficiaires"
   },
   "Newsletter": {
     "title": "Inscrivez-vous pour les mises à jour",
@@ -23,6 +31,9 @@
     "isPending": "En cours de traitement...",
     "email": "Email",
     "emailPlaceholder": "Entrez votre adresse email",
+    "eyebrow": "Dernières actualités",
+    "heading": "Restez connecté",
+    "lead": "Recevez directement dans votre boîte mail les dernières nouvelles, rapports et événements de nos programmes et activités.",
     "name": "Nom",
     "namePlaceholder": "Entrez votre nom",
     "option": "Comment avez-vous entendu parler de nous ?",
