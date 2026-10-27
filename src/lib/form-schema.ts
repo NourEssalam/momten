@@ -27,12 +27,22 @@ export const newsLetterSchema = z.object({
 })
 
 export const contactSchema = z.object({
-  name: z.string().trim().min(3, { message: 'Please enter your name.' }),
+  name: z
+    .string()
+    .trim()
+    .min(2, { message: 'nameRequired' })
+    .max(100, { message: 'nameTooLong' }),
   email: z
     .string()
-    .email({ message: 'Please enter a valid email address.' })
-    .min(1, { message: 'Please enter your email address.' }),
-  message: z.string().min(50, {
-    message: 'Please enter a message with at least 50 characters.',
-  }),
+    .trim()
+    .min(1, { message: 'emailRequired' })
+    .email({ message: 'emailInvalid' })
+    .max(254, { message: 'emailInvalid' }),
+  message: z
+    .string()
+    .trim()
+    .min(10, { message: 'messageTooShort' })
+    .max(3000, { message: 'messageTooLong' }),
+  // Honeypot: real users never see or fill this.
+  website: z.string().optional(),
 })

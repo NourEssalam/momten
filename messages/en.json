@@ -77,9 +77,17 @@
     "badge": "Stronger Communities"
   },
   "ContactPage": {
+    "eyebrow": "Get in touch",
     "title": "Reach Out to Us",
     "subTitle": "Have questions or ideas? Want to get involved? Contact us using the form below or connect via email and social media. We're excited to hear from you!",
+    "info": {
+      "address": "Visit us",
+      "phone": "Call us",
+      "email": "Email us",
+      "social": "Follow us"
+    },
     "form": {
+      "title": "Send us a message",
       "name": "Name",
       "namePlaceholder": "Enter your name",
       "email": "Email",
@@ -87,8 +95,19 @@
       "message": "Message",
       "messagePlaceholder": "Enter your message",
       "submit": "Submit",
+      "sending": "Sending…",
       "success": "Your message has been sent successfully!",
-      "error": "Something went wrong, please try again."
+      "error": "Something went wrong, please try again.",
+      "invalid": "Please fix the highlighted fields and try again.",
+      "unavailable": "The contact form is temporarily unavailable. Please email us directly.",
+      "errors": {
+        "nameRequired": "Please enter your name.",
+        "nameTooLong": "Name is too long.",
+        "emailRequired": "Please enter your email address.",
+        "emailInvalid": "Please enter a valid email address.",
+        "messageTooShort": "Please write at least 10 characters.",
+        "messageTooLong": "Message is too long (3000 characters max)."
+      }
     }
   },
   "Team": {
