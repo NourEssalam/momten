@@ -1,87 +1,77 @@
 'use client'
-import * as React from 'react'
-import { Button } from '@/components/ui/button'
+import { Check, Globe, Loader2 } from 'lucide-react'
+import { useLocale, useTranslations } from 'next-intl'
+import { useTransition } from 'react'
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuSeparator,
+  DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { FaGlobeAmericas } from 'react-icons/fa'
-import { useRouter } from 'next/navigation'
-import { useState, useEffect } from 'react'
-import { usePathname } from 'next/navigation'
-import { getIdByCurrentSlug } from './switchSlugAction'
-import { Language } from '@/i18n/routing'
+import { Language, usePathname, useRouter } from '@/i18n/routing'
+import { cn } from '@/lib/cn'
+import { getPostSlugForLocale } from './switchSlugAction'
+
+const LANGUAGES: { code: Language; label: string }[] = [
+  { code: 'ar', label: 'العربية' },
+  { code: 'en', label: 'English' },
+  { code: 'fr', label: 'Français' },
+]
 
 export default function SwitchLanguage() {
-  const pathname = usePathname()
-  const segments = pathname.split('/')
-  const [position, setPosition] = useState(`${segments[1]}`)
+  const t = useTranslations('SwitchLanguage')
+  const locale = useLocale() as Language
+  const pathname = usePathname() // path without the language prefix, e.g. /blog/my-post
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
-  const handleLanguageChange = (value: React.SetStateAction<string>) => {
-    setPosition(value)
-    console.log('value', value)
-    segments[1] = value as Language
-    router.push(segments.join('/'))
+  const switchTo = (next: Language) => {
+    if (next === locale) return
+
+    startTransition(async () => {
+      let target = pathname
+
+      // Blog post slugs are translated, so find the matching post in the new language
+      const blogPost = pathname.match(/^\/blog\/([^/]+)\/?$/)
+      if (blogPost) {
+        const slug = await getPostSlugForLocale({ slug: blogPost[1], from: locale, to: next })
+        target = slug ? `/blog/${encodeURIComponent(slug)}` : '/blog'
+      }
+
+      router.push(`${target}${window.location.search}`, { locale: next })
+    })
   }
-
-  useEffect(() => {
-    const getId = async () => {
-      const id = await getIdByCurrentSlug({
-        slug: segments[segments.length - 1],
-        locale: segments[1] as Language,
-        position: position as Language,
-      })
-      return id
-    }
-
-    if (segments.length > 3 && segments[2].includes('blog')) {
-      getId()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [position])
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="link" size="sm">
-          <FaGlobeAmericas
-            className="text-grey w-6 h-6  cursor-pointer 
-                        hover:text-accent"
-          />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-48 mr-10 z-100 lg:mx-2 justify-center items-center">
-        {/* <DropdownMenuLabel>{t('choose')}</DropdownMenuLabel> */}
-        <DropdownMenuSeparator />
-        <DropdownMenuRadioGroup
-          value={position}
-          onValueChange={handleLanguageChange}
-          className="items-center justify-center"
+        <button
+          type="button"
+          aria-label={t('choose')}
+          className="rounded-full p-1 text-grey transition-colors hover:text-accent"
         >
-          <DropdownMenuRadioItem
-            className="items-center justify-center"
-            value="ar"
+          {isPending ? (
+            <Loader2 className="h-6 w-6 animate-spin" aria-hidden />
+          ) : (
+            <Globe className="h-6 w-6" aria-hidden />
+          )}
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="z-100 w-44 rounded-xl p-1.5 shadow-lg">
+        {LANGUAGES.map(({ code, label }) => (
+          <DropdownMenuItem
+            key={code}
+            lang={code}
+            onSelect={() => switchTo(code)}
+            className={cn(
+              'cursor-pointer justify-between gap-3 rounded-lg px-3 py-2.5 text-sm font-medium focus:bg-section focus:text-shade-strong',
+              code === locale ? 'bg-section text-shade-strong' : 'text-grey',
+            )}
           >
-            العربية
-          </DropdownMenuRadioItem>
-          <DropdownMenuRadioItem
-            className="items-center justify-center"
-            value="en"
-          >
-            English
-          </DropdownMenuRadioItem>
-          <DropdownMenuRadioItem
-            className="items-center justify-center"
-            value="fr"
-          >
-            Français
-          </DropdownMenuRadioItem>
-        </DropdownMenuRadioGroup>
+            {label}
+            {code === locale && <Check className="h-4 w-4 text-primary" aria-hidden />}
+          </DropdownMenuItem>
+        ))}
       </DropdownMenuContent>
     </DropdownMenu>
   )

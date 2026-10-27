@@ -2,52 +2,47 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { Language } from '@/i18n/routing'
-import { redirect } from 'next/navigation'
 
-export const getIdByCurrentSlug = async ({
+// Finds the slug a blog post has in another language.
+// Returns null when the post (or its translation) doesn't exist.
+export const getPostSlugForLocale = async ({
   slug,
-  locale,
-  position,
+  from,
+  to,
 }: {
   slug: string
-  locale: Language
-  position: Language
-}) => {
-  const decodedSlug = decodeURIComponent(slug)
+  from: Language
+  to: Language
+}): Promise<string | null> => {
+  let decoded = slug
+  try {
+    decoded = decodeURIComponent(slug)
+  } catch {
+    // keep the slug as received
+  }
 
   const payload = await getPayload({ config })
 
-  const findId = await payload.find({
+  const found = await payload.find({
     collection: 'posts',
     limit: 1,
     pagination: false,
-    locale: locale,
-    where: {
-      slug: {
-        equals: decodedSlug,
-      },
-    },
+    depth: 0,
+    locale: from,
+    where: { slug: { equals: decoded } },
   })
 
-  const id = findId.docs[0]?.id
-  if (!id) {
-    console.error('No post found with the given slug')
-    redirect(`/${position}/blog`)
-  }
+  const id = found.docs[0]?.id
+  if (!id) return null
 
-  const result = await payload.findByID({
-    id: id,
+  const post = await payload.findByID({
     collection: 'posts',
-    locale: position,
+    id,
+    depth: 0,
+    locale: to,
     fallbackLocale: false,
     overrideAccess: true,
   })
 
-  if (result) {
-    const safeSlug = encodeURIComponent(result.slug as string)
-
-    redirect(`/${position}/blog/${safeSlug}`)
-  } else {
-    redirect(`/${position}/blog`)
-  }
+  return post?.slug || null
 }
