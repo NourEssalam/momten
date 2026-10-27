@@ -1,56 +1,49 @@
-import { Suspense } from 'react'
-import { Language } from '@/i18n/routing'
-import Loading from './loading'
+import { notFound } from 'next/navigation'
+import type { Metadata } from 'next'
+import type { Language } from '@/i18n/routing'
 import PostFeed from './postFeed'
 import { queryPostBySlug } from './query'
-import { Metadata } from 'next'
 
-export default async function Page(props: {
-  params: Promise<{ slug: string; locale: Language }>
-}) {
-  const { slug, locale } = await props.params
+type Props = { params: Promise<{ slug: string; locale: Language }> }
 
-  return (
-    <Suspense fallback={<Loading />}>
-      <PostFeed locale={locale} slug={slug} />
-    </Suspense>
-  )
+export default async function Page({ params }: Props) {
+  const { slug, locale } = await params
+  const post = await queryPostBySlug({ slug, locale })
+  if (!post) notFound()
+  return <PostFeed post={post} locale={locale} />
 }
 
-export async function generateMetadata(props: {
-  params: Promise<{ slug: string; locale: Language }>
-}): Promise<Metadata> {
-  const { slug, locale } = await props.params
-
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug, locale } = await params
   const post = await queryPostBySlug({ slug, locale })
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+  if (!post) return {}
+
+  const cover = typeof post.image === 'object' ? post.image : null
+  const imageUrl = cover?.url
+    ? cover.url.startsWith('http')
+      ? cover.url
+      : `${process.env.NEXT_PUBLIC_BASE_URL ?? ''}${cover.url}`
+    : null
 
   return {
-    title: post?.title,
-    description: post?.excerpt,
+    title: post.title,
+    description: post.excerpt,
     openGraph: {
-      images:
-        post?.image && typeof post.image === 'object' && post.image.url
-          ? [{ url: `${baseUrl}${post.image.url}`, width: 400, height: 800 }]
-          : [],
+      type: 'article',
+      title: post.title,
+      description: post.excerpt,
+      publishedTime: post.publishedAt,
+      images: imageUrl
+        ? [
+            {
+              url: imageUrl,
+              width: cover?.width ?? undefined,
+              height: cover?.height ?? undefined,
+              alt: cover?.alt,
+            },
+          ]
+        : [],
     },
+    twitter: { card: 'summary_large_image' },
   }
 }
-
-// export async function generateStaticParams() {
-//   const result = await queryPostsSlugs()
-
-//   const params = result.flatMap((item) =>
-//     item.slug
-//       ? Object.values(item.slug).map((orgSlug) => {
-//           const slug = decodeURIComponent(orgSlug)
-//           return { slug }
-//         })
-//       : [],
-//   )
-
-//   // console.log('params', params)
-//   // console.log('params length', params.length)
-
-//   return params
-// }

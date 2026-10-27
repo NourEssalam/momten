@@ -1,151 +1,97 @@
-import Category from '@/components/blog/Categories'
-import PostCard from '@/components/blog/PostCard'
+import type { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
+import type { Language } from '@/i18n/routing'
 import Container from '@/components/shared-components/Container'
-import { Metadata } from 'next'
-import { getPayload } from 'payload'
-import config from '@payload-config'
-import { cache } from 'react'
-
-import { Language } from '@/i18n/routing'
-import BlogPagination from './blog-pagination'
-import NoResult from '@/components/shared-components/no-result'
+import BlogHeader from '@/components/blog/BlogHeader'
+import BlogFilters from '@/components/blog/BlogFilters'
+import BlogCard from '@/components/blog/BlogCard'
+import FeaturedPost from '@/components/blog/FeaturedPost'
+import BlogPagination from '@/components/blog/BlogPagination'
+import BlogEmpty from '@/components/blog/BlogEmpty'
+import { getBlogPosts, getBlogTags, getFeaturedPost } from '@/lib/blog/queries'
 
 // export const dynamic = 'force-static'
 export const revalidate = 0
 
-export function generateMetadata(): Metadata {
-  return {
-    title: `Momtan sdg sustainable development goals blog Posts`,
-  }
+type SearchParams = { [key: string]: string | string[] | undefined }
+
+const first = (value: string | string[] | undefined) =>
+  Array.isArray(value) ? value[0] : value
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: Language }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'Blog' })
+  return { title: t('metaTitle'), description: t('desc') }
 }
 
 export default async function Page({
   params,
   searchParams,
 }: {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
   params: Promise<{ locale: Language }>
+  searchParams: Promise<SearchParams>
 }) {
-  const searchParamsObj = await searchParams
   const { locale } = await params
-  const title = searchParamsObj.title
-  const page =
-    typeof searchParamsObj.page === 'string' ? Number(searchParamsObj.page) : 1
+  const sp = await searchParams
 
-  const category = await getcategory({ locale })
-  const catObj = category.map((cat) => ({ id: cat.id, title: cat.title }))
-  const findIdByTitle = catObj.find((cat) => cat.title === title)
+  // ?page=abc, ?page=-3 or ?page=0 all fall back to page 1
+  const page = Math.max(1, Number.parseInt(first(sp.page) ?? '1', 10) || 1)
 
-  const activeCategoryId = findIdByTitle ? findIdByTitle.id : 'All'
-  const posts = await getPosts(activeCategoryId, page, { locale })
-  const postDocs = posts.docs || []
-  const totalPages = posts.totalPages
+  const tags = await getBlogTags(locale)
+
+  // ?tag=<id> is the new param; ?title=<tag title> is kept so old links still work
+  const tagParam = first(sp.tag)
+  const legacyTitle = first(sp.title)
+  const activeTag =
+    tags.find((tag) => tag.id === tagParam) ??
+    (legacyTitle ? tags.find((tag) => tag.title === legacyTitle) : undefined)
+
+  // Featured = latest post, only on the unfiltered listing
+  const featured = activeTag ? null : await getFeaturedPost(locale)
+  const showFeatured = Boolean(featured) && page === 1
+
+  const { docs, totalPages } = await getBlogPosts({
+    locale,
+    tagId: activeTag?.id,
+    page,
+    excludeId: featured?.id,
+  })
 
   return (
-    <>
-      <section className="h-full">
-        {/* Blog posts */}
-        <Category result={category} locale={locale} />
-        {/* Don't remove this div because Container don't have dir */}
-        {postDocs.length > 0 ? (
-          <Container className="mt-0 grid gap-4 grid-cols-1 sm:gap-10 sm:grid-cols-2 xl:grid-cols-3 justify-items-center  ">
-            {postDocs.map((post) => (
-              <PostCard
-                content={{
-                  root: {
-                    type: '',
-                    children: [],
-                    direction: 'ltr',
-                    format: '',
-                    indent: 0,
-                    version: 0,
-                  },
-                }}
-                tag={[]}
-                createdAt={''}
-                updatedAt={''}
-                key={post.id}
-                locale={locale}
-                {...post}
-              />
-            ))}
-          </Container>
-        ) : (
-          <NoResult backLink={true} />
-        )}
-      </section>
-      {totalPages > 1 && (
-        <BlogPagination
-          title={title}
-          page={page}
-          totalPages={posts.totalPages}
-          locale={locale}
-        />
+    <main>
+      <BlogHeader locale={locale} />
+
+      <Container className="pb-2 pt-4">
+        <BlogFilters tags={tags} activeTagId={activeTag?.id} />
+      </Container>
+
+      {showFeatured && featured && (
+        <Container className="pb-0 pt-6">
+          <FeaturedPost post={featured} locale={locale} />
+        </Container>
       )}
-    </>
+
+      <Container className="pt-8">
+        {docs.length > 0 ? (
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8 xl:grid-cols-3">
+            {docs.map((post) => (
+              <BlogCard key={post.id} post={post} locale={locale} />
+            ))}
+          </div>
+        ) : (
+          !showFeatured && <BlogEmpty />
+        )}
+      </Container>
+
+      {totalPages > 1 && (
+        <Container className="pt-0">
+          <BlogPagination page={page} totalPages={totalPages} tagId={activeTag?.id} />
+        </Container>
+      )}
+    </main>
   )
 }
-
-const getPosts = async (
-  catId: string,
-  page: number,
-  { locale }: { locale: Language },
-) => {
-  const payload = await getPayload({ config })
-  if (catId === 'All') {
-    const posts = await payload.find({
-      collection: 'posts',
-      depth: 1,
-      limit: 6,
-      select: {
-        title: true,
-        image: true,
-        publishedAt: true,
-        authors: true,
-        slug: true,
-        excerpt: true,
-      },
-      locale: locale,
-      fallbackLocale: false,
-      page: page,
-    })
-    // console.log('post 1 ', posts.docs[0])
-    return posts
-  } else {
-    const posts = await payload.find({
-      collection: 'posts',
-      depth: 1,
-      limit: 6,
-      where: {
-        tag: {
-          equals: catId,
-        },
-      },
-      select: {
-        title: true,
-        image: true,
-        publishedAt: true,
-        authors: true,
-        slug: true,
-        excerpt: true,
-      },
-      page: page,
-      locale: locale,
-      fallbackLocale: false,
-    })
-
-    return posts
-  }
-}
-
-const getcategory = cache(async ({ locale }: { locale: Language }) => {
-  const payload = await getPayload({ config })
-  const tags = await payload.find({
-    collection: 'tag',
-    depth: 1,
-    pagination: false,
-    locale: locale,
-    fallbackLocale: false,
-  })
-  return tags.docs || null
-})

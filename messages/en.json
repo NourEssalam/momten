@@ -108,10 +108,20 @@
     "and": "and"
   },
   "Blog": {
+    "metaTitle": "Blog | Momtan Sustainable Development",
+    "eyebrow": "Blog",
+    "title": "Stories and Updates from",
+    "titleHighlight": "Our Community",
+    "desc": "News, stories and insights on citizenship, human development and the Sustainable Development Goals.",
+    "featured": "Latest",
+    "filterLabel": "Filter posts by category",
+    "viewAll": "View all posts",
     "all": "All",
     "share": "Share",
     "shareToSocial": "Share To Social Media",
-    "relatedPosts": "Related Posts"
+    "relatedPosts": "Related Posts",
+    "copyLink": "Copy link",
+    "linkCopied": "Link copied"
   },
   "Error": {
     "error": "Something went wrong",

@@ -1,96 +1,138 @@
-import Container from '@/components/shared-components/Container'
-import { Language } from '@/i18n/routing'
-import { formatDate } from '@/lib/formatDate'
 import Image from 'next/image'
-import BackLink from '@/components/shared-components/BackLink'
-import ShareMenu from '@/components/blog/ShareMenu'
+import { ArrowLeft, CalendarDays, User } from 'lucide-react'
 import { RichText } from '@payloadcms/richtext-lexical/react'
-import { queryPostBySlug } from './query'
-import NoResult from '@/components/shared-components/no-result'
-
-import Authors from './authors'
+import { useTranslations } from 'next-intl'
+import Container from '@/components/shared-components/Container'
+import ShareBlock from '@/components/blog/ShareBlock'
+import { getAuthorNames, getCover } from '@/components/blog/utils'
+import { Link, type Language } from '@/i18n/routing'
+import { formatDate } from '@/lib/formatDate'
+import type { Post, Tag } from '@/payload-types'
 import RelatedPosts from './relatedPosts'
-// import { delay } from '@/lib/timers'
 
-export default async function PostFeed({
-  slug,
+export default function PostFeed({
+  post,
   locale,
 }: {
-  slug: string
+  post: Post
   locale: Language
 }) {
-  // await delay(2500) // 2.5 seconds delay
-  const post = await queryPostBySlug({ slug, locale })
+  const tBack = useTranslations('BackLinks')
+  const tCard = useTranslations('PostCard')
 
-  const relatedPosts = post?.relatedPosts || []
+  const isAr = locale === 'ar'
+  const cover = getCover(post.image)
+  const authors = getAuthorNames(post.authors)
+  const tags = (post.tag ?? []).filter(
+    (t): t is Tag => typeof t === 'object' && Boolean(t?.title),
+  )
 
-  type PostImage = Exclude<typeof post.image, string> // Removes string from the union type
+  return (
+    <>
+      <header className="relative overflow-hidden">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -top-32 -end-32 h-80 w-80 rounded-full bg-section"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute start-0 top-0 h-48 w-64 opacity-60 [background-image:radial-gradient(hsl(var(--stronger-tint))_1.5px,transparent_1.5px)] [background-size:22px_22px]"
+        />
 
-  const mediaImage = post.image as PostImage // Explicitly cast
+        <Container className="relative pb-0">
+          <Link
+            href="/blog"
+            className="group inline-flex items-center gap-2 text-sm font-semibold text-primary"
+          >
+            <ArrowLeft
+              className="h-4 w-4 transition-transform group-hover:-translate-x-1 rtl:rotate-180 rtl:group-hover:translate-x-1"
+              aria-hidden
+            />
+            {tBack('blog')}
+          </Link>
 
-  return post ? (
-    <section className="flex flex-col gap-2 xl:gap-10 justify-center items-center">
-      <Container className="flex flex-col gap-10 mb-0 pb-0 max-w-[1150px]">
-        <BackLink toPage="blog" />
-        <h1 className="text-3xl text-secondary  font-medium sm:text-4xl lg:text-6xl lg:leading-tight  ">
-          {post.title}
-        </h1>
-        {/* meta data */}
-        <div className="w-full  flex items-center justify-between">
-          <div className="flex gap-4 items-center px-5">
-            <time dateTime={post.publishedAt} className=" text-secondary">
-              {formatDate(post.publishedAt, locale)}
-            </time>
-            {post.authors && post.authors.length > 0 && (
-              <Authors authors={post.authors} />
+          {tags.length > 0 && (
+            <ul className="mt-8 flex flex-wrap gap-2">
+              {tags.map((tag) => (
+                <li
+                  key={tag.id}
+                  className={`rounded-full bg-section px-3 py-1 text-xs font-semibold uppercase text-primary ${
+                    isAr ? '' : 'tracking-wider'
+                  }`}
+                >
+                  {tag.title}
+                </li>
+              ))}
+            </ul>
+          )}
+
+          <h1
+            className={`mt-4 max-w-4xl text-3xl font-bold text-shade-strong sm:text-4xl lg:text-5xl ${
+              isAr ? 'leading-normal' : 'leading-tight'
+            }`}
+          >
+            {post.title}
+          </h1>
+
+          {post.excerpt && (
+            <p className="mt-5 max-w-3xl text-lg leading-relaxed text-grey-medium">
+              {post.excerpt}
+            </p>
+          )}
+
+          <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-grey-medium">
+            <span className="flex items-center gap-2">
+              <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-section text-shade">
+                <CalendarDays className="h-4 w-4" aria-hidden />
+              </span>
+              <time dateTime={post.publishedAt}>
+                {formatDate(post.publishedAt, locale)}
+              </time>
+            </span>
+            {authors.length > 0 && (
+              <span className="flex items-center gap-2">
+                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-section text-shade">
+                  <User className="h-4 w-4" aria-hidden />
+                </span>
+                {tCard('writtenBy')} {authors.join(` ${tCard('and')} `)}
+              </span>
             )}
           </div>
 
-          <div className="flex justify-end ">
-            <ShareMenu
-              title={post.title}
-              excerpt={post.excerpt as string}
-              tags={post?.tag}
-              locale={locale}
-            />
-          </div>
-        </div>
-        <div className="relative w-full h-96  overflow-hidden  rounded-3xl">
-          <Image
-            src={mediaImage.url || '/logo.png'}
-            alt={mediaImage.alt || 'post image'}
-            fill
-            sizes="100vw"
-            className="w-full h-full object-fill absolute inset-0 -z-10"
-          />
-        </div>
-      </Container>
-      {/* Content */}
-      <Container className="mt-0 pt-0 max-w-[1150px]">
-        <article className="prose prose-stone md:prose-lg lg:prose-xl prose-p:text-black">
-          <RichText data={post.content} />
-        </article>
-        <div
-          className="rounded  grid grid-cols-auto md:grid-cols-2 lg:grid-cols-3 max-w-[250px] 
-          md:max-w-full gap-4  items-center justify-between"
-        >
-          {post.tag && post.tag?.length > 0
-            ? post.tag.map((tag) =>
-                typeof tag === 'object' ? (
-                  <div
-                    key={tag.id}
-                    className="text-secondary   rounded p-1 bg-gray-200 hover:bg-gray-300"
-                  >{`#${tag.title.split(' ').join('_')}`}</div>
-                ) : (
-                  ''
-                ),
-              )
-            : 'No tags'}
+          {cover && (
+            <div className="relative mt-10 aspect-[16/9] overflow-hidden rounded-3xl bg-section shadow-xl shadow-primary/10">
+              <Image
+                src={cover.url}
+                alt={cover.alt || post.title}
+                fill
+                priority
+                sizes="(max-width: 1440px) 100vw, 1344px"
+                className="object-cover"
+              />
+            </div>
+          )}
+        </Container>
+      </header>
+
+      <Container className="pt-10">
+        <div className="mx-auto max-w-3xl">
+          <article
+            className="prose prose-lg max-w-none text-start
+              prose-headings:font-bold prose-headings:text-shade-strong
+              prose-p:text-grey-medium prose-li:text-grey-medium
+              prose-strong:text-shade-strong
+              prose-a:font-semibold prose-a:text-primary prose-a:no-underline hover:prose-a:underline
+              prose-blockquote:border-primary prose-blockquote:text-shade
+              prose-img:rounded-2xl prose-img:shadow-md"
+          >
+            <RichText data={post.content} />
+          </article>
+
+          <ShareBlock title={post.title} />
         </div>
       </Container>
-      <RelatedPosts relatedPosts={relatedPosts} locale={locale} />
-    </section>
-  ) : (
-    <NoResult backLink={true} />
+
+      <RelatedPosts relatedPosts={post.relatedPosts} locale={locale} />
+    </>
   )
 }
