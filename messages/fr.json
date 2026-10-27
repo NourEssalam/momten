@@ -145,7 +145,12 @@
   "Error": {
     "error": "Quelque chose s'est mal passé",
     "no-result": "Aucun résultat trouvé",
-    "NotFoundPage": "Page non trouvée"
+    "NotFoundPage": "Page non trouvée",
+    "notFoundDesc": "La page que vous recherchez n’existe pas ou a été déplacée.",
+    "backHome": "Retour à l’accueil",
+    "errorDesc": "Une erreur inattendue s’est produite. Veuillez réessayer.",
+    "tryAgain": "Réessayer",
+    "loading": "Chargement..."
   },
   "NextPrev": {
     "next": "Suivant",
