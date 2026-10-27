@@ -9,11 +9,7 @@ const hint = {
 
 export const HomeHero: GlobalConfig = {
   slug: 'home-hero',
-  label: {
-    en: 'Home Hero Photos',
-    ar: 'صور الواجهة الرئيسية',
-    fr: "Photos de l'accueil",
-  },
+  label: { en: 'Site Photos', ar: 'صور الموقع', fr: 'Photos du site' },
   access: {
     read: adminsAndSuperAdmins,
     update: adminsAndSuperAdmins,
@@ -57,6 +53,7 @@ export const HomeHero: GlobalConfig = {
     },
     {
       name: 'aboutImage',
+
       type: 'upload',
       relationTo: 'media',
       label: {
@@ -69,6 +66,23 @@ export const HomeHero: GlobalConfig = {
           en: 'Portrait or square photo works best.',
           ar: 'الصورة العمودية أو المربعة هي الأفضل.',
           fr: 'Une photo portrait ou carrée convient le mieux.',
+        },
+      },
+    },
+    {
+      name: 'aboutPageImage',
+      type: 'upload',
+      relationTo: 'media',
+      label: {
+        en: 'About page photo',
+        ar: 'صورة صفحة من نحن',
+        fr: 'Photo de la page À propos',
+      },
+      admin: {
+        description: {
+          en: 'Landscape photo (4:3 works best).',
+          ar: 'صورة أفقية (النسبة 4:3 هي الأفضل).',
+          fr: 'Photo paysage (4:3 idéal).',
         },
       },
     },

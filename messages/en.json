@@ -48,7 +48,6 @@
     },
     "congratsMessage": "congratulations! You have been successfully subscribed to our newsletter.",
     "congratsSubText": "You will receive our blog updates in your inbox.",
-
     "error": {
       "alreadySubscribed": "You have already subscribed to our newsletter."
     }
@@ -70,7 +69,13 @@
     "desc": "All rights reserved",
     "by Momtan": "By Momten"
   },
-
+  "AboutPage": {
+    "eyebrow": "About Us",
+    "headingStart": "People, Communities and",
+    "headingHighlight": "Lasting Change",
+    "desc": "We are a non-profit association committed to citizenship, human development and sustainable development. Through our programs and partnerships, we work with communities to create a more inclusive, resilient and brighter future.",
+    "badge": "Stronger Communities"
+  },
   "ContactPage": {
     "title": "Reach Out to Us",
     "subTitle": "Have questions or ideas? Want to get involved? Contact us using the form below or connect via email and social media. We're excited to hear from you!",
@@ -86,12 +91,13 @@
       "error": "Something went wrong, please try again."
     }
   },
-
   "Team": {
     "title": "Meet Our Team",
-    "desc": "Our team is made up of passionate individuals dedicated to making a positive impact in our community. With diverse skills and backgrounds, we work together to drive change and support the mission of our organization."
+    "desc": "Our team is made up of passionate individuals dedicated to making a positive impact in our community. With diverse skills and backgrounds, we work together to drive change and support the mission of our organization.",
+    "eyebrow": "Our Team",
+    "headingStart": "Meet",
+    "headingHighlight": "Our Team"
   },
-
   "BackLinks": {
     "blog": "back to the blog page",
     "about": "back to the about page"
@@ -107,7 +113,6 @@
     "shareToSocial": "Share To Social Media",
     "relatedPosts": "Related Posts"
   },
-
   "Error": {
     "error": "Something went wrong",
     "no-result": "No Results was found",

@@ -1,7 +1,10 @@
 import { Media } from '@/payload-types'
 import Image from 'next/image'
 import { Link } from '@/i18n/routing'
-type Team = {
+import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter, FaYoutube } from 'react-icons/fa'
+import { IconType } from 'react-icons'
+
+export type TeamMember = {
   id: string
   name: string
   position: string
@@ -16,14 +19,7 @@ type Team = {
       }[]
     | null
 }
-import {
-  FaFacebook,
-  FaInstagram,
-  FaLinkedin,
-  FaTwitter,
-  FaYoutube,
-} from 'react-icons/fa'
-import { IconType } from 'react-icons'
+
 const iconMapping: Record<string, IconType> = {
   FaFacebook,
   FaInstagram,
@@ -32,41 +28,49 @@ const iconMapping: Record<string, IconType> = {
   FaLinkedin,
 }
 
-export default function Member({ team }: { team: Team }) {
+export default function Member({ team }: { team: TeamMember }) {
   const { name, position, image, socials } = team
-  // console.log('image', image)
 
   return (
-    <div className="flex flex-col items-center justify-center text-center gap-1">
-      <div className="w-28 h-28 rounded-full overflow-hidden">
-        <Image
-          src={image?.url || '/logo.png'}
-          alt={image?.alt || 'member image'}
-          width={500}
-          height={500}
-          className="object-cover w-full h-full"
-        />
+    <article className="flex h-full flex-col items-center rounded-2xl bg-white p-6 text-center shadow-md ring-1 ring-tint">
+      {/* photo with a lavender shape peeking out behind it */}
+      <div className="relative mb-4 h-24 w-24">
+        <span aria-hidden className="absolute -bottom-1 -start-3 h-full w-full rounded-full bg-section" />
+        <div className="relative h-full w-full overflow-hidden rounded-full shadow ring-4 ring-white">
+          <Image
+            src={image?.url || '/logo.png'}
+            alt={image?.alt || name}
+            fill
+            sizes="96px"
+            className="object-cover"
+          />
+        </div>
       </div>
-      <h3 className="mb-1 text-2xl font-semi-bold tracking-tight text-shade-strong">
-        {name}
-      </h3>
-      <p className="text-secondary">{position}</p>
-      <ul className="flex justify-center gap-4 mt-4">
-        {socials?.map((social) => {
-          const IconComponent = social.icon ? iconMapping[social.icon] : null
-          return (
-            <li key={social.name}>
-              <Link
-                href={social.url}
-                className="text-sm hover:text-accent transition-colors duration-300"
-                style={{ color: social.color ?? undefined }}
-              >
-                {IconComponent && <IconComponent className="w-6 h-6" />}
-              </Link>
-            </li>
-          )
-        })}
-      </ul>
-    </div>
+
+      <h3 className="text-lg font-semibold text-shade-strong">{name}</h3>
+      <p className="mt-1 text-sm text-grey-medium">{position}</p>
+
+      {socials && socials.length > 0 && (
+        <ul className="mt-4 flex justify-center gap-3">
+          {socials.map((social) => {
+            const IconComponent = social.icon ? iconMapping[social.icon] : null
+            return (
+              <li key={social.id ?? social.name}>
+                <Link
+                  href={social.url}
+                  aria-label={`${name} - ${social.name}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block transition-transform duration-300 hover:-translate-y-0.5"
+                  style={{ color: social.color ?? undefined }}
+                >
+                  {IconComponent && <IconComponent className="h-5 w-5" />}
+                </Link>
+              </li>
+            )
+          })}
+        </ul>
+      )}
+    </article>
   )
 }

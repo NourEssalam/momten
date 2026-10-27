@@ -46,7 +46,6 @@
       "One of our programs or events": "L'un de nos programmes ou événements",
       "Other": "Autre"
     },
-
     "congratsMessage": "Félicitations ! Vous êtes abonné avec succès à notre newsletter.",
     "congratsSubText": "Vous recevrez les mises à jour de notre blog dans votre boîte de réception.",
     "error": {
@@ -70,6 +69,13 @@
     "desc": "Tous droits réservés",
     "by Momtan": "Par Momtan"
   },
+  "AboutPage": {
+    "eyebrow": "À propos",
+    "headingStart": "Des personnes, des communautés et",
+    "headingHighlight": "un changement durable",
+    "desc": "Nous sommes une association à but non lucratif engagée pour la citoyenneté, le développement humain et le développement durable. À travers nos programmes et nos partenariats, nous travaillons avec les communautés pour construire un avenir plus inclusif, plus résilient et plus radieux.",
+    "badge": "Des communautés plus fortes"
+  },
   "ContactPage": {
     "title": "Contactez-nous",
     "subTitle": "Vous avez des questions ou des idées ? Vous voulez vous impliquer ? Contactez-nous via le formulaire ci-dessous ou connectez-vous par email et sur les réseaux sociaux. Nous sommes ravis de vous entendre !",
@@ -87,7 +93,10 @@
   },
   "Team": {
     "title": "Rencontrez notre équipe",
-    "desc": "Notre équipe est composée de personnes passionnées, dédiées à avoir un impact positif sur notre communauté. Avec des compétences et des parcours divers, nous travaillons ensemble pour apporter des changements et soutenir la mission de notre organisation."
+    "desc": "Notre équipe est composée de personnes passionnées, dédiées à avoir un impact positif sur notre communauté. Avec des compétences et des parcours divers, nous travaillons ensemble pour apporter des changements et soutenir la mission de notre organisation.",
+    "eyebrow": "Notre équipe",
+    "headingStart": "Rencontrez",
+    "headingHighlight": "notre équipe"
   },
   "BackLinks": {
     "blog": "retour à la page du blog",

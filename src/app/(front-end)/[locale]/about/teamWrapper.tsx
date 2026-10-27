@@ -1,20 +1,31 @@
 import Team from '@/components/about/Team'
-import Container from '@/components/shared-components/Container'
 import { Language } from '@/i18n/routing'
+import { cn } from '@/lib/cn'
 import { useTranslations } from 'next-intl'
+
 export default function TeamWrapper({ locale }: { locale: Language }) {
   const t = useTranslations('Team')
+  const isAr = locale === 'ar'
+
   return (
-    <Container>
-      <div className="flex flex-col text-center w-full mb-6 sm:mb-12">
-        <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-shade-strong">
-          {t('title')}
-        </h1>
-        <p className="lg:w-2/3 mx-auto leading-relaxed text-base text-secondary">
-          {t('desc')}
-        </p>
+    <section className="container">
+      <div className="mx-auto mb-10 flex max-w-3xl flex-col items-center text-center">
+        <span
+          className={cn(
+            'mb-3 text-xs font-semibold uppercase text-primary',
+            // letter-spacing breaks Arabic letter joining
+            !isAr && 'tracking-[0.2em]',
+          )}
+        >
+          {t('eyebrow')}
+        </span>
+        <h2 className="text-3xl font-bold text-shade-strong sm:text-4xl">
+          {t('headingStart')} <span className="text-primary">{t('headingHighlight')}</span>
+        </h2>
+        <span aria-hidden className="mt-3 h-1 w-14 rounded-full bg-primary" />
+        <p className="mt-5 text-base leading-relaxed text-grey-medium">{t('desc')}</p>
       </div>
       <Team locale={locale} />
-    </Container>
+    </section>
   )
 }

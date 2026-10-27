@@ -35,3 +35,9 @@ export const queryAboutImage = async (): Promise<HeroPhoto | null> => {
   const data = await getHomeHero()
   return isMedia(data?.aboutImage) ? toPhoto(data.aboutImage) : null
 }
+
+// Photo for the About page hero, or null if not uploaded yet
+export const queryAboutPageImage = async (): Promise<HeroPhoto | null> => {
+  const data = await getHomeHero()
+  return isMedia(data?.aboutPageImage) ? toPhoto(data.aboutPageImage) : null
+}
