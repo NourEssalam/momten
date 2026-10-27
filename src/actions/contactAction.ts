@@ -1,89 +1,102 @@
 'use server'
-import { contactSchema } from '@/lib/form-schema'
+
 import axios from 'axios'
+import { contactSchema } from '@/lib/form-schema'
 
-export type FormState = {
-  message: string
-  fields?: Record<string, string>
-  issues?: string[]
-}
+export type ContactField = 'name' | 'email' | 'message'
 
-export async function onSubmitAction(
-  prevState: FormState,
-  data: FormData,
-): Promise<FormState> {
-  // Get the form data
-  const formData = Object.fromEntries(data)
-  const parsed = contactSchema.safeParse(formData)
+export type ContactState =
+  | { status: 'idle' }
+  | { status: 'success' }
+  | {
+      status: 'error'
+      reason: 'invalid' | 'unavailable' | 'failed'
+      fields?: Partial<Record<ContactField, string>>
+    }
+
+const escapeHtml = (value: string) =>
+  value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+
+export async function onSubmitAction(data: FormData): Promise<ContactState> {
+  const read = (key: string) => String(data.get(key) ?? '')
+
+  // Honeypot: pretend success so bots learn nothing.
+  if (read('website').trim() !== '') {
+    return { status: 'success' }
+  }
+
+  const parsed = contactSchema.safeParse({
+    name: read('name'),
+    email: read('email'),
+    message: read('message'),
+  })
 
   if (!parsed.success) {
-    const fields: Record<string, string> = {}
-    for (const key of Object.keys(formData)) {
-      fields[key] = formData[key].toString()
+    const fields: Partial<Record<ContactField, string>> = {}
+    for (const issue of parsed.error.issues) {
+      const key = issue.path[0] as ContactField
+      fields[key] ??= issue.message
     }
-    return {
-      message: 'Invalid form data',
-      fields,
-      issues: parsed.error.issues.map((issue) => issue.message),
-    }
+    return { status: 'error', reason: 'invalid', fields }
   }
 
-  if (!process.env.BREVO_EMAILS_ACTIVE) {
-    // console.log(
-    //   'the email service is not active please activate it in the .env file',
-    // )
-    return {
-      message: 'please try again later',
-    }
+  const flag = process.env.BREVO_EMAILS_ACTIVE
+  const apiKey = process.env.BREVO_API_KEY
+  const senderEmail = process.env.BREVO_SENDER_EMAIL
+  if (!flag || flag === 'false' || flag === '0' || !apiKey || !senderEmail) {
+    return { status: 'error', reason: 'unavailable' }
   }
+
+  const { name, email, message } = parsed.data
+  const recipient = process.env.BREVO_CONTACT_RECIPIENT || senderEmail
+  const preview = message.replace(/\s+/g, ' ')
+  const subject = `Contact Form: ${preview.slice(0, 50)}${preview.length > 50 ? '...' : ''}`
 
   try {
-    // THIS IS THE KEY CHANGE: Using the correct sender configuration
     await axios({
       method: 'POST',
       url: 'https://api.brevo.com/v3/smtp/email',
+      timeout: 10_000,
       headers: {
-        'api-key': process.env.BREVO_API_KEY,
+        'api-key': apiKey,
         'content-type': 'application/json',
         Accept: 'application/json',
       },
       data: {
         sender: {
           name: process.env.BREVO_SENDER_NAME || 'Website Contact Form',
-          email: process.env.BREVO_SENDER_EMAIL,
+          email: senderEmail,
         },
-        to: [
-          {
-            email: process.env.BREVO_SENDER_EMAIL,
-          },
-        ],
-        replyTo: {
-          name: parsed.data.name,
-          email: parsed.data.email,
-        },
-        subject: `Contact Form: ${parsed.data.message.substring(0, 50)}...`,
+        to: [{ email: recipient }],
+        replyTo: { name, email },
+        subject,
         htmlContent: `
           <html>
             <body>
               <h3>New contact form submission</h3>
-              <p><strong>From:</strong> ${parsed.data.name} (${parsed.data.email})</p>
+              <p><strong>From:</strong> ${escapeHtml(name)} (${escapeHtml(email)})</p>
               <p><strong>Message:</strong></p>
-              <div style="background-color: #f9f9f9; padding: 15px; border-radius: 5px; margin-top: 10px;">
-                ${parsed.data.message.replace(/\n/g, '<br>')}
+              <div style="background-color:#f9f9f9;padding:15px;border-radius:5px;margin-top:10px;">
+                ${escapeHtml(message).replace(/\n/g, '<br>')}
               </div>
             </body>
           </html>
         `,
       },
     })
-
-    return {
-      message: 'Your message has been sent successfully',
-    }
+    return { status: 'success' }
   } catch (error) {
-    console.error('Error sending email with Brevo:', error)
-    return {
-      message: 'Error while sending the email',
-    }
+    console.error(
+      'Error sending contact email with Brevo:',
+      axios.isAxiosError(error)
+        ? (error.response?.data ?? error.message)
+        : error,
+    )
+    return { status: 'error', reason: 'failed' }
   }
 }

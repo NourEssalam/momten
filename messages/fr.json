@@ -77,9 +77,17 @@
     "badge": "Des communautés plus fortes"
   },
   "ContactPage": {
+    "eyebrow": "Restons en contact",
     "title": "Contactez-nous",
     "subTitle": "Vous avez des questions ou des idées ? Vous voulez vous impliquer ? Contactez-nous via le formulaire ci-dessous ou connectez-vous par email et sur les réseaux sociaux. Nous sommes ravis de vous entendre !",
+    "info": {
+      "address": "Adresse",
+      "phone": "Appelez-nous",
+      "email": "Écrivez-nous",
+      "social": "Suivez-nous"
+    },
     "form": {
+      "title": "Envoyez-nous un message",
       "name": "Nom",
       "namePlaceholder": "Entrez votre nom",
       "email": "Email",
@@ -87,8 +95,19 @@
       "message": "Message",
       "messagePlaceholder": "Entrez votre message",
       "submit": "Envoyer",
+      "sending": "Envoi en cours…",
       "success": "Votre message a été envoyé avec succès !",
-      "error": "Quelque chose s'est mal passé, veuillez essayer de nouveau."
+      "error": "Quelque chose s'est mal passé, veuillez essayer de nouveau.",
+      "invalid": "Veuillez corriger les champs signalés et réessayer.",
+      "unavailable": "Le formulaire est temporairement indisponible. Veuillez nous écrire directement par email.",
+      "errors": {
+        "nameRequired": "Veuillez entrer votre nom.",
+        "nameTooLong": "Le nom est trop long.",
+        "emailRequired": "Veuillez entrer votre adresse email.",
+        "emailInvalid": "Veuillez entrer une adresse email valide.",
+        "messageTooShort": "Veuillez écrire au moins 10 caractères.",
+        "messageTooLong": "Le message est trop long (3000 caractères maximum)."
+      }
     }
   },
   "Team": {
