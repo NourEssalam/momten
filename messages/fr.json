@@ -108,10 +108,20 @@
     "and": "et"
   },
   "Blog": {
-    "all": "Tous",
+    "all": "Tout",
     "share": "Partager",
     "shareToSocial": "Partager sur les réseaux sociaux",
-    "relatedPosts": "Articles connexes"
+    "relatedPosts": "Articles similaires",
+    "metaTitle": "Blog | Développement durable",
+    "eyebrow": "Blog",
+    "title": "Histoires et actualités de",
+    "titleHighlight": "notre communauté",
+    "desc": "Actualités, histoires et réflexions autour de la citoyenneté, du développement humain et des objectifs de développement durable.",
+    "featured": "À la une",
+    "filterLabel": "Filtrer les articles par catégorie",
+    "viewAll": "Voir tous les articles",
+    "copyLink": "Copier le lien",
+    "linkCopied": "Lien copié"
   },
   "Error": {
     "error": "Quelque chose s'est mal passé",
