@@ -145,7 +145,12 @@
   "Error": {
     "error": "Something went wrong",
     "no-result": "No Results was found",
-    "NotFoundPage": "Page Not Found"
+    "NotFoundPage": "Page Not Found",
+    "notFoundDesc": "The page you are looking for does not exist or has been moved.",
+    "backHome": "Back to home",
+    "errorDesc": "An unexpected error occurred. Please try again.",
+    "tryAgain": "Try again",
+    "loading": "Loading..."
   },
   "NextPrev": {
     "next": "Next",

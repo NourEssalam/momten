@@ -1,12 +1,15 @@
-import { CiNoWaitingSign } from 'react-icons/ci'
+import { SearchX } from 'lucide-react'
 import BackLink from './BackLink'
 import { useTranslations } from 'next-intl'
+
 export default function NoResult({ backLink = false }: { backLink?: boolean }) {
   const t = useTranslations('Error')
   return (
-    <section className="w-full h-[300px] flex flex-col gap-5 justify-center items-center">
-      <CiNoWaitingSign className="text-4xl lg:text-9xl text-red-700" />
-      <h2>{t('no-result')}</h2>
+    <section className="flex min-h-[300px] w-full flex-col items-center justify-center gap-4 text-center">
+      <span className="flex h-20 w-20 items-center justify-center rounded-full bg-section text-primary">
+        <SearchX className="h-10 w-10" aria-hidden />
+      </span>
+      <h2 className="text-xl font-semibold text-shade-strong">{t('no-result')}</h2>
       {backLink && <BackLink toPage="blog" />}
     </section>
   )
