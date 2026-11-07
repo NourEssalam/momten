@@ -1,8 +1,5 @@
-import { cache } from 'react'
 import { getTranslations } from 'next-intl/server'
-import config from '@payload-config'
-import { getPayload, type TypedLocale } from 'payload'
-
+import { queryContact } from './query'
 import Container from '@/components/shared-components/Container'
 import ContactInfo from '@/components/contact/contactInfo'
 import ContactForm from '@/components/contact/contactForm'
@@ -67,14 +64,3 @@ export default async function Contact({
     </>
   )
 }
-
-export const queryContact = cache(async ({ locale }: { locale: string }) => {
-  const payload = await getPayload({ config })
-  return payload.findGlobal({
-    slug: 'contact',
-    depth: 2,
-    locale: locale as TypedLocale,
-    overrideAccess: true,
-    showHiddenFields: true,
-  })
-})
