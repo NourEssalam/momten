@@ -34,7 +34,11 @@ export default function SwitchLanguage() {
       // Blog post slugs are translated, so find the matching post in the new language
       const blogPost = pathname.match(/^\/blog\/([^/]+)\/?$/)
       if (blogPost) {
-        const slug = await getPostSlugForLocale({ slug: blogPost[1], from: locale, to: next })
+        const slug = await getPostSlugForLocale({
+          slug: blogPost[1],
+          from: locale,
+          to: next,
+        })
         target = slug ? `/blog/${encodeURIComponent(slug)}` : '/blog'
       }
 
@@ -57,7 +61,10 @@ export default function SwitchLanguage() {
           )}
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="z-100 w-44 rounded-xl p-1.5 shadow-lg">
+      <DropdownMenuContent
+        align="end"
+        className="z-100 w-44 rounded-xl p-1.5 shadow-lg"
+      >
         {LANGUAGES.map(({ code, label }) => (
           <DropdownMenuItem
             key={code}
@@ -65,11 +72,14 @@ export default function SwitchLanguage() {
             onSelect={() => switchTo(code)}
             className={cn(
               'cursor-pointer justify-between gap-3 rounded-lg px-3 py-2.5 text-sm font-medium focus:bg-section focus:text-shade-strong',
+              locale === 'ar' && 'flex-row-reverse',
               code === locale ? 'bg-section text-shade-strong' : 'text-grey',
             )}
           >
             {label}
-            {code === locale && <Check className="h-4 w-4 text-primary" aria-hidden />}
+            {code === locale && (
+              <Check className="h-4 w-4 text-primary" aria-hidden />
+            )}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

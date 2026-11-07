@@ -33,8 +33,12 @@ export default function DialogSearchButton({ locale }: { locale: Language }) {
         <DialogPrimitive.Overlay className="fixed inset-0 z-100 bg-black/50 backdrop-blur-sm data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=closed]:animate-out data-[state=closed]:fade-out-0" />
         {/* centered with auto margins (no transforms), so it works the same in RTL */}
         <DialogPrimitive.Content className="fixed inset-x-4 top-4 z-900 mx-auto max-w-2xl overflow-hidden rounded-2xl bg-white shadow-2xl focus:outline-none md:top-[10vh] data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:slide-in-from-top-2 data-[state=closed]:animate-out data-[state=closed]:fade-out-0">
-          <DialogPrimitive.Title className="sr-only">{t('title')}</DialogPrimitive.Title>
-          <DialogPrimitive.Description className="sr-only">{t('start')}</DialogPrimitive.Description>
+          <DialogPrimitive.Title className="sr-only">
+            {t('title')}
+          </DialogPrimitive.Title>
+          <DialogPrimitive.Description className="sr-only">
+            {t('start')}
+          </DialogPrimitive.Description>
           {/* mounted only while open, so the typed text resets on close */}
           <SearchPanel locale={locale} onNavigate={() => setOpen(false)} />
         </DialogPrimitive.Content>
@@ -43,7 +47,13 @@ export default function DialogSearchButton({ locale }: { locale: Language }) {
   )
 }
 
-function SearchPanel({ locale, onNavigate }: { locale: Language; onNavigate: () => void }) {
+function SearchPanel({
+  locale,
+  onNavigate,
+}: {
+  locale: Language
+  onNavigate: () => void
+}) {
   const t = useTranslations('Search')
   const tHeader = useTranslations('Header')
   const tError = useTranslations('Error')
@@ -51,7 +61,9 @@ function SearchPanel({ locale, onNavigate }: { locale: Language; onNavigate: () 
   const [query, setQuery] = useState('')
   const [debounced] = useDebounce(query, 300)
   const [results, setResults] = useState<SearchResult[]>([])
-  const [status, setStatus] = useState<'idle' | 'loading' | 'done' | 'error'>('idle')
+  const [status, setStatus] = useState<'idle' | 'loading' | 'done' | 'error'>(
+    'idle',
+  )
 
   useEffect(() => {
     const q = debounced.trim()
@@ -94,10 +106,10 @@ function SearchPanel({ locale, onNavigate }: { locale: Language; onNavigate: () 
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder={t('placeholder')}
-          dir="auto"
+          dir={query ? 'auto' : locale === 'ar' ? 'rtl' : 'ltr'}
           autoComplete="off"
           enterKeyHint="search"
-          className="min-w-0 flex-1 bg-transparent text-base text-shade-strong placeholder:text-grey-light focus:outline-none sm:text-lg [&::-webkit-search-cancel-button]:hidden"
+          className=" min-w-0 flex-1 bg-transparent text-base text-shade-strong placeholder:text-grey-light focus:outline-none sm:text-lg [&::-webkit-search-cancel-button]:hidden"
         />
         <DialogPrimitive.Close
           aria-label={tHeader('close')}
@@ -122,7 +134,9 @@ function SearchPanel({ locale, onNavigate }: { locale: Language; onNavigate: () 
           </ul>
         )}
 
-        {hasQuery && status === 'error' && <Hint Icon={SearchX} text={tError('error')} />}
+        {hasQuery && status === 'error' && (
+          <Hint Icon={SearchX} text={tError('error')} />
+        )}
 
         {hasQuery && status === 'done' && items.length === 0 && (
           <Hint Icon={SearchX} text={t('notfound')} />
@@ -131,7 +145,8 @@ function SearchPanel({ locale, onNavigate }: { locale: Language; onNavigate: () 
         {hasQuery && status === 'done' && items.length > 0 && (
           <ul className="space-y-1">
             {items.map((item) => {
-              const image = typeof item.image === 'object' && item.image ? item.image : null
+              const image =
+                typeof item.image === 'object' && item.image ? item.image : null
               return (
                 <li key={item.id}>
                   <Link
