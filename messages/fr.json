@@ -155,5 +155,8 @@
   "NextPrev": {
     "next": "Suivant",
     "prev": "Précédent"
+  },
+  "Footer": {
+    "credit": "Conçu et développé par"
   }
 }

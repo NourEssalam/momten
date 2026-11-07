@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { Mail, MapPin, Phone } from 'lucide-react'
+import { ArrowUpRight, Mail, MapPin, Phone } from 'lucide-react'
 import formatPhoneNumber from '@/globals/Contact/formatPhone'
 import config from '@payload-config'
 import { getPayload } from 'payload'
@@ -8,6 +8,8 @@ import CopyRight from './copyRight'
 import { queryContact } from '@/app/(front-end)/[locale]/contact/page'
 import Social from '../contact/social'
 import { Link } from '@/i18n/routing'
+import { getTranslations } from 'next-intl/server'
+import { CREDIT_URL } from '@/lib/data'
 
 const iconBox =
   'flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-section text-shade'
@@ -18,6 +20,7 @@ export default async function Footer({ locale }: { locale: string }) {
   const contact = await queryContact({ locale })
   const { social, email, phones, address } = contact
   const year = new Date().getFullYear()
+  const t = await getTranslations({ locale, namespace: 'Footer' })
 
   return (
     <footer className="mt-24 border-t border-tint bg-tint-tint-lighter">
@@ -103,8 +106,30 @@ export default async function Footer({ locale }: { locale: string }) {
           </div>
         </div>
 
-        <div className="mt-10 border-t border-tint pt-6">
+        {/* replace the bottom bar */}
+        <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-tint pt-6 sm:flex-row">
           <CopyRight year={year} />
+
+          <a
+            href={CREDIT_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex items-center gap-2 rounded-full border border-tint bg-white py-1.5 ps-4 pe-1.5 text-sm text-grey-medium transition-colors duration-300 hover:border-primary hover:bg-primary hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+          >
+            <span>
+              {t('credit')}{' '}
+              <span dir="ltr" lang="en" className="font-semibold">
+                Noor Slimen
+              </span>
+            </span>
+            <span
+              aria-hidden
+              className="relative flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-white transition-colors duration-300 group-hover:bg-white group-hover:text-primary"
+            >
+              <span className="absolute inset-0 rounded-full bg-primary/40 motion-safe:animate-ping motion-reduce:hidden group-hover:hidden" />
+              <ArrowUpRight className="relative h-3.5 w-3.5 rtl:-scale-x-100" />
+            </span>
+          </a>
         </div>
       </div>
     </footer>
